@@ -1,0 +1,16 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.act.videochat.view.YRecycleview
+        android:id="@+id/yrecycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.act.videochat.view.LoadNetView
+        android:id="@+id/loadview"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

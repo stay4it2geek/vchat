@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#11ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_dialog"
+        android:minWidth="240dp"
+        android:orientation="vertical"
+        android:paddingTop="16dp">
+
+        <com.act.videochat.view.CircleImageView
+            android:layout_width="50dp"
+            android:visibility="gone"
+            android:id="@+id/userImage"
+            android:background="@mipmap/default_head"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:visibility="visible"
+            tools:text="" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="left"
+            android:lineSpacingExtra="2dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text=""/>
+        <TextView
+            android:id="@+id/createTime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="left"
+            android:lineSpacingExtra="2dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text=""
+            android:textSize="15dp"
+            android:visibility="gone" />
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/delete_confirm_layout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginLeft="-40dp"-->
+            <!--android:visibility="gone">-->
+
+            <!--<CheckBox-->
+                <!--android:id="@+id/delete_cb"-->
+                <!--android:button="@drawable/check_bg"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="40dp" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_toRightOf="@+id/delete_cb"-->
+                <!--android:gravity="center"-->
+                <!--android:text="  删除源文件"-->
+                <!--android:textColor="@color/red"-->
+                <!--android:textSize="16sp" />-->
+
+        <!--</RelativeLayout>-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="16dp"
+            android:background="#aaa" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/negtive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:singleLine="true"
+                android:textColor="@color/darkgray"
+                android:textSize="17sp"
+                tools:text="" />
+
+            <View
+                android:id="@+id/column_line"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#aaa" />
+
+            <Button
+                android:id="@+id/positive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:singleLine="true"
+                android:textColor="@color/common_red"
+                android:textSize="17sp"
+                tools:text="" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

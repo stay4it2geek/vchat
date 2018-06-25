@@ -112,8 +112,11 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
                 if (msg.what == Constants.LOADMORE && result.data.size() == 0) {
                     recyclerView.setNoMoreData(true);
                 }
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
                 if (adapter == null) {
-                    adapter = new VideoWorksListAdapter(GirlShowVideoListInfoActivity.this, headerInfo, details, result.maxCount);
+                    adapter = new VideoWorksListAdapter(size.x, GirlShowVideoListInfoActivity.this, headerInfo, details, result.maxCount);
                     recyclerView.setAdapter(adapter);
                     adapter.setOnItemClickListener(new VideoWorksListAdapter.OnRecyclerViewItemClickListener() {
                         @Override

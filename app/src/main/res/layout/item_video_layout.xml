@@ -6,11 +6,10 @@
 
     <ImageView
         android:id="@+id/videoCover"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="false"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="2dp"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
         android:layout_width="wrap_content"
-        android:layout_height="190dp"  />
+        android:layout_height="wrap_content"  />
 </LinearLayout>

@@ -16,7 +16,6 @@ public class SmallPlayVideoInfoModel implements Serializable{
         public String shareNum;
         public String url;//http://cdn.pairui8.com/prod/video/jrPWkCJAtp.mp4",
         public Avatar avatar;
-        public String coverUrl="";
         public class Avatar implements Serializable{
             public String id;
             public int width;

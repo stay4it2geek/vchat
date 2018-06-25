@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.act.videochat.R;
-import com.act.videochat.bean.SmallPlayVideoInfoModel;
+import com.act.videochat.bean.CommonVideoListModel;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
 
     private int screenWidth;
     private Context mContext;
-    private ArrayList<SmallPlayVideoInfoModel> datas;
+    private ArrayList<CommonVideoListModel.HomeVideoInfoData> datas;
 
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int position);
@@ -30,11 +30,12 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
         mOnItemClickListener = listener;
     }
 
-    public CommonVideoListAdapter(Context context,int screenWidth) {
+    public CommonVideoListAdapter(Context context, int screenWidth) {
         mContext = context;
         this.screenWidth = screenWidth;
     }
-    public  void setDatas(ArrayList<SmallPlayVideoInfoModel> datas){
+
+    public void setDatas(ArrayList<CommonVideoListModel.HomeVideoInfoData> datas) {
         this.datas = datas;
     }
 
@@ -48,7 +49,9 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.photoImg.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 2), (screenWidth / 2) + 175));
-        Glide.with(mContext).load(datas!=null&&datas.size()>0?datas.get(position).data.coverUrl:"").placeholder(R.drawable.placehoder_img).error(R.drawable.error_img).into(holder.photoImg);//加载网络图片
+        if (mContext != null) {
+            Glide.with(mContext).load(datas != null && datas.size() > 0 ? datas.get(position).cover : "").placeholder(R.drawable.placehoder_img).error(R.drawable.error_img).into(holder.photoImg);//加载网络图片
+        }
         holder.photoImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +63,7 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
 
     @Override
     public int getItemCount() {
-        return datas!=null&&datas.size()>0?datas.size():0;
+        return datas != null && datas.size() > 0 ? datas.size() : 0;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

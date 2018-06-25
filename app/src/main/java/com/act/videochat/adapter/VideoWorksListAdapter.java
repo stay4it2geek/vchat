@@ -1,11 +1,12 @@
 package com.act.videochat.adapter;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.act.videochat.R;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
 import com.act.videochat.bean.CommonVideoListModel;
+import com.act.videochat.util.TCUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-
 
 import java.util.ArrayList;
 
@@ -32,7 +30,7 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     Activity activity;
     BigVideoOneUserInfoModel headerInfo;
     ArrayList<CommonVideoListModel.HomeVideoInfoData> girlVideos;
-    BigVideoOneUserInfoModel userInfoModel;
+    private int screenWidth;
 
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int position);
@@ -44,12 +42,14 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mOnItemClickListener = listener;
     }
 
-    public VideoWorksListAdapter(Activity activity, BigVideoOneUserInfoModel headerInfo, ArrayList<CommonVideoListModel.HomeVideoInfoData> girlVideos, int maxCount) {
+    public VideoWorksListAdapter(int screenWidth,Activity activity, BigVideoOneUserInfoModel headerInfo, ArrayList<CommonVideoListModel.HomeVideoInfoData> girlVideos, int maxCount) {
         this.headerInfo = headerInfo;
         this.activity = activity;
         this.girlVideos = girlVideos;
         mLayoutInflater = LayoutInflater.from(activity);
         this.maxCount = maxCount;
+        this.screenWidth = screenWidth;
+
     }
 
     @Override
@@ -59,10 +59,12 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             return 1;
         }
+
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         if (viewType == 0) {
             return new Item1ViewHolder(mLayoutInflater.inflate(R.layout.girl_video_header_layout, parent, false));
         } else {
@@ -76,13 +78,7 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder instanceof Item1ViewHolder) {
             StaggeredGridLayoutManager.LayoutParams clp = (StaggeredGridLayoutManager.LayoutParams) ((Item1ViewHolder) holder).headerlayout.getLayoutParams();
             clp.setFullSpan(true);
-//            Glide.with(activity).load(headerInfo.data.avatar.url).asBitmap().into(new SimpleTarget<Bitmap>() {
-//                @Override
-//                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                    StackBlurManager stackBlurManager = new StackBlurManager(activity, resource);
-//                    ((Item1ViewHolder) holder).backGroundImg.setImageBitmap(stackBlurManager.process(28));
-//                }
-//            });
+            TCUtils.blurBgPic(activity, ((Item1ViewHolder) holder).backGroundImg, headerInfo.data.avatar.url, R.drawable.main_bkg);
             ((Item1ViewHolder) holder).nickName.setText(headerInfo.data.nickname);
             ((Item1ViewHolder) holder).topics.setText(headerInfo.data.topic);
             ((Item1ViewHolder) holder).videoCount.setText("共有" + maxCount + "个视频");
@@ -98,15 +94,20 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 textView.setBackgroundDrawable(drawable);
                 textView.setText(tag.name);
                 textView.setTextSize(13f);
+                textView.setGravity(Gravity.CENTER);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(150, 105);
-                params.setMargins(5, 15, 5, 5);//设置边距
+                params.setMargins(5, 5, 5, 5);//设置边距
                 textView.setLayoutParams(params);
                 ((Item1ViewHolder) holder).tagLayout.addView(textView);
 
             }
 
         } else if (holder instanceof Item2ViewHolder) {
-            Glide.with(activity).load(girlVideos.get(position).cover).error(R.drawable.error_img).into(((Item2ViewHolder) holder).videoCover);
+            if(activity!=null && !activity.isDestroyed()) {
+                ((Item2ViewHolder) holder).videoCover.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 3), (screenWidth / 3) + 135));
+
+                Glide.with(activity).load(girlVideos.get(position - 1).cover).error(R.drawable.error_img).into(((Item2ViewHolder) holder).videoCover);
+            }
             ((Item2ViewHolder) holder).videoCover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -13,8 +13,9 @@ public class ApiUrls {
         //短视频独立播放的视频资源接口
         public static final String SMALL_PLAY_VIDEO_INO_HREF= "http://youmei.xiumei99.com/smallvideo/one";
         //短视频列表通用接口
-        public static final String COMMON_VIDEO_LIST_HREF= "http://youmei.xiumei99.com/smallvideo/list";
+        public static final String COMMON_VIDEO_SMALL_LIST_HREF= "http://youmei.xiumei99.com/smallvideo/list";
 
+    public static final String  COMMON_VIDEO_LIST_HOMEPAGE_HREF = "http://youmei.xiumei99.com/homepage";
 
     /**
      * 聊天推荐接口合集

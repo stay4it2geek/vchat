@@ -121,7 +121,7 @@ public class OkHttpClientManager {
                 .add("vid",videoId)
                 .build();
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
-        call.enqueue(new MyCallBack(handler, Constants.REFRESH));
+        call.enqueue(new MyCallBack(handler, Constants.INFO));
     }
     public static void parseRequestGirlSmallVideoList(Context context, String url, Handler handler, int what, String vid , String startPage) {
         RequestBody formBody = new FormBody.Builder()

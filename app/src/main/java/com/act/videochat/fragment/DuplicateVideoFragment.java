@@ -2,15 +2,12 @@ package com.act.videochat.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +17,6 @@ import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.bean.HomeVideoTagModel;
-import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.GlideImageLoader;
@@ -38,10 +34,6 @@ import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.act.videochat.manager.OkHttpClientManager.createChart;
-import static com.act.videochat.manager.OkHttpClientManager.createNumData;
-import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 public class DuplicateVideoFragment extends Fragment {
 

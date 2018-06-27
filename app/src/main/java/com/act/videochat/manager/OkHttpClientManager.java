@@ -37,27 +37,17 @@ public class OkHttpClientManager {
         return singleton;
     }
 
-    public static void parseRequest(Context context, String url, Handler handler, int what) {
-        Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).build());
-        call.enqueue(new MyCallBack(handler, what));
-    }
 
     public static void parseRequestGirlHomePage(Context context, String url, Handler handler, int what, String categoryId , String startPage) {
-//      for(int userId=476869 ;userId<477469;userId++){
-//          RequestBody formBody = new FormBody.Builder()
-//                  .add("tagId", categoryId)
-//                  .add("page","1")
-//                  .build();
-//          Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
-//          call.enqueue(new MyCallBack2(handler, userId,what));
-//      }
         RequestBody formBody = new FormBody.Builder()
-                .add("tagId", categoryId)
+                .add("tagId", categoryId+"")
                 .add("page",startPage+"")
                 .build();
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
         call.enqueue(new MyCallBack(handler, what));
     }
+
+
     //生成随机数字和字母,
     public static String getStringRandom(int length) {
 
@@ -66,7 +56,6 @@ public class OkHttpClientManager {
 
         //参数length，表示生成几位随机数
         for(int i = 0; i < length; i++) {
-
             String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
             //输出字母还是数字
             if( "char".equalsIgnoreCase(charOrNum) ) {
@@ -102,36 +91,31 @@ public class OkHttpClientManager {
         }
         return randomcode;
     }
-    public static void parseRequestGirlSmallVideoOne(Context context, String url, Handler handler, String videoId) {
 
-        RequestBody formBody = new FormBody.Builder()
-                .add("userId","0")
-                .add("userKey", "")
-                .add("macid",createChart(6)+"-"+getStringRandom(4)+"-"+getStringRandom(4)+"-"+createNumData(4)+"-"+createNumData(6)+getStringRandom(6))
-                .add("videoId",videoId)
-                .build();
-        Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
-        call.enqueue(new MyCallBack(handler, Constants.REFRESH));
-    }
+
     public static void parseRequestGirlBigVideoOne(Context context, String url, Handler handler, String videoId) {
 
         RequestBody formBody = new FormBody.Builder()
                 .add("userId","0")
                 .add("userKey", "")
-                .add("vid",videoId)
+                .add("vid",videoId+"")
                 .build();
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
         call.enqueue(new MyCallBack(handler, Constants.INFO));
     }
     public static void parseRequestGirlSmallVideoList(Context context, String url, Handler handler, int what, String vid , String startPage) {
         RequestBody formBody = new FormBody.Builder()
-                .add("vid",vid)
+                .add("vid",vid+"")
                 .add("page",startPage+"")
                 .build();
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
         call.enqueue(new MyCallBack(handler, what));
     }
-    static class MyCallBack implements Callback {
+
+
+
+
+    private static class MyCallBack implements Callback {
         Handler handler;
         int what;
 
@@ -156,33 +140,4 @@ public class OkHttpClientManager {
         }
     }
 
-
-    static class MyCallBack2 implements Callback {
-        Handler handler;
-        int what;
-        int userId;
-        public MyCallBack2(Handler handler, int userId, int what) {
-            this.handler = handler;
-            this.what = what;
-            this.userId = userId;
-
-        }
-
-
-        @Override
-        public void onFailure(Call call, IOException e) {
-            handler.sendEmptyMessage(Constants.NetWorkError);
-
-        }
-
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-            Message message = handler.obtainMessage();
-            message.obj = response.body().string();
-            message.arg1 = userId;
-
-            message.what = what;
-            handler.sendMessage(message);
-        }
-    }
 }

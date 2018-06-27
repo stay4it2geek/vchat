@@ -664,7 +664,7 @@ public class TCUtils {
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
 
         blur.setInput(input);
-        blur.setRadius(10);
+        blur.setRadius(5);
         blur.forEach(output);
         output.copyTo(bitmap);
         rs.destroy();

@@ -23,16 +23,15 @@
             android:clickable="true"
             android:drawableLeft="@drawable/btn_back_gray"
             android:drawablePadding="5dp"
-            android:drawableStart="@drawable/btn_back_gray"
-            android:textColor="#eee" />
+            android:drawableStart="@drawable/btn_back_gray" />
     </RelativeLayout>
 
-    <com.act.videochat.view.YRecycleviewRefreshFootView
-        android:id="@+id/yrecycle_view_load"
-        android:layout_width="50dp"
-        android:visibility="gone"
-        android:layout_height="50dp"
-        android:layout_gravity="center" />
+    <ImageView
+        android:id="@+id/player_iv_cover_bkg"
+        android:background="@drawable/main_bkg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <com.act.videochat.view.YRecycleviewRefreshFootView
         android:id="@+id/yrecycle_view_loadMore"

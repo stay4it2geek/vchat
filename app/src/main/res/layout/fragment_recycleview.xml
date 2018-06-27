@@ -10,7 +10,6 @@
 
     <com.act.videochat.view.LoadNetView
         android:id="@+id/loadview"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </RelativeLayout>

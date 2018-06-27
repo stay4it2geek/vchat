@@ -10,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Display;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.widget.ImageView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
@@ -32,8 +36,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.act.videochat.manager.OkHttpClientManager.createChart;
-import static com.act.videochat.manager.OkHttpClientManager.createNumData;
 import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 
@@ -120,9 +122,25 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                     adapter.setOnItemClickListener(new VideoWorksListAdapter.OnRecyclerViewItemClickListener() {
                         @Override
-                        public void onItemClick(View view, int position) {
+                        public void onItemClick(View view, final int position, ImageView imageView) {
+                            ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(GirlShowVideoListInfoActivity.this, R.anim.scale);
+                            imageView.startAnimation(scaleAnimation);
+                            scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+                                    startPlay(result.maxPage, position);
+                                }
 
-                            startPlay(result.maxPage, position);
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
                         }
                     });
 
@@ -145,7 +163,7 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
         RequestBody formBody = new FormBody.Builder()
                 .add("userId", "0")
                 .add("userKey", "")
-                .add("macid", createChart(6) + "-" + getStringRandom(4) + "-" + getStringRandom(4) + "-" + createNumData(4) + "-" + createNumData(6) + getStringRandom(6))
+                .add("macid", getStringRandom(20))
                 .add("videoId", details.get(position).id).build();
 
         Call call = OkHttpClientManager.newInstance(GirlShowVideoListInfoActivity.this).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());
@@ -163,13 +181,8 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
                 intent.putExtra(Constants.LIVE_INFO_AVATAR_URL, model.data.avatar.url);
                 intent.putExtra(Constants.LIVE_INFO_VIDEO_URL, model.data.url);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    }
-                });
+                startActivity(intent);
+
             }
         });
 

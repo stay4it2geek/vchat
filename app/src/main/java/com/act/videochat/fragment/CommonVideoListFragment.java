@@ -13,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.widget.ImageView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
@@ -36,8 +40,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.act.videochat.manager.OkHttpClientManager.createChart;
-import static com.act.videochat.manager.OkHttpClientManager.createNumData;
 import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 public class CommonVideoListFragment extends ScrollAbleFragment {
@@ -59,7 +61,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
             categoryId = getArguments().getString(Constants.TAG_ID);
         }
         loadNetView = (LoadNetView) view.findViewById(R.id.loadview);
-
+        loadNetView.setlayoutVisily(Constants.LOAD);
         recycleview = (YRecycleview) view.findViewById(R.id.yrecycle_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -142,9 +144,26 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                         recycleview.setAdapter(adapter);
                         adapter.setOnItemClickListener(new CommonVideoListAdapter.OnRecyclerViewItemClickListener() {
                             @Override
-                            public void onItemClick(View view, int position) {
+                            public void onItemClick(View view, final int position, ImageView photoImg) {
+                                ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
+                                photoImg.startAnimation(scaleAnimation);
+//                                photoImg.clearAnimation();
+                                scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                                    @Override
+                                    public void onAnimationStart(Animation animation) {
+                                        startPlay(result.maxPage,position);
+                                    }
 
-                                startPlay(result.maxPage,position);
+                                    @Override
+                                    public void onAnimationEnd(Animation animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation) {
+
+                                    }
+                                });
                             }
                         });
                     }
@@ -153,6 +172,9 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                     if (result.maxCount < currentPage) {
                         recycleview.setNoMoreData(true);
                     }
+                    loadNetView.setVisibility(View.GONE);
+                }else{
+                    loadNetView.setlayoutVisily(Constants.NO_DATA);
                 }
             } else {
                 loadNetView.setVisibility(View.VISIBLE);
@@ -191,7 +213,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
         RequestBody formBody = new FormBody.Builder()
                 .add("userId", "0")
                 .add("userKey", "")
-                .add("macid", createChart(6) + "-" + getStringRandom(4) + "-" + getStringRandom(4) + "-" + createNumData(4) + "-" + createNumData(6) + getStringRandom(6))
+                .add("macid", getStringRandom(20))
                 .add("videoId", details.get(position).id).build();
 
         Call call = OkHttpClientManager.newInstance(getActivity()).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());
@@ -208,14 +230,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                 intent.putExtra(Constants.LIVE_INFO_VIDEO_ID,model.data.vid);
                 intent.putExtra(Constants.LIVE_INFO_AVATAR_URL,model.data.avatar.url);
                 intent.putExtra(Constants.LIVE_INFO_VIDEO_URL,model.data.url);
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    }
-                });
+                getActivity().startActivity(intent);
             }
         });
 

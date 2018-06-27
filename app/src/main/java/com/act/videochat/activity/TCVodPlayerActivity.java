@@ -49,8 +49,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.act.videochat.manager.OkHttpClientManager.createChart;
-import static com.act.videochat.manager.OkHttpClientManager.createNumData;
 import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 
@@ -62,8 +60,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
     private ImageView mIvCover;
     private int mInitTCLiveInfoPosition;
     private int mCurrentPosition;
-    YRecycleviewRefreshFootView yrecycle_view_load;
-    YRecycleviewRefreshFootView yrecycle_view_loadMore;
+    private YRecycleviewRefreshFootView yrecycle_view_loadMore;
     private TXVodPlayer mTXVodPlayer;
     private int mMaxCount;
     private int mCurrentPage;
@@ -71,20 +68,10 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
     private String videoUrl = "";
 
 
-    class PlayerInfo {
-        public TXVodPlayer txVodPlayer;
-        public String playURL;
-        public boolean isBegin;
-        public View playerView;
-        public int pos;
-    }
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        yrecycle_view_load = (YRecycleviewRefreshFootView) findViewById(R.id.yrecycle_view_load);
         yrecycle_view_loadMore = (YRecycleviewRefreshFootView) findViewById(R.id.yrecycle_view_loadMore);
         initData();
 
@@ -123,12 +110,6 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
     }
 
-    private void initPhoneListener() {
-        if (mPhoneListener == null)
-            mPhoneListener = new TXPhoneStateListener(mTXVodPlayer);
-        TelephonyManager tm = (TelephonyManager) this.getApplicationContext().getSystemService(Service.TELEPHONY_SERVICE);
-        tm.listen(mPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-    }
 
 
     private void initViews() {
@@ -143,8 +124,6 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                 finish();
             }
         });
-
-
         mVerticalViewPager = (VerticalViewPager) findViewById(R.id.vertical_view_pager);
         mVerticalViewPager.setOffscreenPageLimit(3);
         mVerticalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -192,6 +171,14 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         mPagerAdapter = new MyPagerAdapter();
         mPagerAdapter.setDatas(details);
         mVerticalViewPager.setAdapter(mPagerAdapter);
+    }
+
+    class PlayerInfo {
+        public TXVodPlayer txVodPlayer;
+        public String playURL;
+        public boolean isBegin;
+        public View playerView;
+        public int pos;
     }
 
     class MyPagerAdapter extends PagerAdapter {
@@ -282,13 +269,14 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
             ImageView coverImageView = (ImageView) view.findViewById(R.id.player_iv_cover);
             final CircleImageView ivAvatar = (CircleImageView) view.findViewById(R.id.player_civ_avatar);
             final TXCloudVideoView playView = (TXCloudVideoView) view.findViewById(R.id.player_cloud_view);
+            coverImageView.setVisibility(View.VISIBLE);
             TCUtils.blurBgPic(TCVodPlayerActivity.this, coverImageView, list.get(position).cover, R.drawable.main_bkg);
 
             if (map.get(videoUrl) != null && !map.get(videoUrl).equals(position + "")) {
                 RequestBody formBody = new FormBody.Builder()
                         .add("userId", "0")
                         .add("userKey", "")
-                        .add("macid", createChart(6) + "-" + getStringRandom(4) + "-" + getStringRandom(4) + "-" + createNumData(4) + "-" + createNumData(6) + getStringRandom(6))
+                        .add("macid", getStringRandom(20))
                         .add("videoId", list.get(position).id)
                         .build();
                 Call call = OkHttpClientManager.newInstance(TCVodPlayerActivity.this).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());
@@ -329,13 +317,14 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                 });
 
             } else {
+                if (TCVodPlayerActivity.this != null && !TCVodPlayerActivity.this.isDestroyed()) {
+                    Glide.with(TCVodPlayerActivity.this).load(map.get("avatar")).error(R.mipmap.default_head).into(ivAvatar);
+                }
                 PlayerInfo playerInfo = instantiatePlayerInfo(videoUrl, position);
                 playerInfo.playerView = playView;
                 playerInfo.txVodPlayer.setPlayerView(playView);
                 playerInfo.txVodPlayer.startPlay(playerInfo.playURL);
-                if (TCVodPlayerActivity.this != null && !TCVodPlayerActivity.this.isDestroyed()) {
-                    Glide.with(TCVodPlayerActivity.this).load(map.get("avatar")).error(R.mipmap.default_head).into(ivAvatar);
-                }
+
                 ivAvatar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -345,8 +334,6 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                     }
                 });
             }
-
-
             container.addView(view);
             return view;
         }
@@ -363,6 +350,16 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
     private void initPlayerSDK() {
         mVerticalViewPager.setCurrentItem(mInitTCLiveInfoPosition);
     }
+
+    private void initPhoneListener() {
+        if (mPhoneListener == null)
+            mPhoneListener = new TXPhoneStateListener(mTXVodPlayer);
+        TelephonyManager tm = (TelephonyManager) this.getApplicationContext().getSystemService(Service.TELEPHONY_SERVICE);
+        tm.listen(mPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+    }
+
+
+
 
     private void restartPlay() {
         if (mTXVodPlayer != null) {
@@ -418,6 +415,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
     @Override
     public void onPlayEvent(TXVodPlayer player, int event, Bundle param) {
+        findViewById(R.id.player_iv_cover_bkg).setVisibility(View.GONE);
         if (event == TXLiveConstants.PLAY_EVT_CHANGE_RESOLUTION) {
             int width = param.getInt(TXLiveConstants.EVT_PARAM1);
             int height = param.getInt(TXLiveConstants.EVT_PARAM2);
@@ -436,7 +434,6 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
             }
             if (mTXVodPlayer == player) {
                 mIvCover.setVisibility(View.GONE);
-                yrecycle_view_load.setVisibility(View.GONE);
             }
         } else if (event == TXLiveConstants.PLAY_EVT_VOD_PLAY_PREPARED) {
             if (mTXVodPlayer == player) {
@@ -446,8 +443,6 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
             PlayerInfo playerInfo = mPagerAdapter.findPlayerInfo(player);
             if (playerInfo != null && playerInfo.isBegin) {
                 mIvCover.setVisibility(View.GONE);
-                yrecycle_view_load.setVisibility(View.GONE);
-
             }
         }
     }
@@ -488,6 +483,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         }
     }
 
+
     MyHandler converDataHandler = new MyHandler();
 
     public void getData(final String categoryId, String startPage) {
@@ -519,14 +515,8 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                 Intent intent = new Intent(TCVodPlayerActivity.this, GirlShowVideoListInfoActivity.class);
                 intent.putExtra(Constants.LIVE_INFO_USER_INFO, model);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
             }
-
         }
-
     }
-
 
 }

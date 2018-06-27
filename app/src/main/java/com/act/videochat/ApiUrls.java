@@ -8,6 +8,8 @@ public class ApiUrls {
      */
         //首页短视频分类接口
         public static final String HOME_VIDEO_TAG_HREF= "http://youmei.xiumei99.com/homepage-tag";
+
+
         //短视频作者个人信息接口
         public static final String  BIG_VIDEO_ONE_INFO_HREF= "http://youmei.xiumei99.com/bigv/one";
         //短视频独立播放的视频资源接口
@@ -20,5 +22,12 @@ public class ApiUrls {
     /**
      * 聊天推荐接口合集
      */
+
+    public static final String HOME_CHAT_TAG_HREF= "http://android.vliao9.com/v31/homepage-tag";
+    public static final String HOME_CHAT_USER_LIST_HREF= "http://android.vliao9.com/v31/homepage";
+
+
+
+
 
 }

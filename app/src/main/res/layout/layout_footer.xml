@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text=""
+            android:text="没有更多数据了"
             android:textColor="#c0c0c0"
             android:textSize="12sp"
             android:visibility="visible" />
@@ -40,4 +40,5 @@
             android:indeterminateOnly="false"
             app:cpb_colors="@array/gplus_colors" />
     </LinearLayout>
+
 </FrameLayout>

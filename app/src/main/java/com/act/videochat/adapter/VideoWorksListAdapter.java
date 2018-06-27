@@ -88,15 +88,16 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             for (BigVideoOneUserInfoModel.Tag tag : headerInfo.data.tags) {
                 TextView textView = new TextView(activity);
                 GradientDrawable drawable = new GradientDrawable();
-                drawable.setCornerRadius(5);
+                drawable.setCornerRadius(50);
                 drawable.setStroke(1, Color.parseColor("#cccccc"));
                 drawable.setColor(Color.parseColor("#" + tag.color));
                 textView.setBackgroundDrawable(drawable);
                 textView.setText(tag.name);
-                textView.setTextSize(13f);
+                textView.setTextSize(15f);
+                textView.setTextColor(Color.WHITE);
                 textView.setGravity(Gravity.CENTER);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(150, 105);
-                params.setMargins(5, 5, 5, 5);//设置边距
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(175,100);
+                params.setMargins(10, 16, 10, 5);//设置边距
                 textView.setLayoutParams(params);
                 ((Item1ViewHolder) holder).tagLayout.addView(textView);
 
@@ -104,8 +105,8 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         } else if (holder instanceof Item2ViewHolder) {
             if(activity!=null && !activity.isDestroyed()) {
-                ((Item2ViewHolder) holder).videoCover.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 3)-2, (screenWidth /3) + 136));
-                Glide.with(activity).load(girlVideos.get(position - 1).cover).error(R.drawable.error_img).into(((Item2ViewHolder) holder).videoCover);
+                ((Item2ViewHolder) holder).videoCover.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 3)-5, (screenWidth /3) + 190));
+                Glide.with(activity).load(girlVideos.get(position - 1).cover).error(R.drawable.error_img).placeholder(R.drawable.placehoder_img).into(((Item2ViewHolder) holder).videoCover);
             }
             ((Item2ViewHolder) holder).videoCover.setOnClickListener(new View.OnClickListener() {
                 @Override

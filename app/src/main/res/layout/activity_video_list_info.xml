@@ -14,6 +14,7 @@
         android:id="@+id/focuslayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="@android:color/transparent"
         android:layout_gravity="bottom"
         android:layout_marginBottom="2dp"
         android:orientation="horizontal">

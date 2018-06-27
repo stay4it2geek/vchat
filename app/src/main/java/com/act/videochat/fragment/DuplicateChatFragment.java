@@ -1,6 +1,7 @@
 package com.act.videochat.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,7 +37,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class DuplicateVideoFragment extends Fragment {
+public class DuplicateChatFragment extends Fragment {
 
     private Banner banner;
     private ViewPager view_pager;
@@ -44,8 +45,8 @@ public class DuplicateVideoFragment extends Fragment {
     private SlidingTabLayout mSlidingTabLayout;
     private List<String> tabTitles = new ArrayList<>();
 
-    public static DuplicateVideoFragment newInstance() {
-        DuplicateVideoFragment f = new DuplicateVideoFragment();
+    public static DuplicateChatFragment newInstance() {
+        DuplicateChatFragment f = new DuplicateChatFragment();
         Bundle b = new Bundle();
         b.putString("fragment", "OneFragment");
         return f;
@@ -63,31 +64,10 @@ public class DuplicateVideoFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mScrollLayout = (ScrollableLayout) this.getView().findViewById(R.id.scrollableLayout);
-        banner = (Banner) this.getView().findViewById(R.id.banner);
+        this.getView().findViewById(R.id.banner).setVisibility(View.GONE);
         mSlidingTabLayout = (SlidingTabLayout) this.getView().findViewById(R.id.tab_layout);
         view_pager = (ViewPager) this.getView().findViewById(R.id.view_pager);
-        ArrayList<String> list = new ArrayList<>();
 
-        list.add("http://android.vliao9.com/html/images/ad/home_banner2.jpg");
-        list.add( "http://android.vliao9.com/html/images/ad/home_banner1.jpg");
-
-        RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) banner.getLayoutParams();
-        linearParams.width = getScreenMaxWidth(0);
-        int maxHeight = (int) (getScreenMaxWidth(0) / 2.4);
-        linearParams.height = maxHeight;
-        banner.setLayoutParams(linearParams);
-        banner.setImages(list).setImageLoader(new GlideImageLoader()).start();
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                if(0==position){
-//                    startActivity(new Intent());
-                }else{
-//                    startActivity(new Intent());
-                }
-            }
-        });
-        mScrollLayout.setClickHeadExpand(maxHeight);
         init();
     }
 
@@ -95,7 +75,7 @@ public class DuplicateVideoFragment extends Fragment {
 
     public void init() {
         RequestBody formBody = new FormBody.Builder().build();
-        Call call = OkHttpClientManager.newInstance(getActivity()).newCall(new Request.Builder().url(ApiUrls.HOME_VIDEO_TAG_HREF).post(formBody).build());
+        Call call = OkHttpClientManager.newInstance(getActivity()).newCall(new Request.Builder().url(ApiUrls.HOME_CHAT_TAG_HREF).post(formBody).build());
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -105,15 +85,14 @@ public class DuplicateVideoFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String str = response.body().string();
-                HomeVideoTagModel entity = CommonUtil.parseJsonWithGson(str, HomeVideoTagModel.class);
-                for (HomeVideoTagModel.TagInfoData data : entity.data) {
-                    if (data.name.equals("关注")||data.name.equals("推荐")) {
+                ChatTagModel entity = CommonUtil.parseJsonWithGson(str, ChatTagModel.class);
+                for (ChatTagModel.ChatTagData data : entity.data) {
+                    if (data.name.equals("关注")) {
                         continue;
                     }
                     tabTitles.add(data.name);
-                    CommonVideoListFragment fragment = new CommonVideoListFragment();
+                    CommonChatListFragment fragment = new CommonChatListFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString("fragment", "TwoCateFragment");
                     bundle.putString(Constants.TAG_ID, data.id + "");
                     fragment.setArguments(bundle);
                     fragmentList.add(fragment);
@@ -182,26 +161,4 @@ public class DuplicateVideoFragment extends Fragment {
     }
 
 
-    public int getScreenMaxWidth(int paramInt) {
-        Object localObject = new DisplayMetrics();
-        try {
-            DisplayMetrics localDisplayMetrics =
-                    getActivity().getApplicationContext().getResources().getDisplayMetrics();
-            localObject = localDisplayMetrics;
-            return ((DisplayMetrics) localObject).widthPixels - dip2px(getActivity(), paramInt);
-        } catch (Exception localException) {
-            while (true) {
-                localException.printStackTrace();
-                ((DisplayMetrics) localObject).widthPixels = 640;
-            }
-        }
-    }
-
-    public int dip2px(Context context, int dipValue) {
-        if (context != null) {
-            float reSize = context.getResources().getDisplayMetrics().density;
-            return (int) ((dipValue * reSize) + 0.5);
-        }
-        return dipValue;
-    }
 }

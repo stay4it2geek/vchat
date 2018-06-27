@@ -1,6 +1,5 @@
 package com.act.videochat.fragment;
 
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,18 +12,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
-import com.act.videochat.activity.TCVodPlayerActivity;
-import com.act.videochat.adapter.CommonVideoListAdapter;
-import com.act.videochat.bean.CommonVideoListModel;
-import com.act.videochat.bean.SmallPlayVideoInfoModel;
+import com.act.videochat.adapter.CommonChatListAdapter;
+import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.view.LoadNetView;
@@ -42,15 +36,16 @@ import okhttp3.Response;
 
 import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
-public class CommonVideoListFragment extends ScrollAbleFragment {
+public class CommonChatListFragment extends ScrollAbleFragment {
 
     YRecycleview recycleview;
     int currentPage;
-    CommonVideoListAdapter adapter;
+    CommonChatListAdapter adapter;
     View view;
-    String categoryId;
+    String tagId;
     LoadNetView loadNetView;
     MyHandler converDataHandler;
+
 
     @Nullable
     @Override
@@ -58,12 +53,12 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_recycleview, null, false);
         if (getArguments() != null) {
-            categoryId = getArguments().getString(Constants.TAG_ID);
+            tagId = getArguments().getString(Constants.TAG_ID);
         }
         loadNetView = (LoadNetView) view.findViewById(R.id.loadview);
         loadNetView.setlayoutVisily(Constants.LOAD);
         recycleview = (YRecycleview) view.findViewById(R.id.yrecycle_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleview.setLayoutManager(gridLayoutManager);
         recycleview.setReFreshEnabled(true);
@@ -72,7 +67,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
         recycleview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
             @Override
             public void onRefresh() {
-                getData(categoryId, "1", Constants.REFRESH);
+                getData(tagId, "1", Constants.REFRESH);
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -83,7 +78,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
 
             @Override
             public void onLoadMore() {
-                getData(categoryId, (currentPage + 1) + "", Constants.LOADMORE);
+                getData(tagId, (currentPage + 1) + "", Constants.LOADMORE);
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -92,7 +87,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                 }, 1000);
             }
         });
-        getData(categoryId, "1", Constants.REFRESH);
+        getData(tagId, "1", Constants.REFRESH);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -103,7 +98,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
             @Override
             public void onClick(View v) {
                 loadNetView.setlayoutVisily(Constants.LOAD);
-                getData(categoryId, "1", Constants.REFRESH);
+                getData(tagId, "1", Constants.REFRESH);
             }
         });
 
@@ -111,14 +106,16 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
             @Override
             public void onClick(View v) {
                 loadNetView.setlayoutVisily(Constants.LOAD);
-                getData(categoryId, "1", Constants.REFRESH);
+                getData(tagId, "1", Constants.REFRESH);
             }
         });
 
         return view;
     }
 
-    ArrayList<CommonVideoListModel.HomeVideoInfoData> details = new ArrayList<>();
+
+    ArrayList<CommonChatListModel.HomeChatInfoData> chatDetails = new ArrayList<>();
+
 
     class MyHandler extends Handler {
 
@@ -126,54 +123,36 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what != Constants.NetWorkError) {
-                final CommonVideoListModel result = CommonUtil.parseJsonWithGson((String) msg.obj, CommonVideoListModel.class);
+                final CommonChatListModel result = CommonUtil.parseJsonWithGson((String) msg.obj, CommonChatListModel.class);
                 currentPage = result.currPage;
-                ArrayList<CommonVideoListModel.HomeVideoInfoData> girlDetail = result.data;
+                ArrayList<CommonChatListModel.HomeChatInfoData> details = result.data;
                 if (msg.what == Constants.REFRESH) {
                     currentPage = 1;
-                    details.clear();
+                    chatDetails.clear();
                 }
                 Display display = getActivity().getWindowManager().getDefaultDisplay();
                 Point size = new Point();
                 display.getSize(size);
-                if (result.maxCount > 0) {
-                    details.addAll(girlDetail);
+                if (details != null && details.size() > 0) {
+                    chatDetails.addAll(details);
                     if (adapter == null) {
-                        adapter = new CommonVideoListAdapter(getActivity(), size.x);
-                        adapter.setDatas(details);
+                        adapter = new CommonChatListAdapter(getActivity(), size.x);
+                        adapter.setDatas(chatDetails);
                         recycleview.setAdapter(adapter);
-                        adapter.setOnItemClickListener(new CommonVideoListAdapter.OnRecyclerViewItemClickListener() {
+                        adapter.setOnItemClickListener(new CommonChatListAdapter.OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(View view, final int position, ImageView photoImg) {
-                                ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
-                                photoImg.startAnimation(scaleAnimation);
 
-                                scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
-                                    @Override
-                                    public void onAnimationStart(Animation animation) {
-                                        startPlay(result.maxPage,position);
-                                    }
-
-                                    @Override
-                                    public void onAnimationEnd(Animation animation) {
-
-                                    }
-
-                                    @Override
-                                    public void onAnimationRepeat(Animation animation) {
-
-                                    }
-                                });
                             }
                         });
                     }
                     adapter.notifyDataSetChanged();
 
-                    if (result.maxCount < currentPage) {
+                    if (result.maxPage < currentPage) {
                         recycleview.setNoMoreData(true);
                     }
                     loadNetView.setVisibility(View.GONE);
-                }else{
+                } else {
                     loadNetView.setlayoutVisily(Constants.NO_DATA);
                 }
             } else {
@@ -184,12 +163,12 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
     }
 
 
-    public void getData(final String categoryId, String startPage, final int what) {
-        if (categoryId == null) {
+    public void getData(final String tagId, String startPage, final int what) {
+        if (tagId == null) {
             converDataHandler.sendEmptyMessage(Constants.NetWorkError);
             return;
         }
-        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.COMMON_VIDEO_LIST_HOMEPAGE_HREF, converDataHandler, what, categoryId, startPage,"","");
+        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, "97728", "e9e71fed976fd74763236b86ee3a93b2");
     }
 
 
@@ -202,19 +181,12 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
     private void startPlay(final int maxPage, final int position) {
 
 
-        final Intent intent = new Intent(getActivity(), TCVodPlayerActivity.class);
-        intent.putExtra(Constants.LIVE_INFO_LIST, details);
-        intent.putExtra(Constants.LIVE_INFO_POSITION, position);
-        intent.putExtra(Constants.LIVE_INFO_CATAGORY_ID, categoryId);
-        intent.putExtra(Constants.LIVE_INFO_VIDEO_COVER, details.get(position).cover);
-        intent.putExtra(Constants.LIVE_INFO_CURRENTPAGE, currentPage);
-        intent.putExtra(Constants.LIVE_INFO_MAXCOUNT,maxPage);
-
         RequestBody formBody = new FormBody.Builder()
-                .add("userId", "0")
+                .add("userId", "")
                 .add("userKey", "")
                 .add("macid", getStringRandom(20))
-                .add("videoId", details.get(position).id).build();
+//                .add("videoId", videoDetails.get(position).id)
+                .build();
 
         Call call = OkHttpClientManager.newInstance(getActivity()).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());
         call.enqueue(new Callback() {
@@ -225,12 +197,8 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                final String entityStr = response.body().string();
-                final SmallPlayVideoInfoModel model = CommonUtil.parseJsonWithGson(entityStr, SmallPlayVideoInfoModel.class);
-                intent.putExtra(Constants.LIVE_INFO_VIDEO_ID,model.data.vid);
-                intent.putExtra(Constants.LIVE_INFO_AVATAR_URL,model.data.avatar.url);
-                intent.putExtra(Constants.LIVE_INFO_VIDEO_URL,model.data.url);
-                getActivity().startActivity(intent);
+
+//                getActivity().startActivity(intent);
             }
         });
 

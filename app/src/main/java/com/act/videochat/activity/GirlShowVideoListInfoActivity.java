@@ -36,6 +36,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.act.videochat.manager.OkHttpClientManager.createChart;
+import static com.act.videochat.manager.OkHttpClientManager.createNumData;
 import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 
@@ -163,7 +165,7 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
         RequestBody formBody = new FormBody.Builder()
                 .add("userId", "0")
                 .add("userKey", "")
-                .add("macid", getStringRandom(20))
+                .add("macid", createChart(6) + "-" + getStringRandom(4) + "-" + getStringRandom(4) + "-" + createNumData(4) + "-" + createNumData(6) + getStringRandom(6))
                 .add("videoId", details.get(position).id).build();
 
         Call call = OkHttpClientManager.newInstance(GirlShowVideoListInfoActivity.this).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());

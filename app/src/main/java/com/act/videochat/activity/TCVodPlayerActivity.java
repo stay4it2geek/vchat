@@ -2,6 +2,7 @@ package com.act.videochat.activity;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import com.tencent.rtmp.TXVodPlayConfig;
 import com.tencent.rtmp.TXVodPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.act.videochat.manager.OkHttpClientManager.createChart;
+import static com.act.videochat.manager.OkHttpClientManager.createNumData;
 import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 
@@ -171,6 +175,9 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         mPagerAdapter = new MyPagerAdapter();
         mPagerAdapter.setDatas(details);
         mVerticalViewPager.setAdapter(mPagerAdapter);
+
+
+
     }
 
     class PlayerInfo {
@@ -268,16 +275,25 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
             view.setId(position);
             ImageView coverImageView = (ImageView) view.findViewById(R.id.player_iv_cover);
             final CircleImageView ivAvatar = (CircleImageView) view.findViewById(R.id.player_civ_avatar);
+            final CircleImageView focusImage = (CircleImageView) view.findViewById(R.id.focusImage);
             final TXCloudVideoView playView = (TXCloudVideoView) view.findViewById(R.id.player_cloud_view);
             coverImageView.setVisibility(View.VISIBLE);
             TCUtils.blurBgPic(TCVodPlayerActivity.this, coverImageView, list.get(position).cover, R.drawable.main_bkg);
+
+            focusImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
 
             if (map.get(videoUrl) != null && !map.get(videoUrl).equals(position + "")) {
                 RequestBody formBody = new FormBody.Builder()
                         .add("userId", "0")
                         .add("userKey", "")
-                        .add("macid", getStringRandom(20))
-                        .add("videoId", list.get(position).id)
+                        .add("macid",createChart(6) + "-" + getStringRandom(4) + "-" + getStringRandom(4) + "-" + createNumData(4) + "-" + createNumData(6) + getStringRandom(6))
+                        .add("videoId", list.get(position).id+"")
                         .build();
                 Call call = OkHttpClientManager.newInstance(TCVodPlayerActivity.this).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());
                 call.enqueue(new Callback() {
@@ -334,6 +350,8 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                     }
                 });
             }
+
+
             container.addView(view);
             return view;
         }
@@ -490,7 +508,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         if (categoryId == null) {
             OkHttpClientManager.parseRequestGirlSmallVideoList(this, ApiUrls.COMMON_VIDEO_SMALL_LIST_HREF, converDataHandler, Constants.LOADMORE, categoryId, startPage);
         } else {
-            OkHttpClientManager.parseRequestGirlHomePage(this, ApiUrls.COMMON_VIDEO_LIST_HOMEPAGE_HREF, converDataHandler, Constants.LOADMORE, categoryId, startPage);
+            OkHttpClientManager.parseRequestGirlHomePage(this, ApiUrls.COMMON_VIDEO_LIST_HOMEPAGE_HREF, converDataHandler, Constants.LOADMORE, categoryId, startPage,"","");
 
         }
     }

@@ -38,14 +38,18 @@ public class OkHttpClientManager {
     }
 
 
-    public static void parseRequestGirlHomePage(Context context, String url, Handler handler, int what, String categoryId , String startPage) {
+    public static void parseRequestGirlHomePage(Context context, String url, Handler handler, int what, String tagId , String startPage,String userId , String userKey) {
         RequestBody formBody = new FormBody.Builder()
-                .add("tagId", categoryId+"")
+                .add("tagId", tagId+"")
                 .add("page",startPage+"")
+                .add("userId",""+userId)
+                .add("userKey",""+userKey)
                 .build();
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
         call.enqueue(new MyCallBack(handler, what));
     }
+
+
 
 
     //生成随机数字和字母,

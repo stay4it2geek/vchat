@@ -65,6 +65,8 @@ public class YRecycleviewRefreshFootView extends LinearLayout {
                 break;
             case STATE_NOMORE:
                 this.setVisibility(View.VISIBLE);
+                this.findViewById(R.id.ly_dialog).setVisibility(GONE);
+                this.findViewById(R.id.noData_layout).setVisibility(VISIBLE);
                 break;
         }
 

@@ -14,15 +14,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.act.videochat.adapter.FragmentViewPagerAdapter;
-import com.act.videochat.fragment.OneFragment;
+import com.act.videochat.fragment.DuplicateChatFragment;
 import com.act.videochat.fragment.DuplicateVideoFragment;
+import com.act.videochat.fragment.OneFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private LinearLayout ly_1,ly_2,ly_3,ly_4;
+    private LinearLayout ly_1, ly_2, ly_3, ly_4;
     private ViewPager view_pager;
     private List<Fragment> fragments = null;
 
@@ -46,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ly_4 = (LinearLayout) findViewById(R.id.ly_4);
         view_pager = (ViewPager) findViewById(R.id.view_pager);
         InitImageView();
-        OneFragment tab1Fragment = OneFragment.newInstance();
-        DuplicateVideoFragment tab2Fragment = DuplicateVideoFragment.newInstance();
+        DuplicateVideoFragment tab1Fragment = DuplicateVideoFragment.newInstance();
+        DuplicateChatFragment tab2Fragment = DuplicateChatFragment.newInstance();
         OneFragment tab3Fragment = OneFragment.newInstance();
         OneFragment tab4Fragment = OneFragment.newInstance();
         fragments = new ArrayList<>();
-        fragments.add(tab2Fragment);
         fragments.add(tab1Fragment);
+        fragments.add(tab2Fragment);
         fragments.add(tab3Fragment);
         fragments.add(tab4Fragment);
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), view_pager, fragments);
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onPageSelected(int arg0) {
-                Animation animation = new TranslateAnimation(one*currIndex, one*arg0, 0, 0);//显然这个比较简洁，只有一行代码。
+                Animation animation = new TranslateAnimation(one * currIndex, one * arg0, 0, 0);//显然这个比较简洁，只有一行代码。
                 currIndex = arg0;
                 animation.setFillAfter(true);// True:图片停在动画结束位置
                 animation.setDuration(300);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void InitImageView() {
         cursor = (ImageView) findViewById(R.id.cursor);
-        bmpW = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_pull).getWidth();// 获取图片宽度
+        bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.icon_pull_up).getWidth();// 获取图片宽度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenW = dm.widthPixels;// 获取分辨率宽度
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ly_1:
                 view_pager.setCurrentItem(0);
                 break;
@@ -123,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
-
 
 
 }

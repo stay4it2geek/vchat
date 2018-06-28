@@ -1,5 +1,6 @@
 package com.act.videochat.fragment;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
+import com.act.videochat.activity.GirlInfoActivity;
 import com.act.videochat.adapter.CommonChatListAdapter;
 import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.manager.OkHttpClientManager;
@@ -136,13 +138,13 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                 if (details != null && details.size() > 0) {
                     chatDetails.addAll(details);
                     if (adapter == null) {
-                        adapter = new CommonChatListAdapter(getActivity(), size.x);
+                        adapter = new CommonChatListAdapter(getActivity(), size.x,0);
                         adapter.setDatas(chatDetails);
                         recycleview.setAdapter(adapter);
                         adapter.setOnItemClickListener(new CommonChatListAdapter.OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(View view, final int position, ImageView photoImg) {
-
+                                    startActivity(new Intent(getActivity(), GirlInfoActivity.class));
                             }
                         });
                     }
@@ -153,7 +155,14 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                     }
                     loadNetView.setVisibility(View.GONE);
                 } else {
-                    loadNetView.setlayoutVisily(Constants.NO_DATA);
+                    if(msg.what==Constants.LOADMORE){
+                        if (result.maxPage < currentPage) {
+                            recycleview.setNoMoreData(true);
+                        }
+                    }else{
+                        loadNetView.setlayoutVisily(Constants.NO_DATA);
+                    }
+
                 }
             } else {
                 loadNetView.setVisibility(View.VISIBLE);
@@ -168,7 +177,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
             converDataHandler.sendEmptyMessage(Constants.NetWorkError);
             return;
         }
-        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, "97728", "e9e71fed976fd74763236b86ee3a93b2");
+        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, "97728", "7b38173d4451bd2e654e0ebfeac0ca20");
     }
 
 
@@ -177,32 +186,6 @@ public class CommonChatListFragment extends ScrollAbleFragment {
         return recycleview;
     }
 
-
-    private void startPlay(final int maxPage, final int position) {
-
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("userId", "")
-                .add("userKey", "")
-                .add("macid", getStringRandom(20))
-//                .add("videoId", videoDetails.get(position).id)
-                .build();
-
-        Call call = OkHttpClientManager.newInstance(getActivity()).newCall(new Request.Builder().url(ApiUrls.SMALL_PLAY_VIDEO_INO_HREF).post(formBody).build());
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-//                getActivity().startActivity(intent);
-            }
-        });
-
-    }
 
 
 }

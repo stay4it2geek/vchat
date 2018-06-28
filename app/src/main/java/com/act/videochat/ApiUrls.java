@@ -26,8 +26,24 @@ public class ApiUrls {
     public static final String HOME_CHAT_TAG_HREF= "http://android.vliao9.com/v31/homepage-tag";
     public static final String HOME_CHAT_USER_LIST_HREF= "http://android.vliao9.com/v31/homepage";
 
+    /**
+     * 个人资料接口合集
+     */
 
 
+    public static final String GIRL_INFO_DETAIL_BASE_HREF= "http://android.vliao9.com/v31/bigv/detail-base";
 
+
+    public static final String GIRL_INFO_DETAIL_DATA_HREF= "http://android.vliao9.com/v31/bigv/detail-data";
+
+
+    public static final String GIRL_INFO_COMMENT_HREF="http://android.vliao9.com/v31/bigv/comment";
+
+
+    public static final String GIRL_CHATING_SMALL_LIST_HREF ="http://android.vliao9.com/v32/smallvideo/bigv-list";
+
+//    http://android.vliao9.com/v32/chat/impress
+
+//    userId=97728&userKey=7b38173d4451bd2e654e0ebfeac0ca20&vid=875739&page=1&pageCount=60
 
 }

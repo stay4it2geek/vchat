@@ -1,15 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="1dp"
     android:background="@drawable/background_card"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="1dp">
 
     <ImageView
         android:id="@+id/photoImg"
-        android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/onlinelayout"
+        android:layout_width="56dp"
+        android:layout_height="22dp"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:layout_margin="8dp"
+        android:background="@drawable/shape_radius"
+        android:paddingBottom="1dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="1dp">
+
+        <TextView
+            android:id="@+id/online_dot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/onlinestatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:text="在线"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/starnick_Layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp" >
+
+        <TextView
+            android:id="@+id/nickName"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:text="ddddddd"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/star_Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/nickName"
+            android:orientation="horizontal" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/topicContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="8dp"
+        android:text="ddddddd"
+        android:textColor="#fff"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/vcoinPerMinute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="65dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/vcoinPerMinuteAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="8dp"
+        android:text="V币/分钟"
+        android:textColor="#D3D3D3"
+        android:textSize="13sp" />
+</FrameLayout>

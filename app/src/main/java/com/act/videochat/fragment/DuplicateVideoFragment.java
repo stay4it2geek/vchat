@@ -21,6 +21,7 @@ import com.act.videochat.bean.HomeVideoTagModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.GlideImageLoader;
+import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.scrollable.ScrollableLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.youth.banner.Banner;
@@ -43,6 +44,7 @@ public class DuplicateVideoFragment extends Fragment {
     private ScrollableLayout mScrollLayout;
     private SlidingTabLayout mSlidingTabLayout;
     private List<String> tabTitles = new ArrayList<>();
+    private LoadNetView loadNetView;
 
     public static DuplicateVideoFragment newInstance() {
         DuplicateVideoFragment f = new DuplicateVideoFragment();
@@ -55,17 +57,13 @@ public class DuplicateVideoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_two, container, false);
-        return view;
-    }
+        loadNetView = (LoadNetView)view.findViewById(R.id.loadnetview);
+        loadNetView.setlayoutVisily(Constants.LOAD);
+        mScrollLayout = (ScrollableLayout) view.findViewById(R.id.scrollableLayout);
+        banner = (Banner)view.findViewById(R.id.banner);
+        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.tab_layout);
+        view_pager = (ViewPager) view.findViewById(R.id.view_pager);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mScrollLayout = (ScrollableLayout) this.getView().findViewById(R.id.scrollableLayout);
-        banner = (Banner) this.getView().findViewById(R.id.banner);
-        mSlidingTabLayout = (SlidingTabLayout) this.getView().findViewById(R.id.tab_layout);
-        view_pager = (ViewPager) this.getView().findViewById(R.id.view_pager);
         ArrayList<String> list = new ArrayList<>();
 
         list.add("http://android.vliao9.com/html/images/ad/home_banner2.jpg");
@@ -88,7 +86,29 @@ public class DuplicateVideoFragment extends Fragment {
             }
         });
         mScrollLayout.setClickHeadExpand(maxHeight);
+//        banner.setVisibility(View.GONE);
         init();
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadNetView.setReloadButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNetView.setlayoutVisily(Constants.LOAD);
+                init();
+            }
+        });
+
+        loadNetView.setLoadButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNetView.setlayoutVisily(Constants.LOAD);
+                init();
+            }
+        });
     }
 
     ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
@@ -99,11 +119,22 @@ public class DuplicateVideoFragment extends Fragment {
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNetView.setlayoutVisily(Constants.RELOAD);
+                    }
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNetView.setVisibility(View.GONE);
+                    }
+                });
                 String str = response.body().string();
                 HomeVideoTagModel entity = CommonUtil.parseJsonWithGson(str, HomeVideoTagModel.class);
                 for (HomeVideoTagModel.TagInfoData data : entity.data) {

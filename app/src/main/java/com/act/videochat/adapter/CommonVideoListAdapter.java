@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.act.videochat.R;
 import com.act.videochat.bean.CommonVideoListModel;
@@ -50,7 +48,7 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.photoImg.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 2), (screenWidth / 2) + 175));
+        holder.photoImg.setLayoutParams(new FrameLayout.LayoutParams((screenWidth / 2), (screenWidth / 2) + 175));
         if (mContext != null) {
             Glide.with(mContext).load(datas != null && datas.size() > 0 ? datas.get(position).cover : "").placeholder(R.drawable.placehoder_img).error(R.drawable.error_img).into(holder.photoImg);//加载网络图片
         }

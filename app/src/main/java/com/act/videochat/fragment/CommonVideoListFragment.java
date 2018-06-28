@@ -174,7 +174,13 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                     }
                     loadNetView.setVisibility(View.GONE);
                 }else{
-                    loadNetView.setlayoutVisily(Constants.NO_DATA);
+                    if(msg.what==Constants.LOADMORE){
+                        if (result.maxPage < currentPage) {
+                            recycleview.setNoMoreData(true);
+                        }
+                    }else{
+                        loadNetView.setlayoutVisily(Constants.NO_DATA);
+                    }
                 }
             } else {
                 loadNetView.setVisibility(View.VISIBLE);

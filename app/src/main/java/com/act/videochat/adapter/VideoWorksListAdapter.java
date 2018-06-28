@@ -96,7 +96,7 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 textView.setTextSize(15f);
                 textView.setTextColor(Color.WHITE);
                 textView.setGravity(Gravity.CENTER);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(175,100);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(175,93);
                 params.setMargins(10, 16, 10, 5);//设置边距
                 textView.setLayoutParams(params);
                 ((Item1ViewHolder) holder).tagLayout.addView(textView);

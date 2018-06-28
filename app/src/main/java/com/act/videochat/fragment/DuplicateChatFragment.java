@@ -22,6 +22,7 @@ import com.act.videochat.bean.HomeVideoTagModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.GlideImageLoader;
+import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.scrollable.ScrollableLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.youth.banner.Banner;
@@ -44,7 +45,7 @@ public class DuplicateChatFragment extends Fragment {
     private ScrollableLayout mScrollLayout;
     private SlidingTabLayout mSlidingTabLayout;
     private List<String> tabTitles = new ArrayList<>();
-
+    private LoadNetView loadNetView;
     public static DuplicateChatFragment newInstance() {
         DuplicateChatFragment f = new DuplicateChatFragment();
         Bundle b = new Bundle();
@@ -56,21 +57,35 @@ public class DuplicateChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_two, container, false);
+        mScrollLayout = (ScrollableLayout)view.findViewById(R.id.scrollableLayout);
+        loadNetView = (LoadNetView)view.findViewById(R.id.loadnetview);
+        loadNetView.setlayoutVisily(Constants.LOAD);
+        view.findViewById(R.id.banner).setVisibility(View.GONE);
+        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.tab_layout);
+        view_pager = (ViewPager) view.findViewById(R.id.view_pager);
+        init();
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        loadNetView.setReloadButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNetView.setlayoutVisily(Constants.LOAD);
+                init();
+            }
+        });
 
-        mScrollLayout = (ScrollableLayout) this.getView().findViewById(R.id.scrollableLayout);
-        this.getView().findViewById(R.id.banner).setVisibility(View.GONE);
-        mSlidingTabLayout = (SlidingTabLayout) this.getView().findViewById(R.id.tab_layout);
-        view_pager = (ViewPager) this.getView().findViewById(R.id.view_pager);
-
-        init();
+        loadNetView.setLoadButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNetView.setlayoutVisily(Constants.LOAD);
+                init();
+            }
+        });
     }
-
     ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
 
     public void init() {
@@ -79,11 +94,22 @@ public class DuplicateChatFragment extends Fragment {
         call.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNetView.setlayoutVisily(Constants.RELOAD);
+                    }
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNetView.setVisibility(View.GONE);
+                    }
+                });
                 String str = response.body().string();
                 ChatTagModel entity = CommonUtil.parseJsonWithGson(str, ChatTagModel.class);
                 for (ChatTagModel.ChatTagData data : entity.data) {

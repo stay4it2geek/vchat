@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/graylight"
     android:orientation="vertical">
     
     <LinearLayout
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
-            android:text="网络飞走了呀"
+            android:text="加载失败"
             android:textSize="16sp" />
 
         <Button
@@ -31,7 +32,7 @@
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingTop="10dp"
-            android:text="重新加载"
+            android:text="检查网络后重新加载"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

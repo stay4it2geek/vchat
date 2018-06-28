@@ -84,7 +84,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="情趣"
+                                android:text=""
                                 android:textColor="@color/c_333333"
                                 android:textSize="16sp" />
 
@@ -103,7 +103,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="赚钱"
+                                android:text=""
                                 android:textColor="@color/c_333333"
                                 android:textSize="16sp" />
                         </LinearLayout>

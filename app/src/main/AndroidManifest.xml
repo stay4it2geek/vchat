@@ -42,7 +42,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".TabMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,5 +50,7 @@
         </activity>
         <activity  android:name=".activity.TCVodPlayerActivity" />
         <activity  android:name=".activity.GirlShowVideoListInfoActivity"/>
+        <activity android:name=".activity.GirlInfoActivity"/>
+        <activity android:name=".activity.GirlInfoDetailActivity"/>
     </application>
 </manifest>

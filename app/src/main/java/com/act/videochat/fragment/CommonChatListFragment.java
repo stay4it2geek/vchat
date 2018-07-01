@@ -19,6 +19,7 @@ import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.activity.GirlInfoActivity;
+import com.act.videochat.activity.GirlInfoDetailActivity;
 import com.act.videochat.adapter.CommonChatListAdapter;
 import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.manager.OkHttpClientManager;
@@ -144,7 +145,9 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                         adapter.setOnItemClickListener(new CommonChatListAdapter.OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(View view, final int position, ImageView photoImg) {
-                                    startActivity(new Intent(getActivity(), GirlInfoActivity.class));
+                                Intent intent = new Intent(getActivity(), GirlInfoDetailActivity.class);
+                                intent.putExtra(Constants.USERID,chatDetails.get(position).id);
+                                    startActivity(intent);
                             }
                         });
                     }
@@ -177,7 +180,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
             converDataHandler.sendEmptyMessage(Constants.NetWorkError);
             return;
         }
-        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, "97728", "7b38173d4451bd2e654e0ebfeac0ca20");
+        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, "97728", "50f3e46d68a7fb3a0f300c401363ee35");
     }
 
 

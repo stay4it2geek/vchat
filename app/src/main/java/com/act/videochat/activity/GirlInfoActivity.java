@@ -23,34 +23,13 @@ public class GirlInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_recycleview);
+        setContentView(R.layout.activity_video_list_info);
 
     }
 
 
 
-    private void requestInfoBaseData(String id) {
 
-        RequestBody formBody = new FormBody.Builder()
-                .add("userId", "")
-                .add("userKey", "")
-                .add("vid", id)
-                .build();
-
-        Call call = OkHttpClientManager.newInstance(this).newCall(new Request.Builder().url(ApiUrls.GIRL_INFO_DETAIL_BASE_HREF).post(formBody).build());
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
-
-    }
 
 
     private void requestCommentInfo(String id) {
@@ -83,8 +62,6 @@ public class GirlInfoActivity extends AppCompatActivity {
                 .add("userId", "")
                 .add("userKey", "")
                 .add("vid", id)
-                .add("page","1")
-
                 .build();
 
         Call call = OkHttpClientManager.newInstance(this).newCall(new Request.Builder().url(ApiUrls.GIRL_INFO_DETAIL_DATA_HREF).post(formBody).build());

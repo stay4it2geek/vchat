@@ -112,7 +112,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/white"
             android:gravity="center"
             android:text="没有数据哦"
             android:textSize="16sp" />

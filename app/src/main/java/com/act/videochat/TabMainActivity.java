@@ -21,7 +21,7 @@ import com.act.videochat.fragment.OneFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class TabMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LinearLayout ly_1, ly_2, ly_3, ly_4;
     private ViewPager view_pager;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tab_main);
         findViewById();
     }
 

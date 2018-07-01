@@ -54,7 +54,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
     public void toMain(View view){
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this,TabMainActivity.class));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

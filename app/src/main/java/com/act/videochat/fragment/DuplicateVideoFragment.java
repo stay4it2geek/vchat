@@ -71,7 +71,7 @@ public class DuplicateVideoFragment extends Fragment {
 
         RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) banner.getLayoutParams();
         linearParams.width = getScreenMaxWidth(0);
-        int maxHeight = (int) (getScreenMaxWidth(0) / 2.4);
+        int maxHeight = (int) (getScreenMaxWidth(0) / 2.7);
         linearParams.height = maxHeight;
         banner.setLayoutParams(linearParams);
         banner.setImages(list).setImageLoader(new GlideImageLoader()).start();

@@ -4,7 +4,7 @@ package com.act.videochat.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChatGirlInfoBaseData {
+public class ChatGirlInfoBase {
 
     public boolean result;//true,
     public InfoData data;
@@ -15,10 +15,13 @@ public class ChatGirlInfoBaseData {
         public String nickname;//
         public String identity;//96 年空姐
         public String vcoinPerMinute;//16
-        public String level;//4,
+        public int level;//4,
         public String fans;//2813,
         public String focused;//0,
         public Avatar avatar;
+        public ArrayList<Photos> photos;
+        public ArrayList<FigureTags> figureTags;
+        public ArrayList<Intimacy> intimacy;
     }
 
     public class Avatar {
@@ -31,7 +34,7 @@ public class ChatGirlInfoBaseData {
     }
 
 
-    public ArrayList<Photos> photos;
+
 
 
     public class Photos {
@@ -42,7 +45,7 @@ public class ChatGirlInfoBaseData {
         public String url;//public String  http://cdn.vliao1.xyz/prod/image/400137_1524989036000_qas2hcjvvbi98uodls4n
     }
 
-    public ArrayList<FigureTags> figureTags;
+
 
     public class FigureTags {
         public String id;//7,
@@ -56,7 +59,7 @@ public class ChatGirlInfoBaseData {
         public String meiliao_color;//public String  ff2f79
     }
 
-    public ArrayList<Intimacy> intimacy;
+
 
     public class Intimacy {
 

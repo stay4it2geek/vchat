@@ -14,8 +14,10 @@
 
         <TextView
             android:id="@+id/player_tv_back"
+            android:onClick="back"
             android:layout_width="20dp"
             android:layout_height="30dp"
+            android:padding="10dp"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"

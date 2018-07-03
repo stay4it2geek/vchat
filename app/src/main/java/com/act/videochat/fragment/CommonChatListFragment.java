@@ -1,5 +1,8 @@
 package com.act.videochat.fragment;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -8,15 +11,18 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
+import com.act.videochat.OnScrollShowHideListner;
 import com.act.videochat.R;
 import com.act.videochat.activity.GirlInfoActivity;
 import com.act.videochat.activity.GirlInfoDetailActivity;
@@ -189,6 +195,47 @@ public class CommonChatListFragment extends ScrollAbleFragment {
     public View getScrollableView() {
         return recycleview;
     }
+
+
+
+    OnScrollShowHideListner listner;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listner= (OnScrollShowHideListner) context;
+
+    }
+    private int distance;
+
+    private boolean visible = true;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        recycleview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(distance < -ViewConfiguration.getTouchSlop() && !visible){
+                    //显示fab
+                    //iv_go_uploading.setVisibility(View.VISIBLE);
+                   listner.onScrollShow();
+                    distance = 0;
+                    visible = true;
+                }else if(distance > ViewConfiguration.getTouchSlop() && visible){
+                    //隐藏
+                    //iv_go_uploading.setVisibility(View.GONE);
+                   listner.onScrollHide();
+                    distance = 0;
+                    visible = false;
+                }
+                if ((dy > 0 && visible) || (dy < 0 && !visible))//向下滑并且可见  或者  向上滑并且不可见
+                    distance += dy;
+            }
+        });
+    }
+
+
+
 
 
 

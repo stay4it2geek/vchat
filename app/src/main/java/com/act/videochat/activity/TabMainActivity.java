@@ -1,5 +1,8 @@
 package com.act.videochat.activity;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -7,24 +10,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.act.videochat.OnScrollShowHideListner;
 import com.act.videochat.R;
 import com.act.videochat.adapter.FragmentViewPagerAdapter;
 import com.act.videochat.fragment.DuplicateChatFragment;
 import com.act.videochat.fragment.DuplicateVideoFragment;
-import com.act.videochat.fragment.OneFragment;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabMainActivity extends AppCompatActivity implements View.OnClickListener {
+public class TabMainActivity extends AppCompatActivity implements View.OnClickListener, OnScrollShowHideListner {
 
-    private LinearLayout ly_1, ly_2, ly_3, ly_4;
+    private LinearLayout ly_1, ly_2;
     private ViewPager view_pager;
     private List<Fragment> fragments = null;
 
@@ -32,7 +39,8 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
     private int bmpW;// 动画图片宽度
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号
-
+    private TextView makemoney;
+    private RelativeLayout makelayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,24 +52,22 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
     private void findViewById() {
         ly_1 = (LinearLayout) findViewById(R.id.ly_1);
         ly_2 = (LinearLayout) findViewById(R.id.ly_2);
-        ly_3 = (LinearLayout) findViewById(R.id.ly_3);
-        ly_4 = (LinearLayout) findViewById(R.id.ly_4);
+        makemoney = (TextView) findViewById(R.id.makemoney);
+        makelayout= (RelativeLayout) findViewById(R.id.makelayout);
         view_pager = (ViewPager) findViewById(R.id.view_pager);
         InitImageView();
         DuplicateVideoFragment tab1Fragment = DuplicateVideoFragment.newInstance();
         DuplicateChatFragment tab2Fragment = DuplicateChatFragment.newInstance();
-        OneFragment tab3Fragment = OneFragment.newInstance();
-        OneFragment tab4Fragment = OneFragment.newInstance();
+
         fragments = new ArrayList<>();
         fragments.add(tab1Fragment);
         fragments.add(tab2Fragment);
-        fragments.add(tab3Fragment);
-        fragments.add(tab4Fragment);
+
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), view_pager, fragments);
 
         view_pager.setOverScrollMode(ViewPager.OVER_SCROLL_NEVER);
         view_pager.setCurrentItem(0);
-        view_pager.setOffscreenPageLimit(4);
+        view_pager.setOffscreenPageLimit(2);
         view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
 
@@ -85,8 +91,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
         });
         ly_1.setOnClickListener(this);
         ly_2.setOnClickListener(this);
-        ly_3.setOnClickListener(this);
-        ly_4.setOnClickListener(this);
+        makelayout.setOnClickListener(this);
 
     }
 
@@ -96,7 +101,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenW = dm.widthPixels;// 获取分辨率宽度
-        offset = (screenW / 4 - bmpW) / 2;// 计算偏移量
+        offset = (screenW / 2 - bmpW) / 2;// 计算偏移量
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         cursor.setImageMatrix(matrix);// 设置动画初始位置
@@ -112,15 +117,38 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ly_2:
                 view_pager.setCurrentItem(1);
                 break;
-            case R.id.ly_3:
-                view_pager.setCurrentItem(2);
+            case R.id.makelayout:
+               startActivity(new Intent(this,MineActivity.class));
                 break;
-            case R.id.ly_4:
-                view_pager.setCurrentItem(3);
-                break;
-
         }
     }
 
+
+    @Override
+    public void onScrollShow() {
+        showFABAnimation(makemoney);
+    }
+
+
+    @Override
+    public void onScrollHide() {
+        hideFABAnimation(makemoney);
+    }
+
+
+    public void showFABAnimation(View view) {
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("alpha", 1f);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1f);
+        PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f);
+        ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ).setDuration(400).start();
+    }
+
+
+    public void hideFABAnimation(View view) {
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("alpha", 0f);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 0f);
+        PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 0f);
+        ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ).setDuration(400).start();
+    }
 
 }

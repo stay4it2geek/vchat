@@ -52,8 +52,9 @@
         <activity  android:name=".activity.GirlShowVideoListInfoActivity"/>
         <activity android:name=".activity.GirlInfoActivity"/>
         <activity android:name=".activity.GirlInfoDetailActivity" />
-        <activity android:name=".activity.TCVodPlayerChatActivity"/>
+        <!--<activity android:name=".activity.TCVodPlayerChatActivity"/>-->
         <activity android:name=".activity.WelcomeActivity"/>
+        <activity android:name=".activity.MineActivity"/>
 
     </application>
 </manifest>

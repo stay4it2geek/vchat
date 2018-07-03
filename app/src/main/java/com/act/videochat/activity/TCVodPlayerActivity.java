@@ -537,4 +537,10 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         }
     }
 
+
+    public void back(View view) {
+        this.finish();
+    }
+
+
 }

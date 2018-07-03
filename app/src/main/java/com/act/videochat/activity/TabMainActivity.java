@@ -1,4 +1,4 @@
-package com.act.videochat;
+package com.act.videochat.activity;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -13,6 +13,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.act.videochat.R;
 import com.act.videochat.adapter.FragmentViewPagerAdapter;
 import com.act.videochat.fragment.DuplicateChatFragment;
 import com.act.videochat.fragment.DuplicateVideoFragment;
@@ -57,12 +58,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
         fragments.add(tab3Fragment);
         fragments.add(tab4Fragment);
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), view_pager, fragments);
-        adapter.setOnExtraPageChangeListener(new FragmentViewPagerAdapter.OnExtraPageChangeListener() {
-            @Override
-            public void onExtraPageSelected(int i) {
-                System.out.println("Extra...i: " + i);
-            }
-        });
+
         view_pager.setOverScrollMode(ViewPager.OVER_SCROLL_NEVER);
         view_pager.setCurrentItem(0);
         view_pager.setOffscreenPageLimit(4);
@@ -91,6 +87,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
         ly_2.setOnClickListener(this);
         ly_3.setOnClickListener(this);
         ly_4.setOnClickListener(this);
+
     }
 
     private void InitImageView() {

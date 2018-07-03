@@ -26,7 +26,7 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements ViewPager.
         this.fragmentManager = fragmentManager;
         this.viewPager = viewPager;
         this.viewPager.setAdapter(this);
-        this.viewPager.setOnPageChangeListener(this);
+        this.viewPager.addOnPageChangeListener(this);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements ViewPager.
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        //container.removeView(fragments.get(position).getView()); // 移出viewpager两边之外的page布局
+        container.removeView(fragments.get(position).getView()); // 移出viewpager两边之外的page布局
     }
 
     @Override

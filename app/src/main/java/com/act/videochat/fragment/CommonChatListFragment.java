@@ -76,7 +76,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                     public void run() {
                         recycleview.setReFreshComplete();
                     }
-                }, 1000);
+                },500);
             }
 
             @Override
@@ -87,7 +87,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                     public void run() {
                         recycleview.setloadMoreComplete();
                     }
-                }, 1000);
+                }, 500);
             }
         });
         getData(tagId, "1", Constants.REFRESH);
@@ -139,13 +139,14 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                 if (details != null && details.size() > 0) {
                     chatDetails.addAll(details);
                     if (adapter == null) {
-                        adapter = new CommonChatListAdapter(getActivity(), size.x,0);
+                        adapter = new CommonChatListAdapter(getActivity(), size.x);
                         adapter.setDatas(chatDetails);
                         recycleview.setAdapter(adapter);
                         adapter.setOnItemClickListener(new CommonChatListAdapter.OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(View view, final int position, ImageView photoImg) {
                                 Intent intent = new Intent(getActivity(), GirlInfoDetailActivity.class);
+                                intent.putExtra("online",chatDetails.get(position).online);
                                 intent.putExtra(Constants.USERID,chatDetails.get(position).id);
                                     startActivity(intent);
                             }
@@ -180,7 +181,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
             converDataHandler.sendEmptyMessage(Constants.NetWorkError);
             return;
         }
-        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, "97728", "50f3e46d68a7fb3a0f300c401363ee35");
+        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, Constants.USERID, Constants.USERKEY);
     }
 
 

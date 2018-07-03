@@ -57,13 +57,22 @@
         android:background="@color/white">
 
         <TextView
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/fontRed"
+            android:id="@+id/textView3" />
+
+        <TextView
             android:id="@+id/tagtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
             android:text="Ta的标签"
-            android:textColor="@color/darkgray"
-            android:textSize="17sp" />
+            android:textColor="@color/mainBlack5B"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"  />
 
         <LinearLayout
             android:id="@+id/tagLayout"
@@ -87,21 +96,30 @@
         android:background="@color/white">
 
         <TextView
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/fontRed" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
             android:text="Ta的视频"
-            android:textColor="@color/darkgray"
-            android:textSize="17sp" />
+            android:textColor="@color/mainBlack5B"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/videoCount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
             android:gravity="center_vertical"
             android:text="共有N个视频"
-            android:textColor="@color/darkgray"
-            android:textSize="14sp"></TextView>
+            android:textColor="@color/mainBlack5B"
+            android:textSize="15sp"/>
     </RelativeLayout>
 </LinearLayout>

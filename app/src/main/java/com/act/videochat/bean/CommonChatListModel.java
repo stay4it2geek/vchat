@@ -20,7 +20,7 @@ public class CommonChatListModel implements Serializable {
         public String topic;
         public String vcoinPerMinute;
         public String level;
-        public String online;
+        public Integer online;
         public Avatar avatar;
 
 

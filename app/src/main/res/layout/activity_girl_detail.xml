@@ -52,89 +52,127 @@
                             android:orientation="vertical">
 
 
-                                <FrameLayout
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.youth.banner.Banner
+                                    android:id="@+id/iv_header"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    app:image_scale_type="center_crop"
+                                    app:layout_collapseMode="parallax" />
 
-                                    <com.youth.banner.Banner
-                                        android:id="@+id/iv_header"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        app:image_scale_type="center_crop"
-                                        app:layout_collapseMode="parallax" />
-
-                                    <RelativeLayout
-                                        android:id="@+id/starnick_Layout"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="bottom"
-                                        android:layout_marginBottom="30dp">
-
-                                        <TextView
-                                            android:id="@+id/nickName"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_centerVertical="true"
-                                            android:layout_marginLeft="8dp"
-                                            android:text="ddddddd"
-                                            android:textColor="#fff"
-                                            android:textSize="16sp" />
-
-                                        <LinearLayout
-                                            android:id="@+id/star_Layout"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_centerVertical="true"
-                                            android:layout_marginLeft="15dp"
-                                            android:layout_toRightOf="@+id/nickName"
-                                            android:orientation="horizontal" />
-                                    </RelativeLayout>
+                                <RelativeLayout
+                                    android:id="@+id/onlinelayout"
+                                    android:layout_width="56dp"
+                                    android:layout_height="22dp"
+                                    android:layout_gravity="right"
+                                    android:layout_margin="25dp"
+                                    android:background="@drawable/shape_radius"
+                                    android:paddingBottom="1dp"
+                                    android:paddingLeft="8dp"
+                                    android:paddingRight="8dp"
+                                    android:paddingTop="1dp">
 
                                     <TextView
-                                        android:id="@+id/identity"
+                                        android:id="@+id/online_dot"
+                                        android:layout_width="8dp"
+                                        android:layout_height="8dp"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true" />
+
+                                    <TextView
+                                        android:id="@+id/onlinestatus"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="bottom"
-                                        android:layout_marginBottom="6dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
                                         android:layout_marginLeft="8dp"
-                                        android:gravity="bottom"
-                                        android:text=""
+                                        android:text="在线"
                                         android:textColor="#fff"
-                                        android:textSize="14sp" />
+                                        android:textSize="12sp" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/starnick_Layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginBottom="45dp">
 
                                     <TextView
-                                        android:id="@+id/focusBtn"
+                                        android:id="@+id/nickName"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom|right"
-                                        android:layout_marginBottom="3dp"
-                                        android:layout_marginRight="3dp"
-                                        android:background="@drawable/bg_circle_redpink"
-                                        android:gravity="center"
-                                        android:paddingBottom="7dp"
-                                        android:paddingLeft="18dp"
-                                        android:paddingRight="18dp"
-                                        android:paddingTop="7dp"
-                                        android:text="关注"
-                                        android:textColor="#fff"
-                                        android:textSize="14sp" />
-
-                                    <TextView
-                                        android:id="@+id/fansCount"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom|right"
-                                        android:layout_marginBottom="45dp"
-                                        android:layout_marginRight="8dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="8dp"
                                         android:text=""
                                         android:textColor="#fff"
                                         android:textSize="16sp" />
 
+                                    <LinearLayout
+                                        android:id="@+id/star_Layout"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="15dp"
+                                        android:layout_toRightOf="@+id/nickName"
+                                        android:orientation="horizontal" />
+                                </RelativeLayout>
 
-                                </FrameLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginBottom="35dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="#fff" />
+
+                                <TextView
+                                    android:id="@+id/identity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:gravity="bottom"
+                                    android:text=""
+                                    android:textColor="#fff"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/fansCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom|right"
+                                    android:layout_marginBottom="75dp"
+                                    android:layout_marginRight="8dp"
+                                    android:text=""
+                                    android:textColor="#fff"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/focusBtn"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom|right"
+                                    android:layout_marginBottom="40dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@drawable/button_common_selector"
+                                    android:gravity="center"
+                                    android:paddingBottom="5dp"
+                                    android:paddingLeft="18dp"
+                                    android:paddingRight="18dp"
+                                    android:paddingTop="5dp"
+                                    android:text="关注"
+                                    android:textColor="#fff"
+                                    android:textSize="14sp" />
 
 
-
+                            </FrameLayout>
 
                         </LinearLayout>
                     </android.support.design.widget.CollapsingToolbarLayout>
@@ -145,14 +183,14 @@
                     android:id="@+id/magic_indicator"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/thirty_eight"
+
                     android:layout_gravity="bottom"
                     android:background="@color/mainWhite" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorGray" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <!--</android.support.v4.widget.NestedScrollView>-->
@@ -178,6 +216,7 @@
 
                 <ImageView
                     android:id="@+id/iv_back"
+                    android:onClick="back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/back_white" />
@@ -193,8 +232,7 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/toolbar_avatar"
-                        style="@style/UserTitleAvatar"
-                        android:src="@drawable/timg" />
+                        style="@style/UserTitleAvatar" />
 
                     <TextView
                         android:id="@+id/toolbar_username"
@@ -202,7 +240,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:maxLines="1"
-                        android:text="SiberiaDante"
+                        android:text=""
                         android:textColor="@color/mainBlack"
                         android:textSize="@dimen/font_16" />
 

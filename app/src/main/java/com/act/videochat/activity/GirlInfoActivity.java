@@ -32,53 +32,6 @@ public class GirlInfoActivity extends AppCompatActivity {
 
 
 
-    private void requestCommentInfo(String id) {
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("userId", "")
-                .add("userKey", "")
-                .add("vid", id)
-                .add("page","1")
-                .add("pageCount","30")
-                .build();
-
-        Call call = OkHttpClientManager.newInstance(this).newCall(new Request.Builder().url(ApiUrls.GIRL_INFO_COMMENT_HREF).post(formBody).build());
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
-
-    }
-    private void requestDetailData(String id) {
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("userId", "")
-                .add("userKey", "")
-                .add("vid", id)
-                .build();
-
-        Call call = OkHttpClientManager.newInstance(this).newCall(new Request.Builder().url(ApiUrls.GIRL_INFO_DETAIL_DATA_HREF).post(formBody).build());
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
-
-    }
-
 
 
     private void requestBigVideoListInfo(String id) {

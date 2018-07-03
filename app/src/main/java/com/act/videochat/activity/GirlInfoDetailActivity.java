@@ -30,8 +30,7 @@ import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.adapter.ComFragmentAdapter;
 import com.act.videochat.bean.ChatGirlInfoBase;
-import com.act.videochat.fragment.ArticleFragment;
-import com.act.videochat.fragment.DynamicFragment;
+import com.act.videochat.fragment.GirlInfoFragment;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.DeviceUtil;
@@ -40,8 +39,11 @@ import com.act.videochat.util.ScreenUtil;
 import com.act.videochat.util.StatusBarUtil;
 import com.act.videochat.view.ColorFlipPagerTitleView;
 import com.act.videochat.view.JudgeNestedScrollView;
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.youth.banner.Banner;
@@ -73,6 +75,10 @@ import okhttp3.Response;
 public class GirlInfoDetailActivity extends BaseActivity {
     @BindView(R.id.iv_header)
     Banner banner;
+    @BindView(R.id.onlinestatus)
+    TextView onlinestatus;
+    @BindView(R.id.online_dot)
+    TextView online_dot;
     @BindView(R.id.collapse)
     CollapsingToolbarLayout collapse;
     @BindView(R.id.view_pager)
@@ -116,7 +122,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
     private int mOffset = 0;
     private int mScrollY = 0;
     int toolBarPositionY = 0;
-    private String[] mTitles = new String[]{"资料", "视频"};
+    private String[] mTitles = new String[]{"资料"};
     private List<String> mDataList = Arrays.asList(mTitles);
 
 
@@ -128,6 +134,25 @@ public class GirlInfoDetailActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         initView();
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableRefresh(true);
+        refreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+            }
+
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                requestInfoBaseData(getIntent().getStringExtra(Constants.USERID));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshlayout.finishRefresh();
+                    }
+                },1000);
+            }
+        });
     }
 
     @Override
@@ -177,10 +202,8 @@ public class GirlInfoDetailActivity extends BaseActivity {
                 magicIndicator.getLocationOnScreen(location);
                 int yPosition = location[1];
                 if (yPosition < toolBarPositionY) {
-                    magicIndicatorTitle.setVisibility(View.VISIBLE);
                     scrollView.setNeedScroll(false);
                 } else {
-                    magicIndicatorTitle.setVisibility(View.GONE);
                     scrollView.setNeedScroll(true);
 
                 }
@@ -204,10 +227,13 @@ public class GirlInfoDetailActivity extends BaseActivity {
         toolbar.setBackgroundColor(0);
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(DynamicFragment.getInstance());
-        fragments.add(ArticleFragment.getInstance());
+        GirlInfoFragment fragment1 = new GirlInfoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.USERID, getIntent().getStringExtra(Constants.USERID) + "");
+        fragment1.setArguments(bundle);
+        fragments.add(fragment1);
         viewPager.setAdapter(new ComFragmentAdapter(getSupportFragmentManager(), fragments));
-        viewPager.setOffscreenPageLimit(10);
+        viewPager.setOffscreenPageLimit(3);
         initMagicIndicator();
         initMagicIndicatorTitle();
     }
@@ -227,7 +253,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
                 SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(GirlInfoDetailActivity.this, R.color.mainBlack));
-                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(GirlInfoDetailActivity.this, R.color.mainBlack));
+                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(GirlInfoDetailActivity.this, R.color.mainRed));
                 simplePagerTitleView.setTextSize(16);
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -257,7 +283,6 @@ public class GirlInfoDetailActivity extends BaseActivity {
 
     private void initMagicIndicatorTitle() {
         CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setScrollPivotX(0.65f);
         commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -270,7 +295,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
                 SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(GirlInfoDetailActivity.this, R.color.mainBlack));
-                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(GirlInfoDetailActivity.this, R.color.mainBlack));
+                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(GirlInfoDetailActivity.this, R.color.mainRed));
                 simplePagerTitleView.setTextSize(16);
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -359,20 +384,53 @@ public class GirlInfoDetailActivity extends BaseActivity {
                         FrameLayout.LayoutParams linearParams = new FrameLayout.LayoutParams(size.x, size.x);
                         banner.setLayoutParams(linearParams);
                         banner.setImages(list).setImageLoader(new GlideImageLoader()).start();
-
+                        banner.setIndicatorGravity(Gravity.RIGHT);
                         for (int index = 0; index < base.data.level; index++) {
                             TextView textView = new TextView(GirlInfoDetailActivity.this);
                             textView.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.star));
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(37, 37);
-                            params.setMargins(3, 2, 6, 3);//设置边距
+                            params.setMargins(3, 5, 6, 3);//设置边距
                             params.gravity = Gravity.CENTER_VERTICAL;
                             textView.setLayoutParams(params);
                             star_Layout.addView(textView);
                         }
-
+                        toolbarUsername.setText(base.data.nickname);
                         nickName.setText(base.data.nickname);
                         fansCount.setText(base.data.fans + "粉丝");
                         identity.setText(base.data.identity);
+                        if (GirlInfoDetailActivity.this != null) {
+                            Glide.with(GirlInfoDetailActivity.this).load(base.data.avatar.url).error(R.drawable.error_img).into(toolbarAvatar);
+                        }
+
+
+                        int online = getIntent().getIntExtra("online", 0);
+                        switch (online) {
+                            case 0:
+                                onlinestatus.setText("离线");
+                                online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_offline_shape));
+                                break;
+
+                            case 1:
+                                onlinestatus.setText("在线");
+                                online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_online_shape));
+                                break;
+
+                            case 2:
+                                onlinestatus.setText("在聊");
+                                online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_talking_shape));
+                                break;
+
+                            case 3:
+                                onlinestatus.setText("活跃");
+                                online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_active_shape));
+                                break;
+
+                            case 4:
+                                onlinestatus.setText("勿扰");
+                                online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_nodisturb_shape));
+                                break;
+                        }
+
 
                     }
                 });
@@ -381,6 +439,11 @@ public class GirlInfoDetailActivity extends BaseActivity {
             }
         });
 
+    }
+
+
+    public void back(View view) {
+        this.finish();
     }
 
 

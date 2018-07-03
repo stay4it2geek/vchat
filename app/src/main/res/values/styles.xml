@@ -127,64 +127,7 @@
         <item name="android:layout_height">@dimen/thirty_two</item>
         <item name="android:layout_marginEnd">@dimen/five</item>
     </style>
-    <style name="QuestionTitleTextView">
-        <item name="android:layout_marginTop">@dimen/nineteen</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">@dimen/forty_eight</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:lineSpacingExtra">@dimen/eight</item>
-        <item name="android:maxLines">2</item>
-        <item name="android:textSize">@dimen/font_17</item>
-        <item name="android:textColor">@color/mainBlack</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
-    <style name="QuestionAnswerTextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/mainGrayC6</item>
-        <item name="android:textSize">@dimen/font_12</item>
-    </style>
 
-    <style name="QuestionDescriptionTextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:lineSpacingExtra">@dimen/ten</item>
-        <item name="android:maxLines">2</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/twenty_one</item>
-        <item name="android:textSize">@dimen/font_14</item>
-        <item name="android:textColor">@color/mainGrayC6</item>
-    </style>
-
-    <style name="AnswerSingleTextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/font_14</item>
-        <item name="android:textColor">@color/mainGrayC6</item>
-    </style>
-    <style name="AnswerTextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">@dimen/nine</item>
-        <item name="android:background">@color/mainBlack</item>
-        <item name="android:padding">@dimen/two</item>
-        <item name="android:text">@string/answer</item>
-        <item name="android:textColor">@color/mainWhite</item>
-    </style>
-
-    <style name="AnswerNoneTextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/mainGray88</item>
-        <item name="android:textSize">@dimen/font_14</item>
-        <item name="android:text">@string/no_answer_get_first_answer</item>
-    </style>
 </resources>
 

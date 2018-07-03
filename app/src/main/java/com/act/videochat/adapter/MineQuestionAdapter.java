@@ -6,12 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.act.videochat.R;
-import com.act.videochat.bean.MineQuestionBean;
+import com.act.videochat.bean.ChatGirlInfoComment;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 
-public class MineQuestionAdapter extends RecyclerArrayAdapter<MineQuestionBean> {
+public class MineQuestionAdapter extends RecyclerArrayAdapter<ChatGirlInfoComment> {
     public MineQuestionAdapter(Context context) {
         super(context);
     }
@@ -21,19 +21,19 @@ public class MineQuestionAdapter extends RecyclerArrayAdapter<MineQuestionBean> 
         return new QuestionViewHolder(parent);
     }
 
-    public class QuestionViewHolder extends BaseViewHolder<MineQuestionBean> {
+    public class QuestionViewHolder extends BaseViewHolder<ChatGirlInfoComment> {
 
         TextView textView;
 
         public QuestionViewHolder(ViewGroup parent) {
-            super(parent, R.layout.item_mine_question);
-            textView = $(R.id.tv_title);
+            super(parent, R.layout.item_comment);
+//            textView = $(R.id.tv_title);
         }
 
         @Override
-        public void setData(MineQuestionBean data) {
+        public void setData(ChatGirlInfoComment data) {
             super.setData(data);
-            textView.setText(data.getContent());
+//            textView.setText("");
         }
     }
 }

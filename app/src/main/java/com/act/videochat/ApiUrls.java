@@ -40,10 +40,12 @@ public class ApiUrls {
     public static final String GIRL_INFO_COMMENT_HREF="http://android.vliao9.com/v31/bigv/comment";
 
 
-    public static final String GIRL_CHATING_SMALL_LIST_HREF ="http://android.vliao9.com/v32/smallvideo/bigv-list";
+    public static final String GIRL_CHATING_SMALL_LIST_HREF ="http://sp40.vliao12.com/v32/smallvideo/bigv-list";
 
-//    http://android.vliao9.com/v32/chat/impress
+    public static final String GIRL_CHATING_SMALL_ONE_HREF  ="http://sp40.vliao12.com/v32/smallvideo/get-one";
 
-//    userId=97728&userKey=7b38173d4451bd2e654e0ebfeac0ca20&vid=875739&page=1&pageCount=60
+
+
+
 
 }

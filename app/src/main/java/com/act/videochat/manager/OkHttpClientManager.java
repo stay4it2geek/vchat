@@ -45,6 +45,7 @@ public class OkHttpClientManager {
                 .add("userId",""+userId)
                 .add("userKey",""+userKey)
                 .build();
+
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
         call.enqueue(new MyCallBack(handler, what));
     }
@@ -116,8 +117,16 @@ public class OkHttpClientManager {
         call.enqueue(new MyCallBack(handler, what));
     }
 
-
-
+    public static void parseRequestGirlSmallVideoListNew(Context context, String url, Handler handler, int what, String vid , String startPage,String userId ,String userKey) {
+        RequestBody formBody = new FormBody.Builder()
+                .add("userId",""+userId)
+                .add("userKey",""+userKey)
+                .add("vid",vid+"")
+                .add("page",startPage+"")
+                .build();
+        Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
+        call.enqueue(new MyCallBack(handler, what));
+    }
 
     private static class MyCallBack implements Callback {
         Handler handler;

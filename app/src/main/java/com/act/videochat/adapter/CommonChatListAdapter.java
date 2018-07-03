@@ -24,7 +24,7 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
 
     private int screenWidth;
     private Context mContext;
-    private int uiType;
+
     private ArrayList<CommonChatListModel.HomeChatInfoData> datas;
 
     public interface OnRecyclerViewItemClickListener {
@@ -37,10 +37,10 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
         mOnItemClickListener = listener;
     }
 
-    public CommonChatListAdapter(Context context, int screenWidth, int uiType) {
+    public CommonChatListAdapter(Context context, int screenWidth) {
         mContext = context;
         this.screenWidth = screenWidth;
-        this.uiType = uiType;
+
 
     }
 
@@ -79,7 +79,7 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
             holder.star_Layout.addView(textView);
         }
 
-        int online = Integer.parseInt(datas.get(position).online != null && !datas.get(position).online.equals("") ? datas.get(position).online : "0");
+        int online = datas.get(position).online != null ? datas.get(position).online : 0;
         switch (online) {
             case 0:
                 holder.onlinestatus.setText("离线");
@@ -139,7 +139,6 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
             vcoinPerMinute = (TextView) view.findViewById(R.id.vcoinPerMinute);
             onlinelayout = (RelativeLayout) view.findViewById(R.id.onlinelayout);
             starnickLayout = (RelativeLayout) view.findViewById(R.id.starnick_Layout);
-// /          if (uiType == 1) {
             star_Layout.setVisibility(View.VISIBLE);
             view.findViewById(R.id.vcoinPerMinuteAdd).setVisibility(View.VISIBLE);
             nickName.setVisibility(View.VISIBLE);
@@ -147,7 +146,6 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
             vcoinPerMinute.setVisibility(View.VISIBLE);
             onlinelayout.setVisibility(View.VISIBLE);
             starnickLayout.setVisibility(View.VISIBLE);
-//            }
         }
     }
 

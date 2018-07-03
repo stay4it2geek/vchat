@@ -1,13 +1,5 @@
 <resources>
-    <string name="app_name">ViewPagerDouble</string>
-    <string name="sign">签到</string>
-    <string name="integral">积分</string>
-    <string name="Japanese_currency">日币</string>
-    <string name="friendliness">友好度</string>
-    <string name="prestige">威望</string>
-    <string name="edit">编辑</string>
-    <string name="interest_label">兴趣标签</string>
-
+    <string name="app_name">a</string>
     <string name="follow">关注</string>
     <string name="edit_information">编辑资料</string>
     <string name="fans">粉丝</string>

@@ -1,19 +1,20 @@
 package com.act.videochat.bean;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChatGirlVideoList {
+public class ChatGirlVideoList implements Serializable{
 
 
     public boolean result;
-    public String maxPage;// 1,
-    public String maxCount;// 3,
-    public String currPage;// "1",
+    public int maxPage;// 1,
+    public int maxCount;// 3,
+    public int currPage;// "1",
     public ArrayList<GirlVideoInfo> data;
 
 
-    public class GirlVideoInfo {
+    public class GirlVideoInfo implements Serializable{
 
         public String id;// 15204,
         public String posterId;// 875739,
@@ -21,7 +22,7 @@ public class ChatGirlVideoList {
         public Avatar avatar;
 
 
-        public class Avatar {
+        public class Avatar implements Serializable{
             public String id;// 1890557,
             public String width;// 750,
             public String height;// 750,
@@ -35,7 +36,7 @@ public class ChatGirlVideoList {
         public String follow;// 11,
         public Cover cover;
 
-        public class Cover {
+        public class Cover implements Serializable{
             public String id;// 27490,
             public String width;// 540,
             public String height;// 960,
@@ -44,7 +45,7 @@ public class ChatGirlVideoList {
 
         public Frame frame;
 
-        public class Frame {
+        public class Frame implements Serializable{
             public String id;// 27491,
             public String width;// 540,
             public String height;// 960,

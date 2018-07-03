@@ -42,6 +42,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.act.videochat.Constants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -506,7 +507,7 @@ public class TCUtils {
             String type = networkInfo.getTypeName();
 
             if (type.equalsIgnoreCase("WIFI")) {
-                return TCConstants.NETTYPE_WIFI;
+                return Constants.NETTYPE_WIFI;
             } else if (type.equalsIgnoreCase("MOBILE")) {
                 NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                 if(mobileInfo != null) {
@@ -522,24 +523,24 @@ public class TCUtils {
                                 case TelephonyManager.NETWORK_TYPE_EVDO_B:
                                 case TelephonyManager.NETWORK_TYPE_EHRPD:
                                 case TelephonyManager.NETWORK_TYPE_HSPAP:
-                                    return TCConstants.NETTYPE_3G;
+                                    return Constants.NETTYPE_3G;
                                 case TelephonyManager.NETWORK_TYPE_CDMA:
                                 case TelephonyManager.NETWORK_TYPE_GPRS:
                                 case TelephonyManager.NETWORK_TYPE_EDGE:
                                 case TelephonyManager.NETWORK_TYPE_1xRTT:
                                 case TelephonyManager.NETWORK_TYPE_IDEN:
-                                    return TCConstants.NETTYPE_2G;
+                                    return Constants.NETTYPE_2G;
                                 case TelephonyManager.NETWORK_TYPE_LTE:
-                                    return TCConstants.NETTYPE_4G;
+                                    return Constants.NETTYPE_4G;
                                 default:
-                                    return TCConstants.NETTYPE_NONE;
+                                    return Constants.NETTYPE_NONE;
                             }
                     }
                 }
             }
         }
 
-        return TCConstants.NETTYPE_NONE;
+        return Constants.NETTYPE_NONE;
     }
 
     /**

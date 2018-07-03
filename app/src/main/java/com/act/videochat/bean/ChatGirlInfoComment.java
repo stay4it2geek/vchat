@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class ChatGirlInfoComment {
     public boolean result;
-    public String maxPage;
-
+    public int maxPage;
     public ArrayList<CommentTagList> data;
 
     public class CommentTagList {

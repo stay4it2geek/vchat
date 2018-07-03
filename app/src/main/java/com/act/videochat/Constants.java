@@ -31,5 +31,13 @@ public class Constants {
     public static final String LIVE_INFO_VIDEO_URL = "LIVE_INFO_VIDEO_URL";
     public static final String LIVE_INFO_AVATAR_URL = "LIVE_INFO_AVATAR_URL";
     public static final String USERID = "97728";
-    public static final String USERKEY = "50f3e46d68a7fb3a0f300c401363ee35";
+    public static final String USERKEY = "b273ebf67448a70971964a5eb891509a";
+
+
+    //网络类型
+    public static final int NETTYPE_NONE = 0;
+    public static final int NETTYPE_WIFI = 1;
+    public static final int NETTYPE_4G   = 2;
+    public static final int NETTYPE_3G   = 3;
+    public static final int NETTYPE_2G   = 4;
 }

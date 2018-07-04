@@ -118,7 +118,13 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
                 view_pager.setCurrentItem(1);
                 break;
             case R.id.makelayout:
-               startActivity(new Intent(this,MineActivity.class));
+                if(view_pager.getCurrentItem()==0){
+                    startActivity(new Intent(this,VideoFollowActivity.class));
+                }else{
+                    startActivity(new Intent(this,ChatFollowActivity.class));
+
+                }
+
                 break;
         }
     }

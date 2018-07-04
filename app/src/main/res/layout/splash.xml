@@ -23,137 +23,29 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="270dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
-        android:text="━━  有料  有颜  有趣  有钱  ━━"
+        android:text="-- 高颜值视频社交 --"
         android:textColor="#fff"
-        android:textSize="17sp" />
+        android:textSize="18sp" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="300dp"
+        android:background="@drawable/button_common_selector"
+        android:layout_gravity="center_horizontal|bottom"
         android:gravity="center"
-        android:text="视频  聊天  情趣  赚钱"
+        android:text=" 立即体验 "
+        android:onClick="toMain"
         android:textColor="#fff"
         android:textSize="17sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="380dp"
-        android:gravity="center"
-        android:text=" ━  快捷登录  ━"
-        android:textColor="#fff"
-        android:textSize="17sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="410dp">
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/phonelogin"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/phone" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/phonelogin"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="5dp"
-                android:text="手机"
-                android:textColor="#fff"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-
-            <Button
-                android:id="@+id/wxlogin"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/wx" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/wxlogin"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="微信"
-                android:textColor="#fff"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-
-            <Button
-                android:id="@+id/qqlogin"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/qqquick" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/qqlogin"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="QQ"
-                android:textColor="#fff"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/wblogin"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/wb" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/wblogin"
-                android:layout_marginLeft="22dp"
-                android:layout_marginTop="5dp"
-                android:text="微博"
-                android:textColor="#fff"
-                android:textSize="14sp" />
-        </RelativeLayout>
-    </LinearLayout>
 
     <TextView
         android:text="跳过"

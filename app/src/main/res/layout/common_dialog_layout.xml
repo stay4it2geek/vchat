@@ -14,13 +14,6 @@
         android:orientation="vertical"
         android:paddingTop="16dp">
 
-        <com.act.videochat.view.CircleImageView
-            android:layout_width="50dp"
-            android:visibility="gone"
-            android:id="@+id/userImage"
-            android:background="@mipmap/default_head"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/title"
@@ -47,42 +40,6 @@
             android:lineSpacingExtra="2dp"
             android:lineSpacingMultiplier="1.2"
             android:text=""/>
-        <TextView
-            android:id="@+id/createTime_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="left"
-            android:lineSpacingExtra="2dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text=""
-            android:textSize="15dp"
-            android:visibility="gone" />
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/delete_confirm_layout"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="35dp"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:layout_marginLeft="-40dp"-->
-            <!--android:visibility="gone">-->
-
-            <!--<CheckBox-->
-                <!--android:id="@+id/delete_cb"-->
-                <!--android:button="@drawable/check_bg"-->
-                <!--android:layout_width="35dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="40dp" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_toRightOf="@+id/delete_cb"-->
-                <!--android:gravity="center"-->
-                <!--android:text="  删除源文件"-->
-                <!--android:textColor="@color/red"-->
-                <!--android:textSize="16sp" />-->
-
-        <!--</RelativeLayout>-->
 
         <View
             android:layout_width="match_parent"

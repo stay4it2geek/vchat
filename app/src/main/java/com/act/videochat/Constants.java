@@ -14,27 +14,22 @@ public class Constants {
     public static final int LOADMORE =10;
     public static final int REFRESH =11;
     public static final int NetWorkError=12;
-    public static final int NO_MORE = 13;
     public static final int LOAD = 14;
     public static final int RELOAD = 15;
     public static final int BUY_VIP = 16;
     public static final int NO_DATA = 22;
 
-    public static final int CAN_PLAY_VIDEO = 24;
     public static final String LIVE_INFO_MAXCOUNT = "LIVE_INFO_MAXCOUNT";
     public static final String LIVE_INFO_CATAGORY_ID = "LIVE_INFO_CATAGORY_ID";
     public static final String LIVE_INFO_VIDEO_ID = "LIVE_INFO_VIDEO_ID";
     public static final String LIVE_INFO_VIDEO_COVER = "";
     public static final int INFO = 45;
     public static final String LIVE_INFO_USER_INFO = "LIVE_INFO_USER_INFO";
-    public static final String LIVE_INFO_MODEL = "LIVE_INFO_MODEL";
     public static final String LIVE_INFO_VIDEO_URL = "LIVE_INFO_VIDEO_URL";
     public static final String LIVE_INFO_AVATAR_URL = "LIVE_INFO_AVATAR_URL";
     public static final String USERID = "97728";
-    public static final String USERKEY = "b273ebf67448a70971964a5eb891509a";
+    public static final String USERKEY = "d89811b2f89e38c19cb12ea17328e10b";
 
-
-    //网络类型
     public static final int NETTYPE_NONE = 0;
     public static final int NETTYPE_WIFI = 1;
     public static final int NETTYPE_4G   = 2;

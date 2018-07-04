@@ -34,6 +34,7 @@ import com.act.videochat.util.CommonUtil;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.YRecycleview;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -219,7 +220,6 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
         intent.putExtra(Constants.LIVE_INFO_VIDEO_COVER, details.get(position).cover);
         intent.putExtra(Constants.LIVE_INFO_CURRENTPAGE, currentPage);
         intent.putExtra(Constants.LIVE_INFO_MAXCOUNT,maxPage);
-
         RequestBody formBody = new FormBody.Builder()
                 .add("userId", "0")
                 .add("userKey", "")

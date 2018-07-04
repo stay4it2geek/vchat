@@ -1,5 +1,6 @@
 package com.act.videochat.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.graphics.Point;
@@ -38,6 +39,7 @@ import com.act.videochat.util.GlideImageLoader;
 import com.act.videochat.util.ScreenUtil;
 import com.act.videochat.util.StatusBarUtil;
 import com.act.videochat.view.ColorFlipPagerTitleView;
+import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.JudgeNestedScrollView;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -384,7 +386,8 @@ public class GirlInfoDetailActivity extends BaseActivity {
                         FrameLayout.LayoutParams linearParams = new FrameLayout.LayoutParams(size.x, size.x);
                         banner.setLayoutParams(linearParams);
                         banner.setImages(list).setImageLoader(new GlideImageLoader()).start();
-                        banner.setIndicatorGravity(Gravity.RIGHT);
+                        banner.setIndicatorGravity(Gravity.CENTER);
+                        star_Layout.removeAllViewsInLayout();
                         for (int index = 0; index < base.data.level; index++) {
                             TextView textView = new TextView(GirlInfoDetailActivity.this);
                             textView.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.star));
@@ -446,5 +449,23 @@ public class GirlInfoDetailActivity extends BaseActivity {
         this.finish();
     }
 
+    public void showDownloadDialog(View view) {
 
+        FragmentDialog.newInstance(false, "应用版本已升级", "新版本视频更清晰，速度更流畅哦!", "立即下载新版本", "", "", "", true, new FragmentDialog.OnClickBottomListener() {
+            @Override
+            public void onPositiveClick(Dialog dialog) {
+
+
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void onNegtiveClick(Dialog dialog) {
+                dialog.dismiss();
+            }
+        }).show(getSupportFragmentManager(),"");
+
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.act.videochat.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.act.videochat.bean.CommonVideoListModel;
 import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
+import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.YRecycleview;
 
 import java.io.IOException;
@@ -190,5 +192,25 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
 
     }
 
+
+    public void showDownloadDialog(View view) {
+
+        FragmentDialog.newInstance(false, "应用版本已升级", "新版本视频更清晰，速度更流畅哦!", "立即下载新版本", "", "", "", true, new FragmentDialog.OnClickBottomListener() {
+            @Override
+            public void onPositiveClick(Dialog dialog) {
+
+
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void onNegtiveClick(Dialog dialog) {
+                dialog.dismiss();
+            }
+        }).show(getSupportFragmentManager(),"");
+
+
+    }
 
 }

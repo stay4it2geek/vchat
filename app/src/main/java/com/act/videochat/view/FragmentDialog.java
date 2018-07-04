@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,10 +32,7 @@ public class FragmentDialog extends DialogFragment {
      * 显示的消息
      */
     private TextView messageTv;
-    /**
-     * 显示的消息
-     */
-    private TextView createTime_tv;
+
     /**
      * 确认和取消按钮
      */
@@ -54,7 +49,6 @@ public class FragmentDialog extends DialogFragment {
     private String message;
     private String title;
     private String positive, negtive;
-    private String imageUrl;
 
     /**
      * 底部是否只有一个按钮
@@ -62,33 +56,21 @@ public class FragmentDialog extends DialogFragment {
     private boolean isSingle = false;
 
     private Dialog dialog;
-//    private boolean needShowDelete;
-//    private boolean deleteConfirm;
-//    private CheckBox delete_cb;
-    private RelativeLayout delete_confirm_layout;
-    private CircleImageView userImage;
-    private String creatTime;
+
 
     private void initView(View rootView) {
         Bundle args = getArguments();
         if (args == null)
             return;
-        creatTime = args.getString("creatTime");
         title = args.getString("title");
         positive = args.getString("positive");
         negtive = args.getString("negtive");
         message = args.getString("message");
-        imageUrl = args.getString("imageUrl");
-//        needShowDelete = args.getBoolean("needShowDelete");
         isSingle = args.getBoolean("isSingle");
         negtiveBn = (Button) rootView.findViewById(R.id.negtive);
         positiveBn = (Button) rootView.findViewById(R.id.positive);
-        createTime_tv = (TextView) rootView.findViewById(R.id.createTime_tv);
         titleTv = (TextView) rootView.findViewById(R.id.title);
-        userImage = (CircleImageView) rootView.findViewById(R.id.userImage);
         messageTv = (TextView) rootView.findViewById(R.id.message);
-//        delete_cb = (CheckBox) rootView.findViewById(R.id.delete_cb);
-//        delete_confirm_layout = (RelativeLayout) rootView.findViewById(R.id.delete_confirm_layout);
         columnLineView = rootView.findViewById(R.id.column_line);
     }
 
@@ -99,10 +81,7 @@ public class FragmentDialog extends DialogFragment {
         bundle.putString("message", message);
         bundle.putString("positive", positive);
         bundle.putString("negtive", negtive);
-        bundle.putString("creatTime", creatTime);
-        bundle.putString("imageUrl", imageUrl);
         bundle.putBoolean("isSingle", isSingle);
-        bundle.putBoolean("needShowDelete", needShowDelete);
         fragment.onClickBottomListener = onClickBottomListener;
         fragment.setArguments(bundle);
         return fragment;
@@ -116,7 +95,7 @@ public class FragmentDialog extends DialogFragment {
             public void onClick(View v) {
                 dismiss();
                 if (onClickBottomListener != null) {
-//                    onClickBottomListener.onPositiveClick(dialog, deleteConfirm);
+                    onClickBottomListener.onPositiveClick(dialog);
                 }
             }
         });
@@ -131,14 +110,6 @@ public class FragmentDialog extends DialogFragment {
             }
         });
 
-//        delete_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-//                deleteConfirm = checked;
-//            }
-//        });
-
-
     }
 
     /**
@@ -151,37 +122,12 @@ public class FragmentDialog extends DialogFragment {
         } else {
             titleTv.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(creatTime)) {
-            createTime_tv.setVisibility(View.VISIBLE);
-            messageTv.setVisibility(View.GONE);
-            long l = System.currentTimeMillis() - Long.parseLong(creatTime);
-            long day = l / (24 * 60 * 60 * 1000);
-            long hour = (l / (60 * 60 * 1000) - day * 24);
-            long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
-            if (day <= 1) {
-                createTime_tv.setText(hour + "小时" + min + "分钟前看过她");
-            } else if (day < 30) {
-                createTime_tv.setText(day + "天" + hour + "小时前看过她");
-            } else if (day > 30 && day < 60) {
-                createTime_tv.setText("2个月前看过她");
-            } else if (day > 90) {
-                createTime_tv.setText("3个月前看过她");
-            }
-        }
+
+
         if (!TextUtils.isEmpty(message)) {
             messageTv.setText(message);
         }
-        if (!TextUtils.isEmpty(imageUrl)) {
-            userImage.setVisibility(View.VISIBLE);
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    Glide.with(getActivity()).load(imageUrl).error(R.drawable.error_img).into(userImage);
-                }
-            });
-        } else {
-            userImage.setVisibility(View.GONE);
-        }
+
 
         if (!TextUtils.isEmpty(positive)) {
             positiveBn.setText(positive);
@@ -202,12 +148,6 @@ public class FragmentDialog extends DialogFragment {
             columnLineView.setVisibility(View.VISIBLE);
         }
 
-//        if (needShowDelete) {
-//            delete_confirm_layout.setVisibility(View.VISIBLE);
-//        } else {
-//            delete_confirm_layout.setVisibility(View.GONE);
-//        }
-//        dialog.show();
     }
 
     /**
@@ -216,12 +156,11 @@ public class FragmentDialog extends DialogFragment {
     public OnClickBottomListener onClickBottomListener;
 
 
-
     public interface OnClickBottomListener {
         /**
          * 点击确定按钮事件
          */
-        public void onPositiveClick(Dialog dialog, boolean deleteFileSource);
+        public void onPositiveClick(Dialog dialog);
 
         /**
          * 点击取消按钮事件

@@ -1,7 +1,5 @@
 package com.act.videochat.fragment;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -24,7 +22,6 @@ import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.OnScrollShowHideListner;
 import com.act.videochat.R;
-import com.act.videochat.activity.GirlInfoActivity;
 import com.act.videochat.activity.GirlInfoDetailActivity;
 import com.act.videochat.adapter.CommonChatListAdapter;
 import com.act.videochat.bean.CommonChatListModel;
@@ -33,17 +30,8 @@ import com.act.videochat.util.CommonUtil;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.YRecycleview;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-import static com.act.videochat.manager.OkHttpClientManager.getStringRandom;
 
 public class CommonChatListFragment extends ScrollAbleFragment {
 
@@ -233,10 +221,5 @@ public class CommonChatListFragment extends ScrollAbleFragment {
             }
         });
     }
-
-
-
-
-
 
 }

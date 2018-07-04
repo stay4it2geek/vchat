@@ -14,23 +14,12 @@
         android:orientation="vertical">
 
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/iv_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!--<ImageView-->
-            <!--android:id="@+id/iv_top"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY" />-->
-
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:image_scale_type="fit_start" />
-        </RelativeLayout>
+            android:scaleType="fitXY"
+            android:visibility="gone" />
 
 
         <com.flyco.tablayout.SlidingTabLayout
@@ -69,5 +58,6 @@
 
 
     </com.act.videochat.view.scrollable.ScrollableLayout>
+
 
 </FrameLayout>

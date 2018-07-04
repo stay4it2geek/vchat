@@ -1,6 +1,7 @@
 package com.act.videochat.fragment;
 
-import android.content.Context;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,25 +9,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.bean.ChatTagModel;
-import com.act.videochat.bean.HomeVideoTagModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
-import com.act.videochat.util.GlideImageLoader;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.scrollable.ScrollableLayout;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerListener;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,27 +37,26 @@ import okhttp3.Response;
 
 public class DuplicateChatFragment extends Fragment {
 
-    private Banner banner;
     private ViewPager view_pager;
     private ScrollableLayout mScrollLayout;
     private SlidingTabLayout mSlidingTabLayout;
     private List<String> tabTitles = new ArrayList<>();
     private LoadNetView loadNetView;
+    private TextView follow;
+
     public static DuplicateChatFragment newInstance() {
         DuplicateChatFragment f = new DuplicateChatFragment();
-        Bundle b = new Bundle();
-        b.putString("fragment", "OneFragment");
         return f;
     }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        View view = inflater.inflate(R.layout.duplicate_fragment, container, false);
         mScrollLayout = (ScrollableLayout)view.findViewById(R.id.scrollableLayout);
         loadNetView = (LoadNetView)view.findViewById(R.id.loadnetview);
         loadNetView.setlayoutVisily(Constants.LOAD);
-        view.findViewById(R.id.banner).setVisibility(View.GONE);
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.tab_layout);
         view_pager = (ViewPager) view.findViewById(R.id.view_pager);
         init();
@@ -185,6 +181,7 @@ public class DuplicateChatFragment extends Fragment {
             return tabTitles.get(position);
         }
     }
+
 
 
 }

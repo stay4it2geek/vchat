@@ -15,6 +15,8 @@ import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.DataSave;
+import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.util.TCUtils;
 import com.act.videochat.util.ToastUtil;
 import com.act.videochat.view.YRecycleviewRefreshFootView;
@@ -46,6 +49,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
@@ -312,10 +316,32 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
             view.setId(position);
             ImageView coverImageView = (ImageView) view.findViewById(R.id.player_iv_cover);
             final CircleImageView ivAvatar = (CircleImageView) view.findViewById(R.id.player_civ_avatar);
+            final CheckBox follow = (CheckBox) view.findViewById(R.id.follow);
             final TXCloudVideoView playView = (TXCloudVideoView) view.findViewById(R.id.player_cloud_view);
             coverImageView.setVisibility(View.VISIBLE);
             TCUtils.blurBgPic(TCVodPlayerActivity.this, coverImageView, list.get(position).cover, R.drawable.main_bkg);
+            follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        FollowDataSave dataSave = new FollowDataSave(TCVodPlayerActivity.this, Constants.VIDEO_GIRL_FOLLOW);
 
+                        List<BigVideoOneUserInfoModel> list = dataSave.getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
+                        List<String> IDs = new ArrayList<>();
+                        for (BigVideoOneUserInfoModel headerInfo : list) {
+                            IDs.add(headerInfo.data.id);
+                        }
+//                        String id = getIntent().getStringExtra(Constants.LIVE_INFO_ID)+"";
+//                        if (list != null && !IDs.contains(id)) {
+//                            new FollowDataSave(TCVodPlayerActivity.this, Constants.VIDEO_GIRL_FOLLOW).setDataList(Constants.VIDEO_GIRL_FOLLOW_LIST, list);
+//                        } else {
+//                            if (list != null && IDs.contains(id)){
+//                                new FollowDataSave(TCVodPlayerActivity.this, Constants.VIDEO_GIRL_FOLLOW).setDataList(Constants.VIDEO_GIRL_FOLLOW_LIST, list);
+//                            }
+//                        }
+                    }
+                }
+            });
 
             if (map.get(videoUrl) != null && !map.get(videoUrl).equals(position + "")) {
                 RequestBody formBody = new FormBody.Builder()

@@ -68,8 +68,8 @@
                                     android:layout_width="56dp"
                                     android:layout_height="22dp"
                                     android:layout_gravity="right"
-                                    android:layout_marginTop="45dp"
                                     android:layout_marginRight="15dp"
+                                    android:layout_marginTop="45dp"
                                     android:background="@drawable/shape_radius"
                                     android:paddingBottom="1dp"
                                     android:paddingLeft="8dp"
@@ -199,9 +199,9 @@
 
                 <ImageView
                     android:id="@+id/iv_back"
-                    android:onClick="back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="back"
                     android:src="@drawable/back_white" />
 
 
@@ -245,21 +245,46 @@
             app:layout_collapseMode="pin" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/chat_private"
-        android:onClick="showDownloadDialog"
-        android:layout_width="wrap_content"
-        android:layout_margin="10dp"
+    <FrameLayout
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:background="@drawable/button_common_selector"
-        android:button="@null"
-        android:gravity="center"
-        android:paddingBottom="9dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="9dp"
-        android:text="和她视频"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/followHer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:background="@drawable/button_common_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:onClick="followHer"
+            android:paddingBottom="10dp"
+            android:paddingLeft="22dp"
+            android:paddingRight="22dp"
+            android:paddingTop="10dp"
+            android:text="关注她"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/chat_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/button_common_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:onClick="showDownloadDialog"
+            android:paddingBottom="10dp"
+            android:paddingLeft="22dp"
+            android:paddingRight="22dp"
+            android:paddingTop="10dp"
+            android:text="和她视频"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+
 </FrameLayout>

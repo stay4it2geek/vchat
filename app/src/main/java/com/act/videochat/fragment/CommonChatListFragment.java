@@ -142,6 +142,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                                 Intent intent = new Intent(getActivity(), GirlInfoDetailActivity.class);
                                 intent.putExtra("online",chatDetails.get(position).online);
                                 intent.putExtra(Constants.USERID,chatDetails.get(position).id);
+                                intent.putExtra(Constants.CHAT_GIRL,chatDetails.get(position));
                                     startActivity(intent);
                             }
                         });

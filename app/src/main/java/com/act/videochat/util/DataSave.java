@@ -3,7 +3,7 @@ package com.act.videochat.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.SystemClock;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ public class DataSave {
 
     private SharedPreferences vipPreferences;
     private SharedPreferences.Editor vipEditor;
+
     public DataSave(Context mContext, String preferenceName) {
         preferences = mContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
         editor = preferences.edit();

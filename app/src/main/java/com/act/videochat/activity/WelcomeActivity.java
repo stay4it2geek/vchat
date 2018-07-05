@@ -10,6 +10,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.act.videochat.R;
+import com.act.videochat.util.DataSave;
 
 public class WelcomeActivity extends AppCompatActivity {
     @Override
@@ -21,6 +22,8 @@ public class WelcomeActivity extends AppCompatActivity {
         final TranslateAnimation taLeft = new TranslateAnimation(0, 250, 0, 0);
         taRight.setDuration(4000);
         taLeft.setDuration(4000);
+       DataSave dataSave=new DataSave(this);
+        dataSave.setVipData("isVip");
         login_start_bg.startAnimation(taRight);
         taLeft.setAnimationListener(new Animation.AnimationListener() {
             @Override

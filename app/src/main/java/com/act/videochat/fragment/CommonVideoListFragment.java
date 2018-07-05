@@ -238,6 +238,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                 final String entityStr = response.body().string();
                 final SmallPlayVideoInfoModel model = CommonUtil.parseJsonWithGson(entityStr, SmallPlayVideoInfoModel.class);
                 intent.putExtra(Constants.LIVE_INFO_VIDEO_ID,model.data.vid);
+                intent.putExtra(Constants.LIVE_INFO_ID,model.data.id);
                 intent.putExtra(Constants.LIVE_INFO_AVATAR_URL,model.data.avatar.url);
                 intent.putExtra(Constants.LIVE_INFO_VIDEO_URL,model.data.url);
                 getActivity().startActivity(intent);

@@ -35,4 +35,10 @@ public class Constants {
     public static final int NETTYPE_4G   = 2;
     public static final int NETTYPE_3G   = 3;
     public static final int NETTYPE_2G   = 4;
+    public static final String CHAT_GIRL_FOLLOW = "CHAT_GIRL_FOLLOW";
+    public static final String VIDEO_GIRL_FOLLOW = "VIDEO_GIRL_FOLLOW";
+    public static final String CHAT_GIRL = "CHAT_GIRL";
+    public static final String CHAT_GIRL_FOLLOW_LIST = "CHAT_GIRL_FOLLOW_LIST";
+    public static final String VIDEO_GIRL_FOLLOW_LIST = "VIDEO_GIRL_FOLLOW_LIST";
+    public static final String LIVE_INFO_ID = "LIVE_INFO_ID";
 }

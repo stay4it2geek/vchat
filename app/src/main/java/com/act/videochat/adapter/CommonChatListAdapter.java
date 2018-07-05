@@ -19,13 +19,14 @@ import com.act.videochat.bean.CommonChatListModel;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAdapter.MyViewHolder> {
 
     private int screenWidth;
     private Context mContext;
 
-    private ArrayList<CommonChatListModel.HomeChatInfoData> datas;
+    private List<CommonChatListModel.HomeChatInfoData> datas;
 
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int position, ImageView imageView);
@@ -44,7 +45,7 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
 
     }
 
-    public void setDatas(ArrayList<CommonChatListModel.HomeChatInfoData> datas) {
+    public void setDatas(List<CommonChatListModel.HomeChatInfoData> datas) {
         this.datas = datas;
     }
 

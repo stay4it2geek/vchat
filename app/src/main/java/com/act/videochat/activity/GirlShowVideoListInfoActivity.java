@@ -15,21 +15,25 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.adapter.VideoWorksListAdapter;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
+import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.bean.CommonVideoListModel;
 import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
+import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.YRecycleview;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,6 +54,10 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
     VideoWorksListAdapter adapter;
     ArrayList<CommonVideoListModel.HomeVideoInfoData> details = new ArrayList<>();
     int currentPage;
+    private List<BigVideoOneUserInfoModel> list;
+    private List<String> IDs =new ArrayList<>();
+    private TextView followHer;
+    private FollowDataSave dataSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +93,14 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
                 }, 1000);
             }
         });
+        followHer = ((TextView) findViewById(R.id.followHer));
+        dataSave = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW);
+
+        list = dataSave.getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
+
+        for (BigVideoOneUserInfoModel headerInfo:list) {
+            IDs.add(headerInfo.data.id);
+        }
 
     }
 
@@ -96,6 +112,15 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
         OkHttpClientManager.parseRequestGirlSmallVideoList(this, ApiUrls.COMMON_VIDEO_SMALL_LIST_HREF, handler, what, vid, startPage);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (list!=null && IDs.contains(headerInfo.data.id)) {
+            followHer.setText("已关注");
+        }else{
+            followHer.setText("关注她");
+        }
+    }
 
     Handler handler = new Handler() {
 
@@ -211,6 +236,28 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
         }).show(getSupportFragmentManager(),"");
 
 
+    }
+
+    public void followHer(View view){
+
+        if (followHer.getText().equals("关注她")) {
+
+            if (list!=null && !IDs.contains(headerInfo.data.id)) {
+                list.add(headerInfo);
+                IDs.add(headerInfo.data.id);
+                followHer.setText("已关注");
+                new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).setDataList(Constants.VIDEO_GIRL_FOLLOW_LIST, list);
+
+            }
+        } else {
+            if (list!=null && IDs.contains(headerInfo.data.id)) {
+                list.remove(IDs.indexOf(headerInfo.data.id));
+                IDs.remove(IDs.indexOf(headerInfo.data.id));
+                followHer.setText("关注她");
+                new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).setDataList(Constants.VIDEO_GIRL_FOLLOW_LIST, list);
+
+            }
+        }
     }
 
 }

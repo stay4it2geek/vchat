@@ -31,10 +31,12 @@ import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.adapter.ComFragmentAdapter;
 import com.act.videochat.bean.ChatGirlInfoBase;
+import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.fragment.GirlInfoFragment;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.DeviceUtil;
+import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.util.GlideImageLoader;
 import com.act.videochat.util.ScreenUtil;
 import com.act.videochat.util.StatusBarUtil;
@@ -126,6 +128,11 @@ public class GirlInfoDetailActivity extends BaseActivity {
     int toolBarPositionY = 0;
     private String[] mTitles = new String[]{"资料"};
     private List<String> mDataList = Arrays.asList(mTitles);
+    private List<CommonChatListModel.HomeChatInfoData> list;
+    private List<String> IDs =new ArrayList<>();
+    private CommonChatListModel.HomeChatInfoData infoData;
+    private TextView followHer;
+    private FollowDataSave dataSave;
 
 
     @Override
@@ -152,19 +159,33 @@ public class GirlInfoDetailActivity extends BaseActivity {
                     public void run() {
                         refreshlayout.finishRefresh();
                     }
-                },1000);
+                }, 1000);
             }
         });
     }
 
     @Override
     public void initData() {
+
+
         requestInfoBaseData(getIntent().getStringExtra(Constants.USERID));
     }
 
     private void initView() {
+
         StatusBarUtil.immersive(this);
         StatusBarUtil.setPaddingSmart(this, toolbar);
+        infoData = (CommonChatListModel.HomeChatInfoData) getIntent().getSerializableExtra(Constants.CHAT_GIRL);
+        followHer = ((TextView) findViewById(R.id.followHer));
+        dataSave = new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW);
+
+        list = dataSave.getChatGirlDataList(Constants.CHAT_GIRL_FOLLOW_LIST);
+        for (CommonChatListModel.HomeChatInfoData data:list) {
+            IDs.add(data.id);
+        }
+        if (list!=null && IDs.contains(infoData.id)) {
+            followHer.setText("已关注");
+        }
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
@@ -239,6 +260,17 @@ public class GirlInfoDetailActivity extends BaseActivity {
         initMagicIndicator();
         initMagicIndicatorTitle();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (list!=null && IDs.contains(infoData.id)) {
+            followHer.setText("已关注");
+        }else{
+            followHer.setText("关注她");
+        }
+    }
+
 
     private void initMagicIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(this);
@@ -464,8 +496,31 @@ public class GirlInfoDetailActivity extends BaseActivity {
             public void onNegtiveClick(Dialog dialog) {
                 dialog.dismiss();
             }
-        }).show(getSupportFragmentManager(),"");
+        }).show(getSupportFragmentManager(), "");
 
+
+    }
+
+
+    public void followHer(View view) {
+        if (followHer.getText().equals("关注她")) {
+            infoData = (CommonChatListModel.HomeChatInfoData) getIntent().getSerializableExtra(Constants.CHAT_GIRL);
+            if (list!=null && !IDs.contains(infoData.id)) {
+                list.add(infoData);
+                IDs.add(infoData.id);
+                followHer.setText("已关注");
+                new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).setDataList(Constants.CHAT_GIRL_FOLLOW_LIST, list);
+
+            }
+        } else {
+            if (list!=null && IDs.contains(infoData.id)) {
+                list.remove(IDs.indexOf(infoData.id));
+                IDs.remove(IDs.indexOf(infoData.id));
+                followHer.setText("关注她");
+                new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).setDataList(Constants.CHAT_GIRL_FOLLOW_LIST, list);
+
+            }
+        }
 
     }
 }

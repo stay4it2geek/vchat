@@ -1,5 +1,6 @@
 package com.act.videochat.activity;
 
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +16,6 @@ import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,14 +24,13 @@ import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
 import com.act.videochat.bean.CommonVideoListModel;
-import com.act.videochat.bean.MessageEvent;
 import com.act.videochat.bean.SmallPlayVideoInfoModel;
+import com.act.videochat.bean.WatchMessageEvent;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
-import com.act.videochat.util.DataSave;
-import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.util.TCUtils;
-import com.act.videochat.util.ToastUtil;
+import com.act.videochat.util.WatchAndVipDataSave;
+import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.YRecycleviewRefreshFootView;
 import com.bumptech.glide.Glide;
 import com.tencent.rtmp.ITXVodPlayListener;
@@ -49,7 +47,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
@@ -79,8 +76,9 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
     private int mCurrentPage;
     private String mCatagoryId;
     private String videoUrl = "";
-    private DataSave save;
-    private DataSave vipsave;
+    private WatchAndVipDataSave save;
+    private WatchAndVipDataSave vipsave;
+    private BigVideoOneUserInfoModel model;
 
 
     @Override
@@ -89,18 +87,8 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         setContentView(R.layout.activity_player);
         yrecycle_view_loadMore = (YRecycleviewRefreshFootView) findViewById(R.id.yrecycle_view_loadMore);
         initData();
-        save = new DataSave(this, "VideoInfo");
-        vipsave = new DataSave(this);
-
-        long l = System.currentTimeMillis() - save.getTimeData();
-        long day = l / (24 * 60 * 60 * 1000);
-        long hour = (l / (60 * 60 * 1000) - day * 24);
-//        long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
-
-        if (hour > 24) {
-            save.clearDataList();
-        }
-
+        save = new WatchAndVipDataSave(this, "VideoInfo");
+        vipsave = new WatchAndVipDataSave(this);
         EventBus.getDefault().register(this);
 
     }
@@ -197,7 +185,15 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
                     } else {
 
-                        if ((save.getDataList() == null)) {
+                        long l = System.currentTimeMillis() - save.getTimeData();
+                        long day = l / (24 * 60 * 60 * 1000);
+                        long hour = (l / (60 * 60 * 1000) - day * 24);
+
+                        if (day > 0 && hour > 0) {
+                            save.clearWatchCountDataList();
+                        }
+
+                        if (save.getDataList() == null || save.getDataList().size() == 0) {
                             playerInfo.txVodPlayer.resume();
                             mTXVodPlayer = playerInfo.txVodPlayer;
                         } else {
@@ -206,16 +202,22 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                                 mTXVodPlayer = playerInfo.txVodPlayer;
 
                             } else {
-                                ToastUtil.showToast(TCVodPlayerActivity.this, "bunengbofang");
+                                FragmentDialog.newInstance(false, "非VIP会员一天只能观看8个哦!", "成为VIP会员可以无限观看哦!", "成为永久会员", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
+                                    @Override
+                                    public void onPositiveClick(Dialog dialog) {
+                                        startActivity(new Intent(TCVodPlayerActivity.this, BuyVipActivity.class));
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onNegtiveClick(Dialog dialog) {
+                                        dialog.dismiss();
+
+                                    }
+                                }).show(getSupportFragmentManager(), "");
                             }
-
-
                         }
-
-
                     }
-
-
                 }
             }
         });
@@ -250,7 +252,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         }
 
 
-        protected PlayerInfo instantiatePlayerInfo(String url, int position, boolean isFromList) {
+        protected PlayerInfo instantiatePlayerInfo(String url, int position) {
             PlayerInfo playerInfo = new PlayerInfo();
             TXVodPlayer vodPlayer = new TXVodPlayer(TCVodPlayerActivity.this);
             vodPlayer.setRenderRotation(TXLiveConstants.RENDER_ROTATION_PORTRAIT);
@@ -316,33 +318,9 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
             view.setId(position);
             ImageView coverImageView = (ImageView) view.findViewById(R.id.player_iv_cover);
             final CircleImageView ivAvatar = (CircleImageView) view.findViewById(R.id.player_civ_avatar);
-            final CheckBox follow = (CheckBox) view.findViewById(R.id.follow);
             final TXCloudVideoView playView = (TXCloudVideoView) view.findViewById(R.id.player_cloud_view);
             coverImageView.setVisibility(View.VISIBLE);
             TCUtils.blurBgPic(TCVodPlayerActivity.this, coverImageView, list.get(position).cover, R.drawable.main_bkg);
-            follow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        FollowDataSave dataSave = new FollowDataSave(TCVodPlayerActivity.this, Constants.VIDEO_GIRL_FOLLOW);
-
-                        List<BigVideoOneUserInfoModel> list = dataSave.getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
-                        List<String> IDs = new ArrayList<>();
-                        for (BigVideoOneUserInfoModel headerInfo : list) {
-                            IDs.add(headerInfo.data.id);
-                        }
-//                        String id = getIntent().getStringExtra(Constants.LIVE_INFO_ID)+"";
-//                        if (list != null && !IDs.contains(id)) {
-//                            new FollowDataSave(TCVodPlayerActivity.this, Constants.VIDEO_GIRL_FOLLOW).setDataList(Constants.VIDEO_GIRL_FOLLOW_LIST, list);
-//                        } else {
-//                            if (list != null && IDs.contains(id)){
-//                                new FollowDataSave(TCVodPlayerActivity.this, Constants.VIDEO_GIRL_FOLLOW).setDataList(Constants.VIDEO_GIRL_FOLLOW_LIST, list);
-//                            }
-//                        }
-                    }
-                }
-            });
-
             if (map.get(videoUrl) != null && !map.get(videoUrl).equals(position + "")) {
                 RequestBody formBody = new FormBody.Builder()
                         .add("userId", "0")
@@ -378,14 +356,14 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                                 if (TCVodPlayerActivity.this != null && !TCVodPlayerActivity.this.isDestroyed()) {
                                     Glide.with(TCVodPlayerActivity.this).load(entity.data.avatar.url).error(R.mipmap.default_head).into(ivAvatar);
                                 }
-                                PlayerInfo playerInfo = instantiatePlayerInfo(entity.data.url, position, true);
+                                PlayerInfo playerInfo = instantiatePlayerInfo(entity.data.url, position);
                                 playerInfo.playerView = playView;
                                 playerInfo.txVodPlayer.setPlayerView(playView);
                                 playerInfo.txVodPlayer.startPlay(playerInfo.playURL);
                                 if (vipplayerInfoList.size() < 8 && save.getDataList().size() < 8) {
                                     vipplayerInfoList.add(playerInfo.playURL);
-                                    MessageEvent messageEvent = new MessageEvent(vipplayerInfoList);
-                                    EventBus.getDefault().post(messageEvent);
+                                    WatchMessageEvent watchMessageEvent = new WatchMessageEvent(vipplayerInfoList);
+                                    EventBus.getDefault().post(watchMessageEvent);
                                 }
 
                             }
@@ -398,14 +376,14 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                 if (TCVodPlayerActivity.this != null && !TCVodPlayerActivity.this.isDestroyed()) {
                     Glide.with(TCVodPlayerActivity.this).load(map.get("avatar")).error(R.mipmap.default_head).into(ivAvatar);
                 }
-                PlayerInfo playerInfo = instantiatePlayerInfo(videoUrl, position, false);
+                PlayerInfo playerInfo = instantiatePlayerInfo(videoUrl, position);
                 playerInfo.playerView = playView;
                 playerInfo.txVodPlayer.setPlayerView(playView);
                 playerInfo.txVodPlayer.startPlay(playerInfo.playURL);
                 if (vipplayerInfoList.size() < 8 && save.getDataList().size() < 8) {
                     vipplayerInfoList.add(playerInfo.playURL);
-                    MessageEvent messageEvent = new MessageEvent(vipplayerInfoList);
-                    EventBus.getDefault().post(messageEvent);
+                    WatchMessageEvent watchMessageEvent = new WatchMessageEvent(vipplayerInfoList);
+                    EventBus.getDefault().post(watchMessageEvent);
                 }
                 ivAvatar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -596,7 +574,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                     mPagerAdapter.notifyDataSetChanged();
                 }
             } else {
-                BigVideoOneUserInfoModel model = CommonUtil.parseJsonWithGson((String) msg.obj, BigVideoOneUserInfoModel.class);
+                model = CommonUtil.parseJsonWithGson((String) msg.obj, BigVideoOneUserInfoModel.class);
                 Intent intent = new Intent(TCVodPlayerActivity.this, GirlShowVideoListInfoActivity.class);
                 intent.putExtra(Constants.LIVE_INFO_USER_INFO, model);
                 startActivity(intent);
@@ -610,7 +588,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void Event(MessageEvent messageEvent) {
-        save.setDataList(messageEvent.getMessage());
+    public void Event(WatchMessageEvent watchMessageEvent) {
+        save.setWatchDataList(watchMessageEvent.getMessage());
     }
 }

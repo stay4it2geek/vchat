@@ -30,6 +30,7 @@
         <activity android:name=".activity.TabMainActivity" />
         <activity android:name=".activity.ChatFollowActivity" />
         <activity android:name=".activity.VideoFollowActivity" />
+        <activity android:name=".activity.BuyVipActivity"/>
 
     </application>
 </manifest>

@@ -54,9 +54,7 @@ public class ChatFollowActivity extends AppCompatActivity {
         display.getSize(size);
 
         mLocalDatas = new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).getChatGirlDataList(Constants.CHAT_GIRL_FOLLOW_LIST);
-        //每次读10条数据
-        mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
-        mPageDaoImpl.setCurrentPage(1);
+
         adapter = new CommonChatListAdapter(this, size.x);
         recycleview.setAdapter(adapter);
         recycleview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
@@ -72,6 +70,7 @@ public class ChatFollowActivity extends AppCompatActivity {
                         recycleview.setReFreshComplete();
                     }
                 }, 500);
+                recycleview.setNoMoreData(false);
             }
 
             @Override
@@ -90,8 +89,11 @@ public class ChatFollowActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         recycleview.setloadMoreComplete();
+                        if (!mPageDaoImpl.hasNextPage()) {
+                            recycleview.setNoMoreData(true);
+                        }
                     }
-                }, 500);
+                }, 1000);
             }
         });
 
@@ -127,7 +129,9 @@ public class ChatFollowActivity extends AppCompatActivity {
         //每次读10条数据
         mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
         mPageDaoImpl.setCurrentPage(1);
+        recycleview.setNoMoreData(false);
         getData(Constants.REFRESH);
+
     }
 
 
@@ -163,9 +167,7 @@ public class ChatFollowActivity extends AppCompatActivity {
             }
         }
         adapter.notifyDataSetChanged();
-        if (!mPageDaoImpl.hasNextPage()) {
-            recycleview.setNoMoreData(true);
-        }
+
     }
 
 }

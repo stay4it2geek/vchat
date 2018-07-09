@@ -5,23 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#00000000">
 
-    <LinearLayout
-        android:id="@+id/noData_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="没有更多数据了"
-            android:textColor="#c0c0c0"
-            android:textSize="12sp"
-            android:visibility="visible" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ly_dialog"
@@ -40,5 +24,22 @@
             android:indeterminateOnly="false"
             app:cpb_colors="@array/gplus_colors" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/noData_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="没有更多数据了"
+            android:textColor="#c0c0c0"
+            android:textSize="13sp"
+            android:visibility="visible" />
+    </LinearLayout>
 </FrameLayout>

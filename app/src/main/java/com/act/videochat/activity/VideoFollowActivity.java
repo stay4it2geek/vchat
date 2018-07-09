@@ -53,8 +53,6 @@ public class VideoFollowActivity extends AppCompatActivity {
         display.getSize(size);
 
         mLocalDatas = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
-        mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
-        mPageDaoImpl.setCurrentPage(1);
         adapter = new FollowVideoListAdapter(this, size.x);
         recycleview.setAdapter(adapter);
 
@@ -71,6 +69,7 @@ public class VideoFollowActivity extends AppCompatActivity {
                         recycleview.setReFreshComplete();
                     }
                 }, 500);
+                recycleview.setNoMoreData(false);
             }
 
             @Override
@@ -89,8 +88,11 @@ public class VideoFollowActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         recycleview.setloadMoreComplete();
+                        if (!mPageDaoImpl.hasNextPage()) {
+                            recycleview.setNoMoreData(true);
+                        }
                     }
-                }, 500);
+                }, 1000);
             }
         });
 
@@ -125,6 +127,7 @@ public class VideoFollowActivity extends AppCompatActivity {
         mLocalDatas = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
         mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
         mPageDaoImpl.setCurrentPage(1);
+        recycleview.setNoMoreData(false);
         getData(Constants.REFRESH);
     }
 
@@ -156,9 +159,7 @@ public class VideoFollowActivity extends AppCompatActivity {
             }
         }
         adapter.notifyDataSetChanged();
-        if (!mPageDaoImpl.hasNextPage()) {
-            recycleview.setNoMoreData(true);
-        }
+
 
     }
 }

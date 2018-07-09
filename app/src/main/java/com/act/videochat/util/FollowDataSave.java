@@ -65,9 +65,5 @@ public class FollowDataSave {
 
     }
 
-    public void clear() {
-        chatEditor.clear();
-        chatEditor.commit();
-    }
 
 }

@@ -8,47 +8,47 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataSave {
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
+public class WatchAndVipDataSave {
+    private SharedPreferences watchCountPreferences;
+    private SharedPreferences.Editor watchCountEditor;
 
     private SharedPreferences vipPreferences;
     private SharedPreferences.Editor vipEditor;
 
-    public DataSave(Context mContext, String preferenceName) {
-        preferences = mContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
-        editor = preferences.edit();
+    public WatchAndVipDataSave(Context mContext, String preferenceName) {
+        watchCountPreferences = mContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
+        watchCountEditor = watchCountPreferences.edit();
     }
-    public DataSave(Context mContext) {
+    public WatchAndVipDataSave(Context mContext) {
         vipPreferences = mContext.getSharedPreferences("vipData", Context.MODE_PRIVATE);
         vipEditor = vipPreferences.edit();
     }
 
 
-    public void setDataList(List<String> datalist) {
+    public void setWatchDataList(List<String> datalist) {
         if (null == datalist || datalist.size() <= 0)
             return;
         StringBuilder sb = new StringBuilder();
         for (String str : datalist) {
             sb.append(str).append(",");
         }
-        editor.clear();
-        editor.putString("videoList", sb.toString());
-        editor.putLong("time",  System.currentTimeMillis());
-        editor.commit();
+        watchCountEditor.clear();
+        watchCountEditor.putString("videoList", sb.toString());
+        watchCountEditor.putLong("time",  System.currentTimeMillis());
+        watchCountEditor.commit();
 
     }
 
 
-    public void clearDataList() {
-        editor.clear();
-        editor.commit();
+    public void clearWatchCountDataList() {
+        watchCountEditor.clear();
+        watchCountEditor.commit();
 
     }
 
     public List<String> getDataList() {
         List<String> datalist = new ArrayList<>();
-        String str = preferences.getString("videoList", null);
+        String str = watchCountPreferences.getString("videoList", null);
         if (null == str) {
             return datalist;
         }
@@ -62,15 +62,16 @@ public class DataSave {
 
     public Long getTimeData() {
 
-        return preferences.getLong("time", 0);
+        return watchCountPreferences.getLong("time", 0);
 
     }
 
 
     public void setVipData(String isVip) {
-        vipEditor.putString("isVip", isVip);
+//        vipEditor.putString("isVip", isVip);
+//        vipEditor.commit();
+        vipEditor.clear();
         vipEditor.commit();
-
     }
 
 

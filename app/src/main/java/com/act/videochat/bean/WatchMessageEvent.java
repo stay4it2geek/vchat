@@ -3,10 +3,10 @@ package com.act.videochat.bean;
 
 import java.util.ArrayList;
 
-public class MessageEvent {
+public class WatchMessageEvent {
     private ArrayList<String> message;
 
-    public MessageEvent(ArrayList<String> message) {
+    public WatchMessageEvent(ArrayList<String> message) {
         this.message = message;
     }
 

@@ -179,7 +179,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
 
                 if (playerInfo != null) {
-                    if (vipsave.getVipData() != null && !"".equals(vipsave.getVipData())) {
+                    if (vipsave.getVipData() != null && "isVip".equals(vipsave.getVipData())) {
                         playerInfo.txVodPlayer.resume();
                         mTXVodPlayer = playerInfo.txVodPlayer;
 

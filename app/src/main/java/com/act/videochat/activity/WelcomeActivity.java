@@ -22,8 +22,8 @@ public class WelcomeActivity extends AppCompatActivity {
         final TranslateAnimation taLeft = new TranslateAnimation(0, 250, 0, 0);
         taRight.setDuration(4000);
         taLeft.setDuration(4000);
-       WatchAndVipDataSave dataSave=new WatchAndVipDataSave(this);
-        dataSave.setVipData("isVip");
+        WatchAndVipDataSave dataSave = new WatchAndVipDataSave(this);
+        dataSave.clearVipData();
         login_start_bg.startAnimation(taRight);
         taLeft.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -58,8 +58,9 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
-    public void toMain(View view){
-        startActivity(new Intent(this,TabMainActivity.class));
+
+    public void toMain(View view) {
+        startActivity(new Intent(this, TabMainActivity.class));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

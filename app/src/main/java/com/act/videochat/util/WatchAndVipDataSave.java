@@ -39,6 +39,11 @@ public class WatchAndVipDataSave {
 
     }
 
+    public void clearVipData() {
+        vipEditor.clear();
+        vipEditor.commit();
+
+    }
 
     public void clearWatchCountDataList() {
         watchCountEditor.clear();

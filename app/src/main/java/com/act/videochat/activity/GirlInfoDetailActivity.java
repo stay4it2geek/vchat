@@ -2,6 +2,7 @@ package com.act.videochat.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -36,8 +37,10 @@ import com.act.videochat.fragment.GirlInfoFragment;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.DeviceUtil;
+import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.util.GlideImageLoader;
+import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.ScreenUtil;
 import com.act.videochat.util.StatusBarUtil;
 import com.act.videochat.view.ColorFlipPagerTitleView;
@@ -503,6 +506,12 @@ public class GirlInfoDetailActivity extends BaseActivity {
 
 
     public void followHer(View view) {
+        FileUtils fileUtils=new FileUtils();
+        LoginDataSave dataSave = new LoginDataSave(this);
+        if ((!"isLogin".equals(dataSave.getLoginData()))&&!"isLogin".equals(fileUtils.readInfo(Constants.USER_EXIST))) {
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
         if (followHer.getText().equals("关注她")) {
             infoData = (CommonChatListModel.HomeChatInfoData) getIntent().getSerializableExtra(Constants.CHAT_GIRL);
             if (list!=null && !IDs.contains(infoData.id)) {
@@ -522,5 +531,10 @@ public class GirlInfoDetailActivity extends BaseActivity {
             }
         }
 
+    }
+
+    public void loginphone(View view) {
+        startActivity(new Intent(this, LoginActivity.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

@@ -4,24 +4,17 @@ package com.act.videochat.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class WatchAndVipDataSave {
+public class WatchDataSave {
+
     private SharedPreferences watchCountPreferences;
     private SharedPreferences.Editor watchCountEditor;
 
-    private SharedPreferences vipPreferences;
-    private SharedPreferences.Editor vipEditor;
-
-    public WatchAndVipDataSave(Context mContext, String preferenceName) {
+    public WatchDataSave(Context mContext, String preferenceName) {
         watchCountPreferences = mContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
         watchCountEditor = watchCountPreferences.edit();
-    }
-    public WatchAndVipDataSave(Context mContext) {
-        vipPreferences = mContext.getSharedPreferences("vipData", Context.MODE_PRIVATE);
-        vipEditor = vipPreferences.edit();
     }
 
 
@@ -39,11 +32,6 @@ public class WatchAndVipDataSave {
 
     }
 
-    public void clearVipData() {
-        vipEditor.clear();
-        vipEditor.commit();
-
-    }
 
     public void clearWatchCountDataList() {
         watchCountEditor.clear();
@@ -72,16 +60,4 @@ public class WatchAndVipDataSave {
     }
 
 
-    public void setVipData(String isVip) {
-//        vipEditor.putString("isVip", isVip);
-//        vipEditor.commit();
-        vipEditor.clear();
-        vipEditor.commit();
-    }
-
-
-    public String getVipData() {
-        return vipPreferences.getString("isVip", null);
-
-    }
 }

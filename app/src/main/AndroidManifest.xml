@@ -31,6 +31,8 @@
         <activity android:name=".activity.ChatFollowActivity" />
         <activity android:name=".activity.VideoFollowActivity" />
         <activity android:name=".activity.BuyVipActivity"/>
+        <activity android:name=".activity.LoginActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".activity.RegsiterActivity" android:launchMode="singleInstance"/>
 
     </application>
 </manifest>

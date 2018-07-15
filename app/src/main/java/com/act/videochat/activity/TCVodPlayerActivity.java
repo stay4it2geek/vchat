@@ -28,8 +28,10 @@ import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.bean.WatchMessageEvent;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
+import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.TCUtils;
-import com.act.videochat.util.WatchAndVipDataSave;
+import com.act.videochat.util.VipDataSave;
+import com.act.videochat.util.WatchDataSave;
 import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.YRecycleviewRefreshFootView;
 import com.bumptech.glide.Glide;
@@ -76,10 +78,12 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
     private int mCurrentPage;
     private String mCatagoryId;
     private String videoUrl = "";
-    private WatchAndVipDataSave save;
-    private WatchAndVipDataSave vipsave;
+    private WatchDataSave watchDataSave;
+    private VipDataSave vipsave;
     private BigVideoOneUserInfoModel model;
-
+    private String isVipPrivate;
+    private String isVipStorage;
+    private FileUtils fileUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +91,9 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         setContentView(R.layout.activity_player);
         yrecycle_view_loadMore = (YRecycleviewRefreshFootView) findViewById(R.id.yrecycle_view_loadMore);
         initData();
-        save = new WatchAndVipDataSave(this, "VideoInfo");
-        vipsave = new WatchAndVipDataSave(this);
+        watchDataSave = new WatchDataSave(this, "VideoInfo");
+        vipsave = new VipDataSave(this);
+        fileUtils= new FileUtils();
         EventBus.getDefault().register(this);
 
     }
@@ -179,25 +184,25 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
 
                 if (playerInfo != null) {
-                    if (vipsave.getVipData() != null && "isVip".equals(vipsave.getVipData())) {
+                    if ((isVipPrivate != null && "isVip".equals(isVipPrivate))||(isVipStorage != null && "isVip".equals(isVipStorage))) {
                         playerInfo.txVodPlayer.resume();
                         mTXVodPlayer = playerInfo.txVodPlayer;
 
                     } else {
 
-                        long l = System.currentTimeMillis() - save.getTimeData();
+                        long l = System.currentTimeMillis() - watchDataSave.getTimeData();
                         long day = l / (24 * 60 * 60 * 1000);
                         long hour = (l / (60 * 60 * 1000) - day * 24);
 
                         if (day > 0 && hour > 0) {
-                            save.clearWatchCountDataList();
+                            watchDataSave.clearWatchCountDataList();
                         }
 
-                        if (save.getDataList() == null || save.getDataList().size() == 0) {
+                        if (watchDataSave.getDataList() == null || watchDataSave.getDataList().size() == 0) {
                             playerInfo.txVodPlayer.resume();
                             mTXVodPlayer = playerInfo.txVodPlayer;
                         } else {
-                            if (save.getDataList().size() < 9 && save.getDataList().contains(playerInfo.playURL)) {
+                            if (watchDataSave.getDataList().size() < 9 && watchDataSave.getDataList().contains(playerInfo.playURL)) {
                                 playerInfo.txVodPlayer.resume();
                                 mTXVodPlayer = playerInfo.txVodPlayer;
 
@@ -360,7 +365,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                                 playerInfo.playerView = playView;
                                 playerInfo.txVodPlayer.setPlayerView(playView);
                                 playerInfo.txVodPlayer.startPlay(playerInfo.playURL);
-                                if (vipplayerInfoList.size() < 8 && save.getDataList().size() < 8) {
+                                if (vipplayerInfoList.size() < 8 && watchDataSave.getDataList().size() < 8) {
                                     vipplayerInfoList.add(playerInfo.playURL);
                                     WatchMessageEvent watchMessageEvent = new WatchMessageEvent(vipplayerInfoList);
                                     EventBus.getDefault().post(watchMessageEvent);
@@ -380,7 +385,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                 playerInfo.playerView = playView;
                 playerInfo.txVodPlayer.setPlayerView(playView);
                 playerInfo.txVodPlayer.startPlay(playerInfo.playURL);
-                if (vipplayerInfoList.size() < 8 && save.getDataList().size() < 8) {
+                if (vipplayerInfoList.size() < 8 && watchDataSave.getDataList().size() < 8) {
                     vipplayerInfoList.add(playerInfo.playURL);
                     WatchMessageEvent watchMessageEvent = new WatchMessageEvent(vipplayerInfoList);
                     EventBus.getDefault().post(watchMessageEvent);
@@ -435,6 +440,52 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         }
         if (mTXVodPlayer != null) {
             mTXVodPlayer.resume();
+        }
+        isVipPrivate=vipsave.getVipData();
+        isVipStorage= fileUtils.readInfo(Constants.VIP);
+        PlayerInfo playerInfo = mPagerAdapter.findPlayerInfo(mCurrentPosition);
+
+
+        if (playerInfo != null) {
+            if ((isVipPrivate != null && "isVip".equals(isVipPrivate))||(isVipStorage != null && "isVip".equals(isVipStorage))) {
+                playerInfo.txVodPlayer.resume();
+                mTXVodPlayer = playerInfo.txVodPlayer;
+
+            } else {
+
+                long l = System.currentTimeMillis() - watchDataSave.getTimeData();
+                long day = l / (24 * 60 * 60 * 1000);
+                long hour = (l / (60 * 60 * 1000) - day * 24);
+
+                if (day > 0 && hour > 0) {
+                    watchDataSave.clearWatchCountDataList();
+                }
+
+                if (watchDataSave.getDataList() == null || watchDataSave.getDataList().size() == 0) {
+                    playerInfo.txVodPlayer.resume();
+                    mTXVodPlayer = playerInfo.txVodPlayer;
+                } else {
+                    if (watchDataSave.getDataList().size() < 9 && watchDataSave.getDataList().contains(playerInfo.playURL)) {
+                        playerInfo.txVodPlayer.resume();
+                        mTXVodPlayer = playerInfo.txVodPlayer;
+
+                    } else {
+                        FragmentDialog.newInstance(false, "非VIP会员一天只能观看8个哦!", "成为VIP会员可以无限观看哦!", "成为永久会员", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
+                            @Override
+                            public void onPositiveClick(Dialog dialog) {
+                                startActivity(new Intent(TCVodPlayerActivity.this, BuyVipActivity.class));
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onNegtiveClick(Dialog dialog) {
+                                dialog.dismiss();
+
+                            }
+                        }).show(getSupportFragmentManager(), "");
+                    }
+                }
+            }
         }
     }
 
@@ -589,6 +640,6 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void Event(WatchMessageEvent watchMessageEvent) {
-        save.setWatchDataList(watchMessageEvent.getMessage());
+        watchDataSave.setWatchDataList(watchMessageEvent.getMessage());
     }
 }

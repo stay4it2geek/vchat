@@ -22,12 +22,13 @@ import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.adapter.VideoWorksListAdapter;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
-import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.bean.CommonVideoListModel;
 import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
+import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.FollowDataSave;
+import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.YRecycleview;
 
@@ -55,7 +56,7 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
     ArrayList<CommonVideoListModel.HomeVideoInfoData> details = new ArrayList<>();
     int currentPage;
     private List<BigVideoOneUserInfoModel> list;
-    private List<String> IDs =new ArrayList<>();
+    private List<String> IDs = new ArrayList<>();
     private TextView followHer;
     private FollowDataSave dataSave;
 
@@ -98,7 +99,7 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
 
         list = dataSave.getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
 
-        for (BigVideoOneUserInfoModel headerInfo:list) {
+        for (BigVideoOneUserInfoModel headerInfo : list) {
             IDs.add(headerInfo.data.id);
         }
 
@@ -115,9 +116,9 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (list!=null && IDs.contains(headerInfo.data.id)) {
+        if (list != null && IDs.contains(headerInfo.data.id)) {
             followHer.setText("已关注");
-        }else{
+        } else {
             followHer.setText("关注她");
         }
     }
@@ -233,16 +234,22 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
             public void onNegtiveClick(Dialog dialog) {
                 dialog.dismiss();
             }
-        }).show(getSupportFragmentManager(),"");
+        }).show(getSupportFragmentManager(), "");
 
 
     }
 
-    public void followHer(View view){
+    public void followHer(View view) {
+        FileUtils fileUtils=new FileUtils();
+        LoginDataSave dataSave = new LoginDataSave(this);
+        if ((!"isLogin".equals(dataSave.getLoginData()))&&!"isLogin".equals(fileUtils.readInfo(Constants.USER_EXIST))) {
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
 
         if (followHer.getText().equals("关注她")) {
 
-            if (list!=null && !IDs.contains(headerInfo.data.id)) {
+            if (list != null && !IDs.contains(headerInfo.data.id)) {
                 list.add(headerInfo);
                 IDs.add(headerInfo.data.id);
                 followHer.setText("已关注");
@@ -250,7 +257,7 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
 
             }
         } else {
-            if (list!=null && IDs.contains(headerInfo.data.id)) {
+            if (list != null && IDs.contains(headerInfo.data.id)) {
                 list.remove(IDs.indexOf(headerInfo.data.id));
                 IDs.remove(IDs.indexOf(headerInfo.data.id));
                 followHer.setText("关注她");

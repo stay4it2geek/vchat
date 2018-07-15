@@ -17,10 +17,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
-/**
- * 状态栏透明
- * Created by SCWANG on 2016/10/26.
- */
 
 @SuppressWarnings("unused")
 public class StatusBarUtil {
@@ -109,15 +105,7 @@ public class StatusBarUtil {
         } else {
             immersive(window, color, alpha);
         }
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//        } else if (Build.VERSION.SDK_INT >= 19) {
-//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
 
-//        setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
     }
 
     //------------------------->
@@ -125,9 +113,6 @@ public class StatusBarUtil {
     /** android 6.0设置字体颜色 */
     @RequiresApi(Build.VERSION_CODES.M)
     private static void darkModeForM(Window window, boolean dark) {
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(Color.TRANSPARENT);
 
         int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
         if (dark) {
@@ -138,10 +123,7 @@ public class StatusBarUtil {
         window.getDecorView().setSystemUiVisibility(systemUiVisibility);
     }
 
-    /**
-     * 设置Flyme4+的darkMode,darkMode时候字体颜色及icon变黑
-     * http://open-wiki.flyme.cn/index.php?title=Flyme%E7%B3%BB%E7%BB%9FAPI
-     */
+
     public static boolean darkModeForFlyme4(Window window, boolean dark) {
         boolean result = false;
         if (window != null) {

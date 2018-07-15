@@ -17,7 +17,10 @@ import com.act.videochat.R;
 import com.act.videochat.adapter.FollowVideoListAdapter;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
 import com.act.videochat.manager.PageHelper;
+import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.FollowDataSave;
+import com.act.videochat.util.LoginDataSave;
+import com.act.videochat.util.ToastUtil;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.YRecycleview;
 
@@ -83,7 +86,6 @@ public class VideoFollowActivity extends AppCompatActivity {
                 getData(Constants.LOADMORE);
 
 
-
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -147,8 +149,8 @@ public class VideoFollowActivity extends AppCompatActivity {
                 }
             });
             loadNetView.setVisibility(View.GONE);
-        }else{
-            if (Constants.REFRESH==what){
+        } else {
+            if (Constants.REFRESH == what) {
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -160,6 +162,13 @@ public class VideoFollowActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
 
+
+    }
+
+    public void logout(View view) {
+        LoginDataSave dataSave = new LoginDataSave(this);
+        dataSave.clearLoginData();
+        ToastUtil.showToast(this, "已清除登录数据");
 
     }
 }

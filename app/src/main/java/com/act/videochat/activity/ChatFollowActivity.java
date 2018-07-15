@@ -18,7 +18,10 @@ import com.act.videochat.R;
 import com.act.videochat.adapter.CommonChatListAdapter;
 import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.manager.PageHelper;
+import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.FollowDataSave;
+import com.act.videochat.util.LoginDataSave;
+import com.act.videochat.util.ToastUtil;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.YRecycleview;
 
@@ -167,6 +170,13 @@ public class ChatFollowActivity extends AppCompatActivity {
             }
         }
         adapter.notifyDataSetChanged();
+
+    }
+
+    public void logout(View view){
+        LoginDataSave dataSave =new LoginDataSave(this);
+        dataSave.clearLoginData();
+        ToastUtil.showToast(this,"已清除登录数据");
 
     }
 

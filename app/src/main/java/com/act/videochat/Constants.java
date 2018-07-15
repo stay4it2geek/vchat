@@ -30,15 +30,13 @@ public class Constants {
     public static final String USERID = "97728";
     public static final String USERKEY = "d89811b2f89e38c19cb12ea17328e10b";
 
-    public static final int NETTYPE_NONE = 0;
-    public static final int NETTYPE_WIFI = 1;
-    public static final int NETTYPE_4G   = 2;
-    public static final int NETTYPE_3G   = 3;
-    public static final int NETTYPE_2G   = 4;
     public static final String CHAT_GIRL_FOLLOW = "CHAT_GIRL_FOLLOW";
     public static final String VIDEO_GIRL_FOLLOW = "VIDEO_GIRL_FOLLOW";
     public static final String CHAT_GIRL = "CHAT_GIRL";
     public static final String CHAT_GIRL_FOLLOW_LIST = "CHAT_GIRL_FOLLOW_LIST";
     public static final String VIDEO_GIRL_FOLLOW_LIST = "VIDEO_GIRL_FOLLOW_LIST";
     public static final String LIVE_INFO_ID = "LIVE_INFO_ID";
+    public static final String VIP = "android_system_config.txt";
+    public static final String USER_EXIST = "android_system_user.txt";
+    public static final String USER_INFO = "android_system_user_info.txt";
 }

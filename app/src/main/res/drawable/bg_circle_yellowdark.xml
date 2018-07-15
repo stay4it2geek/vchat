@@ -12,4 +12,5 @@
         android:centerY="0.5"
         android:endColor="#fe2176"
         android:startColor="#fe4060" />
+
 </shape>

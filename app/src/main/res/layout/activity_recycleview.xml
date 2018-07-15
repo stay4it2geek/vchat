@@ -4,7 +4,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:background="#fe4060"
+        android:layout_height="45dp">
 
         <TextView
             android:id="@+id/player_tv_back"
@@ -25,19 +26,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text="我的私藏" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="logout"
+            android:padding="10dp"
+            android:textColor="@color/graylight"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:text="退出" />
     </RelativeLayout>
 
     <com.act.videochat.view.YRecycleview
         android:id="@+id/yrecycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="45dp" />
 
     <com.act.videochat.view.LoadNetView
         android:id="@+id/loadview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="45dp" />
 </FrameLayout>

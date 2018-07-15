@@ -4,15 +4,6 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-/**
- * @Created SiberiaDante
- * @Describe：
- * @CreateTime: 2017/12/18
- * @UpDateTime:
- * @Email: 2654828081@qq.com
- * @GitHub: https://github.com/SiberiaDante
- */
-
 public class ScreenUtil {
 
     /**

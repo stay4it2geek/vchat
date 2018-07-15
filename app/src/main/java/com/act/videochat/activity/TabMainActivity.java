@@ -40,7 +40,6 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号
     private TextView makemoney;
-    private RelativeLayout makelayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,6 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
         ly_1 = (LinearLayout) findViewById(R.id.ly_1);
         ly_2 = (LinearLayout) findViewById(R.id.ly_2);
         makemoney = (TextView) findViewById(R.id.makemoney);
-        makelayout= (RelativeLayout) findViewById(R.id.makelayout);
         view_pager = (ViewPager) findViewById(R.id.view_pager);
         InitImageView();
         DuplicateVideoFragment tab1Fragment = DuplicateVideoFragment.newInstance();
@@ -91,7 +89,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
         });
         ly_1.setOnClickListener(this);
         ly_2.setOnClickListener(this);
-        makelayout.setOnClickListener(this);
+        makemoney.setOnClickListener(this);
 
     }
 
@@ -117,7 +115,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ly_2:
                 view_pager.setCurrentItem(1);
                 break;
-            case R.id.makelayout:
+            case R.id.makemoney:
                 if(view_pager.getCurrentItem()==0){
                     startActivity(new Intent(this,VideoFollowActivity.class));
                 }else{

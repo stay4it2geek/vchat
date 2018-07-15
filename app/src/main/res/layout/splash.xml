@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="250dp"
         android:gravity="center"
         android:text="-- 高颜值视频社交 --"
         android:textColor="#fff"
@@ -47,15 +47,37 @@
         android:textSize="17sp" />
 
 
-    <TextView
-        android:text="跳过"
-        android:onClick="toMain"
-        android:textSize="17sp"
-        android:padding="15dp"
-        android:layout_margin="5dp"
-        android:layout_gravity="right"
-        android:textColor="#fff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+
+
+        <TextView
+
+            android:id="@+id/logintip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="380dp"
+            android:gravity="center"
+            android:text=" ━  手机快捷登录/注册  ━"
+            android:textColor="#fff"
+            android:textSize="17sp" />
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="410dp">
+
+            <Button
+                android:id="@+id/phonelogin"
+                android:onClick="loginphone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/phone" />
+
+        </RelativeLayout>
+
+
+
 </FrameLayout>

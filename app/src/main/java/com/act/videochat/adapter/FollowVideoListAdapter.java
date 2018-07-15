@@ -49,7 +49,7 @@ public class FollowVideoListAdapter extends RecyclerView.Adapter<FollowVideoList
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.photoImg.setLayoutParams(new FrameLayout.LayoutParams((screenWidth / 2), (screenWidth / 2)));
+        holder.photoImg.setLayoutParams(new FrameLayout.LayoutParams((screenWidth / 2), (screenWidth / 2) + 175));
         if (mContext != null) {
             Glide.with(mContext).load(datas != null && datas.size() > 0 ? datas.get(position).data.avatar.url : "").placeholder(R.drawable.placehoder_img).error(R.drawable.error_img).into(holder.photoImg);//加载网络图片
         }

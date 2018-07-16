@@ -639,7 +639,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                 }
             } else {
                 model = CommonUtil.parseJsonWithGson((String) msg.obj, BigVideoOneUserInfoModel.class);
-                Intent intent = new Intent(TCVodPlayerActivity.this, GirlShowVideoListInfoActivity.class);
+                Intent intent = new Intent(TCVodPlayerActivity.this, GirlShowListInfoActivity.class);
                 intent.putExtra(Constants.LIVE_INFO_USER_INFO, model);
                 startActivity(intent);
             }

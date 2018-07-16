@@ -10,7 +10,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:name="com.act.videochat.App"
         android:allowBackup="true"
@@ -25,14 +26,27 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TCVodPlayerActivity" />
-        <activity android:name=".activity.GirlShowVideoListInfoActivity" android:launchMode="singleInstance" />
-        <activity android:name=".activity.GirlInfoDetailActivity" android:launchMode="singleInstance"/>
+        <activity
+            android:name=".activity.GirlInfoDetailActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".activity.TabMainActivity" />
-        <activity android:name=".activity.ChatFollowActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".activity.VideoFollowActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".activity.BuyVipActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".activity.LoginActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".activity.RegsiterActivity" android:launchMode="singleInstance"/>
-
+        <activity
+            android:name=".activity.ChatFollowActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.VideoFollowActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.BuyVipActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.RegsiterActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.GirlShowListInfoActivity"
+            android:launchMode="singleInstance" />
     </application>
 </manifest>

@@ -156,7 +156,7 @@ public class VideoFollowActivity extends AppCompatActivity {
             adapter.setOnItemClickListener(new FollowVideoListAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, final int position, ImageView photoImg) {
-                    Intent intent = new Intent(VideoFollowActivity.this, GirlShowVideoListInfoActivity.class);
+                    Intent intent = new Intent(VideoFollowActivity.this, GirlShowListInfoActivity.class);
                     intent.putExtra(Constants.LIVE_INFO_USER_INFO, list.get(position));
                     startActivity(intent);
                 }

@@ -26,8 +26,8 @@
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="290dp"
         android:gravity="center"
-        android:text="-- 高颜值视频社交 --"
-        android:textColor="#fff"
+        android:text="- 高颜值视频社交 -"
+        android:textColor="@color/fontpink"
         android:textSize="18sp" />
 
 

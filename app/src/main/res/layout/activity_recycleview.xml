@@ -8,8 +8,8 @@
         android:layout_height="45dp">
 
         <TextView
-            android:id="@+id/player_tv_back"
-            android:layout_width="25dp"
+            android:id="@+id/tv_back"
+            android:layout_width="22dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
@@ -20,23 +20,27 @@
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/btn_back_gray"
             android:onClick="back"
-            android:padding="15dp" />
+            android:padding="10dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="18sp"
             android:textColor="@color/white"
             android:text="我的私藏" />
 
         <TextView
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:onClick="logout"
             android:padding="10dp"
+
+            android:textSize="17sp"
             android:textColor="@color/graylight"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:text="退出" />
     </RelativeLayout>

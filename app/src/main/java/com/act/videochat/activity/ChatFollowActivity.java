@@ -79,13 +79,13 @@ public class ChatFollowActivity extends AppCompatActivity {
             @Override
             public void onLoadMore() {
 
-                if (mPageDaoImpl.getCurrentPage() <= mPageDaoImpl.getPageNum()) {
+                if (mPageDaoImpl.getCurrentPage() < mPageDaoImpl.getPageNum()) {
                     mPageDaoImpl.nextPage();
-
+                    getData(Constants.LOADMORE);
                 }
 
 
-                getData(Constants.LOADMORE);
+
 
 
                 converDataHandler.postDelayed(new Runnable() {
@@ -120,6 +120,12 @@ public class ChatFollowActivity extends AppCompatActivity {
                 getData(Constants.REFRESH);
             }
         });
+        loadNetView.setloginButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatFollowActivity.this,LoginActivity.class));
+            }
+        });
 
 
     }
@@ -127,13 +133,22 @@ public class ChatFollowActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        list.clear();
-        mLocalDatas = new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).getChatGirlDataList(Constants.CHAT_GIRL_FOLLOW_LIST);
-        //每次读10条数据
-        mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
-        mPageDaoImpl.setCurrentPage(1);
-        recycleview.setNoMoreData(false);
-        getData(Constants.REFRESH);
+
+        LoginDataSave dataSave = new LoginDataSave(this);
+        if (dataSave.getLoginData()!=null &&"isLogin".equals(dataSave.getLoginData())) {
+            findViewById(R.id.logout).setVisibility(View.VISIBLE);
+            list.clear();
+            mLocalDatas = new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).getChatGirlDataList(Constants.CHAT_GIRL_FOLLOW_LIST);
+            //每次读10条数据
+            mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
+            mPageDaoImpl.setCurrentPage(1);
+            recycleview.setNoMoreData(false);
+            getData(Constants.REFRESH);
+        }else{
+            findViewById(R.id.logout).setVisibility(View.GONE);
+            loadNetView.setVisibility(View.VISIBLE);
+            loadNetView.setlayoutVisily(Constants.LOGIN);
+        }
 
     }
 
@@ -172,12 +187,17 @@ public class ChatFollowActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
     }
+    public void back(View view) {
+        this.finish();
+    }
 
     public void logout(View view){
         LoginDataSave dataSave =new LoginDataSave(this);
         dataSave.clearLoginData();
         ToastUtil.showToast(this,"已清除登录数据");
-
+        loadNetView.setVisibility(View.VISIBLE);
+        loadNetView.setlayoutVisily(Constants.LOGIN);
+        findViewById(R.id.logout).setVisibility(View.GONE);
     }
 
 }

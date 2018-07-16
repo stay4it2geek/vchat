@@ -2,6 +2,7 @@ package com.act.videochat.activity;
 
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -20,6 +21,7 @@ import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.VipDataSave;
+import com.act.videochat.view.FragmentDialog;
 
 import org.json.JSONException;
 
@@ -44,7 +46,7 @@ public class BuyVipActivity extends AppCompatActivity {
         // 设置允许JS弹窗
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-        mWebView.loadUrl("http://xiaogu1.av86.vip/return.php");
+        mWebView.loadUrl("http://xiaogu1.av86.vip/index.php");
 
         button = (Button) findViewById(R.id.button);
 
@@ -60,7 +62,18 @@ public class BuyVipActivity extends AppCompatActivity {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
                     public void run() {
-                        mWebView.loadUrl("javascript:callPay()");
+                        FragmentDialog.newInstance(false, "!!支付时不能关闭该应用", "即将打开支付宝支付,支付时不能关闭该应用,支付完成后必须回到该页面，否则将无法升级成VIP会员", "立即支付", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
+                            @Override
+                            public void onPositiveClick(Dialog dialog) {
+                                mWebView.loadUrl("javascript:callPay()");
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onNegtiveClick(Dialog dialog) {
+                                dialog.dismiss();
+                            }
+                        }).show(getSupportFragmentManager(),"");
 
                     }
                 });
@@ -86,7 +99,7 @@ public class BuyVipActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.e("TAG", "访问的url地址：" + url);
                 if (url.contains("platformapi/startapp")) {
-
+                    button.setVisibility(View.GONE);
                     Intent intent;
                     try {
                         intent = Intent.parseUri(url,
@@ -100,6 +113,7 @@ public class BuyVipActivity extends AppCompatActivity {
                     }
 
                 } else {
+                    button.setVisibility(View.VISIBLE);
                     view.loadUrl(url);
                 }
 
@@ -116,6 +130,7 @@ public class BuyVipActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void payInfoMessage(String message) throws JSONException {
+            Log.e("TAG", "message：" + message);
             if (message.equals("SUCCESS")) {
                 VipDataSave dataSave = new VipDataSave(BuyVipActivity.this);
                 dataSave.setVipData("isVip");

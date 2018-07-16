@@ -1,10 +1,10 @@
 package com.act.videochat.activity;
 
+import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.act.videochat.R;
 import com.act.videochat.util.LoginDataSave;
+import com.act.videochat.util.TCUtils;
+import com.act.videochat.view.FragmentDialog;
 import com.act.videochat.view.SelfDialog;
 
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
@@ -77,14 +79,44 @@ public class WelcomeActivity extends ActivityManagePermission {
     protected void onResume() {
         super.onResume();
         LoginDataSave dataSave = new LoginDataSave(this);
-        if("isLogin".equals(dataSave.getLoginData())){
+        if (!TCUtils.isNetworkAvailable(this)) {
             findViewById(R.id.phonelogin).setVisibility(View.GONE);
             findViewById(R.id.logintip).setVisibility(View.GONE);
+            FragmentDialog.newInstance(false, "网络有问题", "请先打开网络", "确定", "", "", "", true, new FragmentDialog.OnClickBottomListener() {
+                @Override
+                public void onPositiveClick(Dialog dialog) {
+                    Intent intent=null;
+                    //判断手机系统的版本  即API大于10 就是3.0或以上版本
+                    if(android.os.Build.VERSION.SDK_INT>10){
+                        intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                    }else{
+                        intent = new Intent();
+                        ComponentName component = new ComponentName("com.android.settings","com.android.settings.WirelessSettings");
+                        intent.setComponent(component);
+                        intent.setAction("android.intent.action.VIEW");
+                    }
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onNegtiveClick(Dialog dialog) {
+                        dialog.dismiss();
+                }
+            });
+        } else {
+            if ("isLogin".equals(dataSave.getLoginData())) {
+                findViewById(R.id.phonelogin).setVisibility(View.GONE);
+                findViewById(R.id.logintip).setVisibility(View.GONE);
+            }
+            if (dataSave.getLoginData() == ""||dataSave.getLoginData() == null) {
+                findViewById(R.id.phonelogin).setVisibility(View.VISIBLE);
+                findViewById(R.id.logintip).setVisibility(View.VISIBLE);
+            }
+            findViewById(R.id.tomain).setVisibility(View.VISIBLE);
         }
-        if(dataSave.getLoginData().equals("")){
-            findViewById(R.id.phonelogin).setVisibility(View.VISIBLE);
-            findViewById(R.id.logintip).setVisibility(View.VISIBLE);
-        }
+
+
     }
 
 

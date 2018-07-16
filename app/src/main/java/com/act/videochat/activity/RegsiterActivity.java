@@ -47,14 +47,13 @@ public class RegsiterActivity extends AppCompatActivity {
             dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
             FileUtils fileUtils = new FileUtils();
             if (fileUtils.isExternalStorageReadable() && fileUtils.isExternalStorageWritable()) {
-                if (!fileUtils.isFileExist(Constants.USER_EXIST)) {
-                    fileUtils.write2SDFromInput( Constants.USER_EXIST, "isLogin");
-                    fileUtils.write2SDFromInput( Constants.USER_INFO, et_userPhonenumber.getText().toString() + "##" + et_userpassword.getText().toString());
-                    this.finish();
-                    ToastUtil.showToast(this, "注册成功");
-                }else{
-
+                if (!fileUtils.isFileExist(Constants.USER_INFO)) {
+                    fileUtils.deleteFile(Constants.USER_INFO);
                 }
+                fileUtils.write2SDFromInput( Constants.USER_INFO, et_userPhonenumber.getText().toString() + "##" + et_userpassword.getText().toString());
+                startActivity(new Intent(RegsiterActivity.this, TabMainActivity.class));
+                this.finish();
+                ToastUtil.showToast(this, "注册成功");
 
             }
         }

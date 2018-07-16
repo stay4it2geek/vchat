@@ -29,6 +29,7 @@ import com.act.videochat.bean.WatchMessageEvent;
 import com.act.videochat.manager.OkHttpClientManager;
 import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.FileUtils;
+import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.TCUtils;
 import com.act.videochat.util.VipDataSave;
 import com.act.videochat.util.WatchDataSave;
@@ -210,8 +211,12 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                                 FragmentDialog.newInstance(false, "非VIP会员一天只能观看8个哦!", "成为VIP会员可以无限观看哦!", "成为永久会员", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
                                     @Override
                                     public void onPositiveClick(Dialog dialog) {
-                                        startActivity(new Intent(TCVodPlayerActivity.this, BuyVipActivity.class));
-                                        dialog.dismiss();
+                                        LoginDataSave dataSave = new LoginDataSave(TCVodPlayerActivity.this);
+                                        if ("isLogin".equals(dataSave.getLoginData())) {
+                                            startActivity(new Intent(TCVodPlayerActivity.this,BuyVipActivity .class));
+                                        }else{
+                                            startActivity(new Intent(TCVodPlayerActivity.this, LoginActivity.class));
+                                        }
                                     }
 
                                     @Override
@@ -473,7 +478,13 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
                         FragmentDialog.newInstance(false, "非VIP会员一天只能观看8个哦!", "成为VIP会员可以无限观看哦!", "成为永久会员", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
                             @Override
                             public void onPositiveClick(Dialog dialog) {
-                                startActivity(new Intent(TCVodPlayerActivity.this, BuyVipActivity.class));
+                                LoginDataSave dataSave = new LoginDataSave(TCVodPlayerActivity.this);
+                                if ("isLogin".equals(dataSave.getLoginData())) {
+                                    startActivity(new Intent(TCVodPlayerActivity.this,BuyVipActivity .class));
+                                }else{
+                                    startActivity(new Intent(TCVodPlayerActivity.this, LoginActivity.class));
+                                }
+
                                 dialog.dismiss();
                             }
 

@@ -119,18 +119,32 @@ public class VideoFollowActivity extends AppCompatActivity {
             }
         });
 
+        loadNetView.setloginButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(VideoFollowActivity.this,LoginActivity.class));
+            }
+        });
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        list.clear();
-        mLocalDatas = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
-        mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
-        mPageDaoImpl.setCurrentPage(1);
-        recycleview.setNoMoreData(false);
-        getData(Constants.REFRESH);
+        LoginDataSave dataSave = new LoginDataSave(this);
+        if (dataSave.getLoginData()!=null &&"isLogin".equals(dataSave.getLoginData())) {
+            findViewById(R.id.logout).setVisibility(View.VISIBLE);
+            list.clear();
+            mLocalDatas = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
+            mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
+            mPageDaoImpl.setCurrentPage(1);
+            recycleview.setNoMoreData(false);
+            getData(Constants.REFRESH);
+        }else{
+            findViewById(R.id.logout).setVisibility(View.GONE);
+            loadNetView.setVisibility(View.VISIBLE);
+            loadNetView.setlayoutVisily(Constants.LOGIN);
+        }
     }
 
 
@@ -169,6 +183,12 @@ public class VideoFollowActivity extends AppCompatActivity {
         LoginDataSave dataSave = new LoginDataSave(this);
         dataSave.clearLoginData();
         ToastUtil.showToast(this, "已清除登录数据");
+        loadNetView.setVisibility(View.VISIBLE);
+        loadNetView.setlayoutVisily(Constants.LOGIN);
+        findViewById(R.id.logout).setVisibility(View.GONE);
+    }
 
+    public void back(View view) {
+        this.finish();
     }
 }

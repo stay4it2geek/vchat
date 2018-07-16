@@ -13,11 +13,11 @@
 
         <TextView
             android:id="@+id/tv_back"
-            android:layout_width="20dp"
+            android:layout_width="22dp"
             android:layout_height="30dp"
             android:layout_gravity="left"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:drawableLeft="@drawable/btn_back_gray"
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="1dp"
             android:padding="10dp"
             android:text="注册"
             android:textColor="@color/white"
@@ -48,7 +48,7 @@
             android:onClick="phonelogin"
             android:layout_marginRight="10dp"
             android:textColor="@color/colorGray"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <View

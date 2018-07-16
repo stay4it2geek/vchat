@@ -25,12 +25,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TCVodPlayerActivity" />
-        <activity android:name=".activity.GirlShowVideoListInfoActivity" />
-        <activity android:name=".activity.GirlInfoDetailActivity" />
+        <activity android:name=".activity.GirlShowVideoListInfoActivity" android:launchMode="singleInstance" />
+        <activity android:name=".activity.GirlInfoDetailActivity" android:launchMode="singleInstance"/>
         <activity android:name=".activity.TabMainActivity" />
-        <activity android:name=".activity.ChatFollowActivity" />
-        <activity android:name=".activity.VideoFollowActivity" />
-        <activity android:name=".activity.BuyVipActivity"/>
+        <activity android:name=".activity.ChatFollowActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".activity.VideoFollowActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".activity.BuyVipActivity" android:launchMode="singleInstance"/>
         <activity android:name=".activity.LoginActivity" android:launchMode="singleInstance"/>
         <activity android:name=".activity.RegsiterActivity" android:launchMode="singleInstance"/>
 

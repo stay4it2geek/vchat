@@ -25,12 +25,16 @@ import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
 import com.act.videochat.OnScrollShowHideListner;
 import com.act.videochat.R;
+import com.act.videochat.activity.LoginActivity;
 import com.act.videochat.activity.TCVodPlayerActivity;
 import com.act.videochat.adapter.CommonVideoListAdapter;
 import com.act.videochat.bean.CommonVideoListModel;
 import com.act.videochat.bean.SmallPlayVideoInfoModel;
 import com.act.videochat.manager.OkHttpClientManager;
+import com.act.videochat.manager.PageHelper;
 import com.act.videochat.util.CommonUtil;
+import com.act.videochat.util.FollowDataSave;
+import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.YRecycleview;
 
@@ -150,25 +154,35 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                         adapter.setOnItemClickListener(new CommonVideoListAdapter.OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(View view, final int position, ImageView photoImg) {
-                                ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
-                                photoImg.startAnimation(scaleAnimation);
 
-                                scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
-                                    @Override
-                                    public void onAnimationStart(Animation animation) {
-                                        startPlay(result.maxPage,position);
-                                    }
+                                LoginDataSave dataSave = new LoginDataSave(getActivity());
+                                if (dataSave.getLoginData()!=null &&"isLogin".equals(dataSave.getLoginData())) {
+                                    ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
+                                    photoImg.startAnimation(scaleAnimation);
 
-                                    @Override
-                                    public void onAnimationEnd(Animation animation) {
+                                    scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                                        @Override
+                                        public void onAnimationStart(Animation animation) {
+                                            startPlay(result.maxPage,position);
+                                        }
 
-                                    }
+                                        @Override
+                                        public void onAnimationEnd(Animation animation) {
 
-                                    @Override
-                                    public void onAnimationRepeat(Animation animation) {
+                                        }
 
-                                    }
-                                });
+                                        @Override
+                                        public void onAnimationRepeat(Animation animation) {
+
+                                        }
+                                    });
+                                }else{
+                                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                                }
+
+
+
+
                             }
                         });
                     }

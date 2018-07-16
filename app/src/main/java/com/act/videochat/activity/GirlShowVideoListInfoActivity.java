@@ -240,9 +240,8 @@ public class GirlShowVideoListInfoActivity extends AppCompatActivity {
     }
 
     public void followHer(View view) {
-        FileUtils fileUtils=new FileUtils();
         LoginDataSave dataSave = new LoginDataSave(this);
-        if ((!"isLogin".equals(dataSave.getLoginData()))&&!"isLogin".equals(fileUtils.readInfo(Constants.USER_EXIST))) {
+        if ((!"isLogin".equals(dataSave.getLoginData()))) {
             startActivity(new Intent(this, LoginActivity.class));
             return;
         }

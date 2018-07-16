@@ -13,19 +13,14 @@ import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.act.videochat.Constants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 
-/**
- * Created by Administrator on 2016/8/3.
- */
 public class TCUtils {
 
 

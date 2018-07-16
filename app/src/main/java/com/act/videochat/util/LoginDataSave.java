@@ -31,14 +31,14 @@ public class LoginDataSave {
     }
 
     public String getLoginPhone() {
-        return loginPreferences.getString("phone", "");
+        return loginPreferences.getString("phone",null);
     }
 
     public String getLoginPassWord() {
-        return loginPreferences.getString("password", "");
+        return loginPreferences.getString("password", null);
     }
 
     public String getLoginData() {
-        return loginPreferences.getString("isLogin", "");
+        return loginPreferences.getString("isLogin", null);
     }
 }

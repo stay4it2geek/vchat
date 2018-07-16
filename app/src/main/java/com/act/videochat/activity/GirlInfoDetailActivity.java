@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.ButtonBarLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -103,7 +102,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
     @BindView(R.id.buttonBarLayout)
     ButtonBarLayout buttonBarLayout;
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    android.support.v7.widget.Toolbar toolbar;
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
     @BindView(R.id.magic_indicator_title)
@@ -506,9 +505,8 @@ public class GirlInfoDetailActivity extends BaseActivity {
 
 
     public void followHer(View view) {
-        FileUtils fileUtils=new FileUtils();
         LoginDataSave dataSave = new LoginDataSave(this);
-        if ((!"isLogin".equals(dataSave.getLoginData()))&&!"isLogin".equals(fileUtils.readInfo(Constants.USER_EXIST))) {
+        if ((!"isLogin".equals(dataSave.getLoginData()))) {
             startActivity(new Intent(this, LoginActivity.class));
             return;
         }
@@ -519,7 +517,6 @@ public class GirlInfoDetailActivity extends BaseActivity {
                 IDs.add(infoData.id);
                 followHer.setText("已关注");
                 new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).setDataList(Constants.CHAT_GIRL_FOLLOW_LIST, list);
-
             }
         } else {
             if (list!=null && IDs.contains(infoData.id)) {

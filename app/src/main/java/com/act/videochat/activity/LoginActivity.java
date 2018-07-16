@@ -56,12 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         });
         if (uitl.verifyInputTrue(et_userPhonenumber, et_userpassword)) {
             LoginDataSave dataSave = new LoginDataSave(this);
-            if ("isLogin".equals(dataSave.getLoginData())) {
+            if (dataSave.getLoginData()!=null&&"isLogin".equals(dataSave.getLoginData())) {
                 this.finish();
                 ToastUtil.showToast(this, "登录成功");
             } else {
 
-                String[] infos = fileUtils.readInfo(Constants.USER_INFO).toString().split("##");
+                String[] infos = (fileUtils.readInfo(Constants.USER_INFO)+"").split("##");
                 String phone = "";
                 String password = "";
                 if (infos.length > 1) {
@@ -72,14 +72,19 @@ public class LoginActivity extends AppCompatActivity {
                 if ((et_userPhonenumber.getText().toString().equals(dataSave.getLoginPhone())
                         && et_userpassword.getText().toString().equals(dataSave.getLoginPassWord())) ) {
                     dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
+                    startActivity(new Intent(LoginActivity.this, TabMainActivity.class));
+                    this.finish();
                     ToastUtil.showToast(this, "登录成功");
-                } else if("isLogin".equals(fileUtils.readInfo(Constants.USER_EXIST))
-                        || et_userPhonenumber.getText().toString().equals(phone)
+                } else if(et_userPhonenumber.getText().toString().equals(phone)
                         && et_userpassword.getText().toString().equals(password)){
+                    dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
+                    startActivity(new Intent(LoginActivity.this, TabMainActivity.class));
+                    this.finish();
                     ToastUtil.showToast(this, "登录成功");
-
-                }else{
-                    ToastUtil.showToast(this, "请检查用户密码是否正确！");
+                }else if(!et_userPhonenumber.getText().toString().equals(phone)){
+                    ToastUtil.showToast(this, "请检查用户是否正确！");
+                }else if(!et_userpassword.getText().toString().equals(password)){
+                    ToastUtil.showToast(this, "请检查密码是否正确！");
                 }
             }
 

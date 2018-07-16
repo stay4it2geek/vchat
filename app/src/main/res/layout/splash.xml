@@ -24,13 +24,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="290dp"
         android:gravity="center"
         android:text="-- 高颜值视频社交 --"
         android:textColor="#fff"
         android:textSize="18sp" />
 
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp">
+        <TextView
+
+            android:id="@+id/logintip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text=" ━  手机快捷登录/注册  ━"
+            android:textColor="#fff"
+            android:textSize="17sp" />
+        <Button
+            android:id="@+id/phonelogin"
+            android:onClick="loginphone"
+            android:layout_below="@+id/logintip"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/phone" />
+
+    </RelativeLayout>
+
+
+
     <TextView
+        android:id="@+id/tomain"
         android:layout_width="wrap_content"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -47,36 +81,6 @@
         android:textSize="17sp" />
 
 
-
-
-        <TextView
-
-            android:id="@+id/logintip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="380dp"
-            android:gravity="center"
-            android:text=" ━  手机快捷登录/注册  ━"
-            android:textColor="#fff"
-            android:textSize="17sp" />
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="410dp">
-
-            <Button
-                android:id="@+id/phonelogin"
-                android:onClick="loginphone"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/phone" />
-
-        </RelativeLayout>
 
 
 

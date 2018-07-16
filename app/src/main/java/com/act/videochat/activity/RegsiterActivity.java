@@ -43,19 +43,30 @@ public class RegsiterActivity extends AppCompatActivity {
             }
         });
         if (uitl.verifyInputTrue(et_userPhonenumber, et_userpassword)) {
-            LoginDataSave dataSave = new LoginDataSave(this);
-            dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
-            FileUtils fileUtils = new FileUtils();
-            if (fileUtils.isExternalStorageReadable() && fileUtils.isExternalStorageWritable()) {
-                if (!fileUtils.isFileExist(Constants.USER_INFO)) {
-                    fileUtils.deleteFile(Constants.USER_INFO);
-                }
-                fileUtils.write2SDFromInput( Constants.USER_INFO, et_userPhonenumber.getText().toString() + "##" + et_userpassword.getText().toString());
-                startActivity(new Intent(RegsiterActivity.this, TabMainActivity.class));
-                this.finish();
-                ToastUtil.showToast(this, "注册成功");
 
+            String[] infos = (new FileUtils().readInfo(Constants.USER_INFO) + "").split("##");
+            String phone = "";
+            if (infos.length > 1) {
+                phone = infos[0];
             }
+
+            if (et_userPhonenumber.getText().toString().equals(phone)) {
+                ToastUtil.showToast(this, "该用户已存在");
+            } else {
+                LoginDataSave dataSave = new LoginDataSave(this);
+                dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
+                FileUtils fileUtils = new FileUtils();
+                if (fileUtils.isExternalStorageReadable() && fileUtils.isExternalStorageWritable()) {
+                    if (!fileUtils.isFileExist(Constants.USER_INFO)) {
+                        fileUtils.write2SDFromInput(Constants.USER_INFO, et_userPhonenumber.getText().toString() + "##" + et_userpassword.getText().toString());
+                        startActivity(new Intent(RegsiterActivity.this, TabMainActivity.class));
+                        this.finish();
+                        ToastUtil.showToast(this, "注册成功");
+                    }
+                }
+            }
+
+
         }
     }
 

@@ -6,13 +6,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * @Created： SiberiaDante
- * @Date： 2017/11/11
- * @Describe：
- * @github： https://github.com/SiberiaDante
- * @博客园： http://www.cnblogs.com/shen-hua/
- */
 
 public class NormalDecoration extends RecyclerView.ItemDecoration {
 

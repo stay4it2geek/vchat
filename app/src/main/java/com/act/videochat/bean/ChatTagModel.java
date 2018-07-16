@@ -2,9 +2,7 @@ package com.act.videochat.bean;
 
 import java.util.ArrayList;
 
-/**
- * Created by weiminglin on 18/6/27.
- */
+
 
 public class ChatTagModel {
 

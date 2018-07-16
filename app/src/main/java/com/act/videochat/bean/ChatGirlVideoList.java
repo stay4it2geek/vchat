@@ -8,58 +8,58 @@ public class ChatGirlVideoList implements Serializable{
 
 
     public boolean result;
-    public int maxPage;// 1,
-    public int maxCount;// 3,
-    public int currPage;// "1",
+    public int maxPage;
+    public int maxCount;
+    public int currPage;
     public ArrayList<GirlVideoInfo> data;
 
 
     public class GirlVideoInfo implements Serializable{
 
-        public String id;// 15204,
-        public String posterId;// 875739,
-        public String nickname;// "菲力Lilly",
+        public String id;
+        public String posterId;
+        public String nickname;
         public Avatar avatar;
 
 
         public class Avatar implements Serializable{
-            public String id;// 1890557,
-            public String width;// 750,
-            public String height;// 750,
-            public String sn;// 0,
-            public String url;// "http://cdn.vliao1.xyz/prod/image/pdbp5SChw6.jpg"
+            public String id;
+            public String width;
+            public String height;
+            public String sn;
+            public String url;
         }
 
-        public String isPay;// 0,
-        public String title;// "你好啊来聊天",
-        public String postTime;// "18天之前",
-        public String follow;// 11,
+        public String isPay;
+        public String title;
+        public String postTime;
+        public String follow;
         public Cover cover;
 
         public class Cover implements Serializable{
-            public String id;// 27490,
-            public String width;// 540,
-            public String height;// 960,
-            public String url;// "http://cdn.vliao1.xyz/prod/image/875739_1528964641000_q5fda4nc4iklpu9uduhe"
+            public String id;
+            public String width;
+            public String height;
+            public String url;
         }
 
         public Frame frame;
 
         public class Frame implements Serializable{
-            public String id;// 27491,
-            public String width;// 540,
-            public String height;// 960,
-            public String url;// "http://cdn.vliao1.xyz/prod/image/875739_1528964642000_4jqws3rpcoyzo4bgrm39"
+            public String id;
+            public String width;
+            public String height;
+            public String url;
         }
 
-        public String states;// 1,
-        public String seeNum;// 608,
-        public String shareNum;// 1,
-        public String income;// 0,
-        public String vcoin;// 0,
-        public String online;// "4",
-        public String payNum;// 0,
-        public String hasPaid;// 0
+        public String states;
+        public String seeNum;
+        public String shareNum;
+        public String income;
+        public String vcoin;
+        public String online;
+        public String payNum;
+        public String hasPaid;
 
     }
 }

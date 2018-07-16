@@ -185,7 +185,8 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
 
                 if (playerInfo != null) {
-                    if ((isVipPrivate != null && "isVip".equals(isVipPrivate))||(isVipStorage != null && "isVip".equals(isVipStorage))) {
+                    if ((isVipPrivate != null && (new LoginDataSave(TCVodPlayerActivity.this).getLoginPhone()+"isVip").equals(isVipPrivate))
+                            ||(isVipStorage != null && (new LoginDataSave(TCVodPlayerActivity.this).getLoginPhone()+"isVip").equals(isVipStorage))) {
                         playerInfo.txVodPlayer.resume();
                         mTXVodPlayer = playerInfo.txVodPlayer;
 
@@ -452,7 +453,8 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
 
 
         if (playerInfo != null) {
-            if ((isVipPrivate != null && "isVip".equals(isVipPrivate))||(isVipStorage != null && "isVip".equals(isVipStorage))) {
+            if ((isVipPrivate != null &&  (new LoginDataSave(TCVodPlayerActivity.this).getLoginPhone()+"isVip").equals(isVipPrivate))
+                    ||(isVipStorage != null && (new LoginDataSave(TCVodPlayerActivity.this).getLoginPhone()+"isVip").equals(isVipStorage))) {
                 playerInfo.txVodPlayer.resume();
                 mTXVodPlayer = playerInfo.txVodPlayer;
 

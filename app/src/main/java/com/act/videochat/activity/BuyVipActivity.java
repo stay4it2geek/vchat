@@ -20,6 +20,7 @@ import android.widget.Button;
 import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.util.FileUtils;
+import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.VipDataSave;
 import com.act.videochat.view.FragmentDialog;
 
@@ -62,7 +63,7 @@ public class BuyVipActivity extends AppCompatActivity {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
                     public void run() {
-                        FragmentDialog.newInstance(false, "!!支付时不能关闭该应用", "即将打开支付宝支付,支付时不能关闭该应用,支付完成后必须回到该页面，否则将无法升级成VIP会员", "立即支付", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
+                        FragmentDialog.newInstance(false, "!!支付时不能关闭该应用", "即将打开支付宝支付,支付时不能关闭该应用,支付完成后返回该页面,则自动升级为VIP会员", "立即支付", "取消", "", "", false, new FragmentDialog.OnClickBottomListener() {
                             @Override
                             public void onPositiveClick(Dialog dialog) {
                                 mWebView.loadUrl("javascript:callPay()");
@@ -130,14 +131,14 @@ public class BuyVipActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void payInfoMessage(String message) throws JSONException {
-            Log.e("TAG", "message：" + message);
+
             if (message.equals("SUCCESS")) {
                 VipDataSave dataSave = new VipDataSave(BuyVipActivity.this);
-                dataSave.setVipData("isVip");
+                dataSave.setVipData(new LoginDataSave(BuyVipActivity.this).getLoginPhone()+"isVip");
                 FileUtils fileUtils=new FileUtils();
                 if(fileUtils.isExternalStorageReadable() && fileUtils.isExternalStorageWritable()){
                     if(!fileUtils.isFileExist(Constants.VIP)){
-                        fileUtils.write2SDFromInput(Constants.VIP,"isVip");
+                        fileUtils.write2SDFromInput(Constants.VIP,new LoginDataSave(BuyVipActivity.this).getLoginPhone()+"isVip");
                     }
 
                 }

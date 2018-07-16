@@ -5,18 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 
-/**
- * @Created SiberiaDante
- * @Describe：
- * @CreateTime: 2017/12/5
- * @UpDateTime:
- * @Email: 2654828081@qq.com
- * @GitHub: https://github.com/SiberiaDante
- */
-
 public abstract class LazyFragment extends BaseFragment {
-    public static final String TAG = LazyFragment.class.getSimpleName();
-
 
     private boolean hasLoaded = false;
 

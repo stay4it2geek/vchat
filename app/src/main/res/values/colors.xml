@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#000000</color>
+
     <color name="black">#000000</color>
-    <color name="colorAccent">#FF4081</color>
     <color name="c_333333">#333333</color>
-    <color name="c_999999">#999999</color>
     <color name="white">#ffffff</color>
     <color name="common_red">#FF0000</color>
     <color name="graylight">#EEEEEE</color>
@@ -14,7 +11,6 @@
     <color name="talking">#FF4081</color>
     <color name="active">#63B8FF</color>
     <color name="notdisturb">#8C8C8C</color>
-
     <color name="darkgray">#999999</color>
 
     <integer-array name="gplus_colors">
@@ -28,10 +24,6 @@
     <color name="gplus_color_3">#427fed</color>
     <color name="gplus_color_4">#b23424</color>
 
-
-    <!--theme color-->
-    <color name="themeGray">#DEDEDE</color>
-    <!--basic color-->
     <color name="mainBlack">#242828</color>
     <color name="mainBlack5B">#5b5b5b</color>
     <color name="mainRed">#ff3955</color>

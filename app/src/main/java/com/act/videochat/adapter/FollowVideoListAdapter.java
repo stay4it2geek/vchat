@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.act.videochat.R;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
-import com.act.videochat.bean.CommonVideoListModel;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;

@@ -1,23 +1,22 @@
 package com.act.videochat.bean;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ChatGirlInfoBase {
 
-    public boolean result;//true,
+    public boolean result;
     public InfoData data;
 
     public class InfoData {
 
-        public String id;//400137,
-        public String nickname;//
-        public String identity;//96 年空姐
-        public String vcoinPerMinute;//16
-        public int level;//4,
-        public String fans;//2813,
-        public String focused;//0,
+        public String id;
+        public String nickname;
+        public String identity;
+        public String vcoinPerMinute;
+        public int level;
+        public String fans;
+        public String focused;
         public Avatar avatar;
         public ArrayList<Photos> photos;
         public ArrayList<FigureTags> figureTags;
@@ -26,11 +25,11 @@ public class ChatGirlInfoBase {
 
     public class Avatar {
 
-        public String id;//1867238,
-        public String width;//720,
-        public String height;//720,
-        public String sn;//0,
-        public String url;//public String  http://cdn.vliao1.xyz/prod/image/400137_1524989036000_qas2hcjvvbi98uodls4n
+        public String id;
+        public String width;
+        public String height;
+        public String sn;
+        public String url;
     }
 
 

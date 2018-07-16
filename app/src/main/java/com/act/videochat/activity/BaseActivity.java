@@ -7,15 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 
-/**
- * @Created SiberiaDante
- * @Describe：
- * @CreateTime: 2017/12/5
- * @UpDateTime:
- * @Email: 2654828081@qq.com
- * @GitHub: https://github.com/SiberiaDante
- */
-
 
 public abstract class BaseActivity extends AppCompatActivity {
     public static final String TAG = BaseActivity.class.getSimpleName();

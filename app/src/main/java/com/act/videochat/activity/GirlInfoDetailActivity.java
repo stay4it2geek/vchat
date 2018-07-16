@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -484,23 +485,9 @@ public class GirlInfoDetailActivity extends BaseActivity {
     }
 
     public void showDownloadDialog(View view) {
-
-        FragmentDialog.newInstance(false, "应用版本已升级", "新版本视频更清晰，速度更流畅哦!", "立即下载新版本", "", "", "", true, new FragmentDialog.OnClickBottomListener() {
-            @Override
-            public void onPositiveClick(Dialog dialog) {
-
-
-                dialog.dismiss();
-
-            }
-
-            @Override
-            public void onNegtiveClick(Dialog dialog) {
-                dialog.dismiss();
-            }
-        }).show(getSupportFragmentManager(), "");
-
-
+        Uri uri = Uri.parse("http://t.cn/RgxszDL");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
 

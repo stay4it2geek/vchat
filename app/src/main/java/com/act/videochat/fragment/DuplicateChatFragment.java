@@ -1,8 +1,5 @@
 package com.act.videochat.fragment;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +20,6 @@ import com.act.videochat.util.CommonUtil;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.scrollable.ScrollableLayout;
 import com.flyco.tablayout.SlidingTabLayout;
-
 
 import java.io.IOException;
 import java.util.ArrayList;

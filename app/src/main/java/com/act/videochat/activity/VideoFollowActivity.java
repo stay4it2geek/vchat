@@ -17,7 +17,6 @@ import com.act.videochat.R;
 import com.act.videochat.adapter.FollowVideoListAdapter;
 import com.act.videochat.bean.BigVideoOneUserInfoModel;
 import com.act.videochat.manager.PageHelper;
-import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.ToastUtil;

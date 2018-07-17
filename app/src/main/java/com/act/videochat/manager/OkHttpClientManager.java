@@ -50,15 +50,10 @@ public class OkHttpClientManager {
         call.enqueue(new MyCallBack(handler, what));
     }
 
-
-
-
     //生成随机数字和字母,
     public static String getStringRandom(int length) {
-
         String val = "";
         Random random = new Random();
-
         //参数length，表示生成几位随机数
         for(int i = 0; i < length; i++) {
             String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
@@ -84,11 +79,11 @@ public class OkHttpClientManager {
         }
        return sb.toString();
     }
+
     //52个字母与6个大小写字母间的符号；范围为91~96
     public static String createChart(int length){
         String randomcode = "";
-        for(int i=0;i<length;i++)
-        {
+        for(int i=0;i<length;i++){
             int value = (int)(Math.random()*58+65);
             while(value>=91 && value<=96)
                 value = (int)(Math.random()*58+65);
@@ -108,6 +103,7 @@ public class OkHttpClientManager {
         Call call = OkHttpClientManager.newInstance(context).newCall(new Request.Builder().url(url).post(formBody).build());
         call.enqueue(new MyCallBack(handler, Constants.INFO));
     }
+
     public static void parseRequestGirlSmallVideoList(Context context, String url, Handler handler, int what, String vid , String startPage) {
         RequestBody formBody = new FormBody.Builder()
                 .add("vid",vid+"")

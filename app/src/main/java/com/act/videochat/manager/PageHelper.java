@@ -24,10 +24,6 @@ public class PageHelper<T> {
         pageNum = allNum % perPage == 0 ? (allNum / perPage) : (allNum / perPage + 1);
     }
 
-    public int getCount() {
-        return this.allNum;
-    }
-
     public int getCurrentPage() {
         return this.currentPage;
     }
@@ -36,41 +32,14 @@ public class PageHelper<T> {
         return this.pageNum;
     }
 
-    public int getPerPage() {
-        return this.perPage;
-    }
-
-    public void gotoPage(int n) { // 页面跳转
-        currentPage = n > pageNum ? pageNum : (n < 1 ? 1 : n);
-    }
-
     public boolean hasNextPage() {// 是否有下一页
         return currentPage < pageNum;
-    }
-
-    public boolean hasPrePage() {// 是否有前一页
-        return currentPage > 1;
-    }
-
-    public void headPage() {// 第一页
-        currentPage = 1;
-    }
-
-    public void lastPage() {// 最后一页
-        currentPage = pageNum;
     }
 
     public void nextPage() {// 下一页
         currentPage = hasNextPage() ? currentPage + 1 : pageNum;
     }
 
-    public void prePage() {// 前一页
-        currentPage = hasPrePage() ? currentPage - 1 : 1;
-    }
-
-    public void setPerPage(int perPage) {// 设置上一页面
-        this.perPage = perPage;
-    }
 
     /**
      * 获得当前数据

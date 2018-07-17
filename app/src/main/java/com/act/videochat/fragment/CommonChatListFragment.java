@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
+import com.act.videochat.MyApp;
 import com.act.videochat.OnScrollShowHideListner;
 import com.act.videochat.R;
 import com.act.videochat.activity.GirlInfoDetailActivity;
@@ -30,11 +31,9 @@ import com.act.videochat.util.CommonUtil;
 import com.act.videochat.view.LoadNetView;
 import com.act.videochat.view.YRecycleview;
 
-
 import java.util.ArrayList;
 
 public class CommonChatListFragment extends ScrollAbleFragment {
-
     YRecycleview recycleview;
     int currentPage;
     CommonChatListAdapter adapter;
@@ -42,8 +41,8 @@ public class CommonChatListFragment extends ScrollAbleFragment {
     String tagId;
     LoadNetView loadNetView;
     MyHandler converDataHandler;
-
-
+    int distance;
+    boolean visible = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,7 +71,6 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                     }
                 },500);
             }
-
             @Override
             public void onLoadMore() {
                 getData(tagId, (currentPage + 1) + "", Constants.LOADMORE);
@@ -98,7 +96,6 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                 getData(tagId, "1", Constants.REFRESH);
             }
         });
-
         loadNetView.setLoadButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,13 +103,10 @@ public class CommonChatListFragment extends ScrollAbleFragment {
                 getData(tagId, "1", Constants.REFRESH);
             }
         });
-
         return view;
     }
 
-
     ArrayList<CommonChatListModel.HomeChatInfoData> chatDetails = new ArrayList<>();
-
 
     class MyHandler extends Handler {
 
@@ -170,22 +164,18 @@ public class CommonChatListFragment extends ScrollAbleFragment {
         }
     }
 
-
     public void getData(final String tagId, String startPage, final int what) {
         if (tagId == null) {
             converDataHandler.sendEmptyMessage(Constants.NetWorkError);
             return;
         }
-        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, Constants.USERID, Constants.USERKEY);
+        OkHttpClientManager.parseRequestGirlHomePage(getActivity(), ApiUrls.HOME_CHAT_USER_LIST_HREF, converDataHandler, what, tagId, startPage, MyApp.userInfo[0],  MyApp.userInfo[1]);
     }
-
 
     @Override
     public View getScrollableView() {
         return recycleview;
     }
-
-
 
     OnScrollShowHideListner listner;
     @Override
@@ -194,9 +184,7 @@ public class CommonChatListFragment extends ScrollAbleFragment {
         listner= (OnScrollShowHideListner) context;
 
     }
-    private int distance;
 
-    private boolean visible = true;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

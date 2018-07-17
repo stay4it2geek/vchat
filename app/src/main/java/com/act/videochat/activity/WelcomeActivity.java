@@ -30,12 +30,10 @@ public class WelcomeActivity extends ActivityManagePermission {
         final TranslateAnimation taLeft = new TranslateAnimation(0, 250, 0, 0);
         taRight.setDuration(4000);
         taLeft.setDuration(4000);
-
         login_start_bg.startAnimation(taRight);
         taLeft.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -45,13 +43,11 @@ public class WelcomeActivity extends ActivityManagePermission {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         taRight.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -61,37 +57,28 @@ public class WelcomeActivity extends ActivityManagePermission {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
     }
 
     public void toMain(View view) {
-        grantPermission(TabMainActivity.class);
+        checkSomething();
+
     }
 
-
-    public void loginphone(View view) {
-        grantPermission(LoginActivity.class);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LoginDataSave dataSave = new LoginDataSave(this);
+    private void checkSomething() {
         if (!TCUtils.isNetworkAvailable(this)) {
-            findViewById(R.id.phonelogin).setVisibility(View.GONE);
-            findViewById(R.id.logintip).setVisibility(View.GONE);
+
             FragmentDialog.newInstance(false, "网络有问题", "请先打开网络", "确定", "", "", "", true, new FragmentDialog.OnClickBottomListener() {
                 @Override
                 public void onPositiveClick(Dialog dialog) {
-                    Intent intent=null;
+                    Intent intent = null;
                     //判断手机系统的版本  即API大于10 就是3.0或以上版本
-                    if(android.os.Build.VERSION.SDK_INT>10){
+                    if (android.os.Build.VERSION.SDK_INT > 10) {
                         intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
-                    }else{
+                    } else {
                         intent = new Intent();
-                        ComponentName component = new ComponentName("com.android.settings","com.android.settings.WirelessSettings");
+                        ComponentName component = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
                         intent.setComponent(component);
                         intent.setAction("android.intent.action.VIEW");
                     }
@@ -101,35 +88,42 @@ public class WelcomeActivity extends ActivityManagePermission {
 
                 @Override
                 public void onNegtiveClick(Dialog dialog) {
-                        dialog.dismiss();
+                    dialog.dismiss();
                 }
-            });
+            }).show(getSupportFragmentManager(),"");
         } else {
-            if ("isLogin".equals(dataSave.getLoginData())) {
-                findViewById(R.id.phonelogin).setVisibility(View.GONE);
-                findViewById(R.id.logintip).setVisibility(View.GONE);
-            }
-            if (dataSave.getLoginData() == ""||dataSave.getLoginData() == null) {
-                findViewById(R.id.phonelogin).setVisibility(View.VISIBLE);
-                findViewById(R.id.logintip).setVisibility(View.VISIBLE);
-            }
-            findViewById(R.id.tomain).setVisibility(View.VISIBLE);
+            grantPermission(LoginActivity.class);
         }
+    }
 
+    public void loginphone(View view) {
+        checkSomething();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoginDataSave dataSave = new LoginDataSave(this);
+        if ("isLogin".equals(dataSave.getLoginData())) {
+            findViewById(R.id.phonelogin).setVisibility(View.GONE);
+            findViewById(R.id.logintip).setVisibility(View.GONE);
+        }
+        if (dataSave.getLoginData() == "" || dataSave.getLoginData() == null) {
+            findViewById(R.id.phonelogin).setVisibility(View.VISIBLE);
+            findViewById(R.id.logintip).setVisibility(View.VISIBLE);
+        }
+        findViewById(R.id.tomain).setVisibility(View.VISIBLE);
 
     }
 
-
     void grantPermission(final Class cls) {
-
         final SelfDialog selfDialog = new SelfDialog(WelcomeActivity.this, false);
         askCompactPermissions(new String[]{PermissionUtils.Manifest_READ_EXTERNAL_STORAGE, PermissionUtils.Manifest_WRITE_EXTERNAL_STORAGE}, new PermissionResult() {
             @Override
             public void permissionGranted() {
                 startActivity(new Intent(WelcomeActivity.this, cls));
-
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
+                finish();
             }
 
             @Override

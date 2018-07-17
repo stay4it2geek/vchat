@@ -45,9 +45,23 @@
             android:paddingLeft="22dp"
             android:paddingRight="22dp"
             android:paddingTop="10dp"
-            android:text="和她视频"
+            android:text="一对一视频"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tv_back"
+        android:layout_width="22dp"
+        android:layout_height="30dp"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:drawableLeft="@drawable/btn_back_gray"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/btn_back_gray"
+        android:onClick="back"
+        android:padding="10dp" />
 </FrameLayout>

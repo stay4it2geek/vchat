@@ -100,7 +100,7 @@
 
 
     <LinearLayout
-        android:id="@+id/noDataText"
+        android:id="@+id/noDatalayout"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

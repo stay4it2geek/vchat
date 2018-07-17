@@ -16,23 +16,17 @@ import java.util.ArrayList;
 
 public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoListAdapter.MyViewHolder> {
 
-    private int screenWidth;
-    private Context mContext;
-    private ArrayList<CommonVideoListModel.HomeVideoInfoData> datas;
-
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, int position,ImageView imageView);
-    }
-
-    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mOnItemClickListener = listener;
-    }
-
+    int screenWidth;
+    Context mContext;
+    ArrayList<CommonVideoListModel.HomeVideoInfoData> datas;
+    OnRecyclerViewItemClickListener mOnItemClickListener = null;
     public CommonVideoListAdapter(Context context, int screenWidth) {
         mContext = context;
         this.screenWidth = screenWidth;
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
     public void setDatas(ArrayList<CommonVideoListModel.HomeVideoInfoData> datas) {
@@ -55,10 +49,9 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
         holder.photoImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.onItemClick(v, position,holder.photoImg);
+                mOnItemClickListener.onItemClick(v, position, holder.photoImg);
             }
         });
-
     }
 
     @Override
@@ -66,9 +59,12 @@ public class CommonVideoListAdapter extends RecyclerView.Adapter<CommonVideoList
         return datas != null && datas.size() > 0 ? datas.size() : 0;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView photoImg;
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position, ImageView imageView);
+    }
 
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView photoImg;
         public MyViewHolder(View view) {
             super(view);
             photoImg = (ImageView) view.findViewById(R.id.photoImg);

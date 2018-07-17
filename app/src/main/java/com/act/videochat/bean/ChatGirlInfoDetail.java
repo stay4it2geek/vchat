@@ -7,9 +7,7 @@ public class ChatGirlInfoDetail {
 
     public boolean result;
     public GirlDetailInfo data;
-
     public class GirlDetailInfo {
-
         public String id;
         public String topic;
         public String weight;
@@ -21,8 +19,6 @@ public class ChatGirlInfoDetail {
         public String connectRate;
         public String lastTime;
         public ArrayList<FigureTags> figureTags;
-
-
         public class FigureTags {
             public String id;
             public String type;
@@ -35,15 +31,12 @@ public class ChatGirlInfoDetail {
             public String meiliao_color;
         }
 
-
         public ArrayList<CommentTags> commentTags;
-
         public class CommentTags {
             public String id;
             public String name;
             public String color;
         }
-
         public String like;
         public String dislike;
 

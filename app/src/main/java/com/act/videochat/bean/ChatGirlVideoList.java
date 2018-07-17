@@ -12,16 +12,11 @@ public class ChatGirlVideoList implements Serializable{
     public int maxCount;
     public int currPage;
     public ArrayList<GirlVideoInfo> data;
-
-
     public class GirlVideoInfo implements Serializable{
-
         public String id;
         public String posterId;
         public String nickname;
         public Avatar avatar;
-
-
         public class Avatar implements Serializable{
             public String id;
             public String width;

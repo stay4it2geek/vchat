@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
@@ -33,25 +32,23 @@ import okhttp3.Response;
 
 public class DuplicateChatFragment extends Fragment {
 
-    private ViewPager view_pager;
-    private ScrollableLayout mScrollLayout;
-    private SlidingTabLayout mSlidingTabLayout;
-    private List<String> tabTitles = new ArrayList<>();
-    private LoadNetView loadNetView;
-    private TextView follow;
+    ViewPager view_pager;
+    ScrollableLayout mScrollLayout;
+    SlidingTabLayout mSlidingTabLayout;
+    List<String> tabTitles = new ArrayList<>();
+    LoadNetView loadNetView;
 
     public static DuplicateChatFragment newInstance() {
         DuplicateChatFragment f = new DuplicateChatFragment();
         return f;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.duplicate_fragment, container, false);
-        mScrollLayout = (ScrollableLayout)view.findViewById(R.id.scrollableLayout);
-        loadNetView = (LoadNetView)view.findViewById(R.id.loadnetview);
+        mScrollLayout = (ScrollableLayout) view.findViewById(R.id.scrollableLayout);
+        loadNetView = (LoadNetView) view.findViewById(R.id.loadnetview);
         loadNetView.setlayoutVisily(Constants.LOAD);
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.tab_layout);
         view_pager = (ViewPager) view.findViewById(R.id.view_pager);
@@ -78,6 +75,7 @@ public class DuplicateChatFragment extends Fragment {
             }
         });
     }
+
     ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
 
     public void init() {
@@ -115,7 +113,7 @@ public class DuplicateChatFragment extends Fragment {
                     fragment.setArguments(bundle);
                     fragmentList.add(fragment);
                 }
-                if(fragmentList.size()>0){
+                if (fragmentList.size() > 0) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -150,12 +148,9 @@ public class DuplicateChatFragment extends Fragment {
     }
 
 
+    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-
-
-    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-
-        private List<ScrollAbleFragment> fragmentList;
+        List<ScrollAbleFragment> fragmentList;
 
         public MyFragmentPagerAdapter(FragmentManager fm, List<ScrollAbleFragment> fragmentList) {
             super(fm);
@@ -177,7 +172,5 @@ public class DuplicateChatFragment extends Fragment {
             return tabTitles.get(position);
         }
     }
-
-
 
 }

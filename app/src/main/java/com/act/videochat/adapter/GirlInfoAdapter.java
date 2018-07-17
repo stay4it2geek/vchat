@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class GirlInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     ChatGirlInfoDetail detail;
@@ -132,23 +131,18 @@ public class GirlInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(168, 75);
                     params.setMargins(10, 28, 5, 5);//设置边距
                     textView.setLayoutParams(params);
-
-
                     ((UserCommentHolder) holder).name.setText(commentsData.get(position - 1).nickname + "");
                     if (index > 2) {
                         break;
                     }
                     ((UserCommentHolder) holder).commentTagsLayout.addView(textView);
                 }
-
             }
         }
-
     }
 
     @Override
     public int getItemCount() {
-
         return commentsData != null ? commentsData.size() + 1 : 1;
     }
 
@@ -180,18 +174,13 @@ public class GirlInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             dislike = (TextView) itemView.findViewById(R.id.dislike);
             constellation = (TextView) itemView.findViewById(R.id.constellation);
         }
-
-
     }
 
 
     public class UserCommentHolder extends RecyclerView.ViewHolder {
-
         TextView name;
         CircleImageView iv_avatar;
         LinearLayout commentTagsLayout;
-
-
         public UserCommentHolder(View itemView) {
             super(itemView);
             iv_avatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar);

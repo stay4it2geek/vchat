@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        android:paddingEnd="@dimen/sixteen"
-        android:paddingStart="@dimen/sixteen"
+        android:paddingEnd="16sp"
+        android:paddingStart="16sp"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp" />
 

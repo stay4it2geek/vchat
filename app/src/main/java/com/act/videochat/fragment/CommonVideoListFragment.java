@@ -57,8 +57,9 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
     View view;
     String categoryId;
     LoadNetView loadNetView;
+    int distance;
+    boolean visible = true;
     MyHandler converDataHandler;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -221,10 +222,7 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
         return recycleview;
     }
 
-
     private void startPlay(final int maxPage, final int position) {
-
-
         final Intent intent = new Intent(getActivity(), TCVodPlayerActivity.class);
         intent.putExtra(Constants.LIVE_INFO_LIST, details);
         intent.putExtra(Constants.LIVE_INFO_POSITION, position);
@@ -256,7 +254,6 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
                 getActivity().startActivity(intent);
             }
         });
-
     }
 
     OnScrollShowHideListner listner;
@@ -264,11 +261,8 @@ public class CommonVideoListFragment extends ScrollAbleFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         listner= (OnScrollShowHideListner) context;
-
     }
-    private int distance;
 
-    private boolean visible = true;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

@@ -134,7 +134,6 @@
                 android:textColor="@color/black"
                 android:textSize="15sp">
 
-                <requestFocus />
             </EditText>
         </RelativeLayout>
 

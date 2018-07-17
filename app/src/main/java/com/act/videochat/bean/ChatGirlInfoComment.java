@@ -8,10 +8,8 @@ public class ChatGirlInfoComment {
     public ArrayList<CommentTagList> data;
 
     public class CommentTagList {
-
         public String nickname;
         public Avatar avatar;
-
         public class Avatar {
             public String id;
             public String width;
@@ -19,13 +17,10 @@ public class ChatGirlInfoComment {
             public String sn;
             public String url;
         }
-
         public ArrayList<Taglist> taglist;
-
         public class Taglist {
             public String name;
             public String color;
-
         }
     }
 

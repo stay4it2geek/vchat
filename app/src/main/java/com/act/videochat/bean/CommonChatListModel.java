@@ -12,9 +12,7 @@ public class CommonChatListModel implements Serializable {
     public int currPage;
     public int maxPage;
     public ArrayList<HomeChatInfoData> data;
-
     public class HomeChatInfoData implements Serializable {
-
         public String id;
         public String nickname;
         public String topic;
@@ -22,8 +20,6 @@ public class CommonChatListModel implements Serializable {
         public String level;
         public Integer online;
         public Avatar avatar;
-
-
         public class Avatar implements Serializable {
             public String id;
             public int width;
@@ -31,6 +27,5 @@ public class CommonChatListModel implements Serializable {
             public int sn;
             public String url;
         }
-
     }
 }

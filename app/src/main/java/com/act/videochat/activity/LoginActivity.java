@@ -21,8 +21,7 @@ import com.act.videochat.util.VerifyUitl;
 public class LoginActivity extends AppCompatActivity {
     EditText et_userPhonenumber;
     EditText et_userpassword;
-
-    private Animation shakeAnimation;
+    Animation shakeAnimation;
     FileUtils fileUtils;
 
     @Override
@@ -32,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
         et_userPhonenumber = (EditText) findViewById(R.id.et_userPhonenumber);
         et_userpassword = (EditText) findViewById(R.id.et_userpassword);
-
         fileUtils = new FileUtils();
     }
 
@@ -56,39 +54,45 @@ public class LoginActivity extends AppCompatActivity {
         });
         if (uitl.verifyInputTrue(et_userPhonenumber, et_userpassword)) {
             LoginDataSave dataSave = new LoginDataSave(this);
-            if (dataSave.getLoginData()!=null&&"isLogin".equals(dataSave.getLoginData())) {
+            if (dataSave.getLoginData() != null && "isLogin".equals(dataSave.getLoginData())) {
                 this.finish();
                 ToastUtil.showToast(this, "登录成功");
             } else {
-
-                String[] infos = (fileUtils.readInfo(Constants.USER_INFO)+"").split("##");
+                String[] infos = (fileUtils.readInfo(Constants.USER_INFO) + "").split("##");
+                String loginInfo = "";
+                String[] logininfos;
                 String phone = "";
                 String password = "";
-                if (infos.length > 1) {
-                    phone = infos[0];
-                    password = infos[1];
+                if (infos.length > 0) {
+                    for (int i = 0; i < infos.length; i++) {
+                        loginInfo = infos[i];
+                        if (loginInfo.contains("&#&") && (loginInfo.contains(et_userPhonenumber.getText().toString()))) {
+                            logininfos = loginInfo.split("&#&");
+                            if (logininfos.length > 1) {
+                                phone = logininfos[0];
+                                password = logininfos[1];
+                            }
+                        }
+                    }
                 }
-
                 if ((et_userPhonenumber.getText().toString().equals(dataSave.getLoginPhone())
-                        && et_userpassword.getText().toString().equals(dataSave.getLoginPassWord())) ) {
+                        && et_userpassword.getText().toString().equals(dataSave.getLoginPassWord()))) {
                     dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
                     startActivity(new Intent(LoginActivity.this, TabMainActivity.class));
                     this.finish();
                     ToastUtil.showToast(this, "登录成功");
-                } else if(et_userPhonenumber.getText().toString().equals(phone)
-                        && et_userpassword.getText().toString().equals(password)){
+                } else if (et_userPhonenumber.getText().toString().equals(phone)
+                        && et_userpassword.getText().toString().equals(password)) {
                     dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
                     startActivity(new Intent(LoginActivity.this, TabMainActivity.class));
                     this.finish();
                     ToastUtil.showToast(this, "登录成功");
-                }else if(!et_userPhonenumber.getText().toString().equals(phone)){
+                } else if (!et_userPhonenumber.getText().toString().equals(phone)) {
                     ToastUtil.showToast(this, "请检查用户是否正确！");
-                }else if(!et_userpassword.getText().toString().equals(password)){
+                } else if (!et_userpassword.getText().toString().equals(password)) {
                     ToastUtil.showToast(this, "请检查密码是否正确！");
                 }
             }
-
-
         }
     }
 
@@ -99,4 +103,5 @@ public class LoginActivity extends AppCompatActivity {
     public void phoneRegister(View view) {
         startActivity(new Intent(this, RegsiterActivity.class));
     }
+
 }

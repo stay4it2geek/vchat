@@ -24,8 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="12dp"
+        android:visibility="gone"
         android:background="@drawable/button_common_selector"
-        android:text="点击支付48元立刻享受1年VIP会员"
+        android:text=""
         android:textColor="#fff"
         android:textSize="17sp"
         android:textStyle="bold" />

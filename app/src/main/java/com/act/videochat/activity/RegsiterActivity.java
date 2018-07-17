@@ -21,8 +21,7 @@ import com.act.videochat.util.VerifyUitl;
 public class RegsiterActivity extends AppCompatActivity {
     EditText et_userPhonenumber;
     EditText et_userpassword;
-
-    private Animation shakeAnimation;
+    Animation shakeAnimation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,8 +30,6 @@ public class RegsiterActivity extends AppCompatActivity {
         shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
         et_userPhonenumber = (EditText) findViewById(R.id.et_userPhonenumber);
         et_userpassword = (EditText) findViewById(R.id.et_userpassword);
-
-
     }
 
     public void phoneregister(View view) {
@@ -44,29 +41,22 @@ public class RegsiterActivity extends AppCompatActivity {
         });
         if (uitl.verifyInputTrue(et_userPhonenumber, et_userpassword)) {
 
-            String[] infos = (new FileUtils().readInfo(Constants.USER_INFO) + "").split("##");
-            String phone = "";
-            if (infos.length > 1) {
-                phone = infos[0];
-            }
 
-            if (et_userPhonenumber.getText().toString().equals(phone)) {
+            String content = new FileUtils().readInfo(Constants.USER_INFO);
+            if (content != null && content.contains(et_userPhonenumber.getText().toString())) {
                 ToastUtil.showToast(this, "该用户已存在");
             } else {
                 LoginDataSave dataSave = new LoginDataSave(this);
                 dataSave.setLoginData("isLogin", et_userPhonenumber.getText().toString(), et_userpassword.getText().toString());
                 FileUtils fileUtils = new FileUtils();
                 if (fileUtils.isExternalStorageReadable() && fileUtils.isExternalStorageWritable()) {
-                    if (!fileUtils.isFileExist(Constants.USER_INFO)) {
-                        fileUtils.write2SDFromInput(Constants.USER_INFO, et_userPhonenumber.getText().toString() + "##" + et_userpassword.getText().toString());
-                        startActivity(new Intent(RegsiterActivity.this, TabMainActivity.class));
-                        this.finish();
-                        ToastUtil.showToast(this, "注册成功");
-                    }
+                    fileUtils.write2SDFromInput(Constants.USER_INFO, "##" + et_userPhonenumber.getText().toString() + "&#&" + et_userpassword.getText().toString() + "##" + content);
+                    startActivity(new Intent(RegsiterActivity.this, TabMainActivity.class));
+                    this.finish();
+                    ToastUtil.showToast(this, "注册成功");
+
                 }
             }
-
-
         }
     }
 
@@ -74,8 +64,8 @@ public class RegsiterActivity extends AppCompatActivity {
         this.finish();
     }
 
-
     public void phonelogin(View view) {
         startActivity(new Intent(this, LoginActivity.class));
     }
+
 }

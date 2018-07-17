@@ -26,7 +26,6 @@ public class BigVideoOneUserInfoModel implements Serializable {
         public int sn;
         public String url;
     }
-
     public class Tag implements Serializable {
         public String id;
         public String type;

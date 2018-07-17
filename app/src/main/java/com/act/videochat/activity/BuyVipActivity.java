@@ -1,6 +1,5 @@
 package com.act.videochat.activity;
 
-
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.VipDataSave;
 import com.act.videochat.view.FragmentDialog;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -35,9 +35,7 @@ public class BuyVipActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buyvip);
-
         mWebView = (WebView) findViewById(R.id.webview);
-
         WebSettings webSettings = mWebView.getSettings();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -46,9 +44,7 @@ public class BuyVipActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         // 设置允许JS弹窗
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-
         mWebView.loadUrl("http://xiaogu1.av86.vip/index.php");
-
         button = (Button) findViewById(R.id.button);
 
         /**
@@ -58,7 +54,6 @@ public class BuyVipActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 通过Handler发送消息
                 mWebView.post(new Runnable() {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
@@ -69,7 +64,6 @@ public class BuyVipActivity extends AppCompatActivity {
                                 mWebView.loadUrl("javascript:callPay()");
                                 dialog.dismiss();
                             }
-
                             @Override
                             public void onNegtiveClick(Dialog dialog) {
                                 dialog.dismiss();
@@ -83,86 +77,125 @@ public class BuyVipActivity extends AppCompatActivity {
         });
 
         mWebView.setWebViewClient(new WebViewClient() {
-
+            LoadingDialog dialog;
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-            }
 
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(dialog==null){
+                            dialog = new LoadingDialog(BuyVipActivity.this);
+                            dialog.setLoadingText("加载中").setSuccessText("加载成功").closeSuccessAnim();
+                            dialog.show();
+                        }
+
+                    }
+                });
+            }
             @Override
             public void onPageFinished(WebView view, String url) {
-                findViewById(R.id.cover).setVisibility(View.GONE);
                 super.onPageFinished(view, url);
-
+                findViewById(R.id.cover).setVisibility(View.GONE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(dialog!=null){
+                        dialog.close();
+                        }
+                    }
+                });
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.e("TAG", "访问的url地址：" + url);
                 if (url.contains("platformapi/startapp")) {
-                    button.setVisibility(View.GONE);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(dialog==null){
+                                dialog = new LoadingDialog(BuyVipActivity.this);
+                                dialog.setLoadingText("加载中").setSuccessText("加载成功").closeSuccessAnim();
+                                dialog.show();
+                            }
+
+                        }
+                    });
                     Intent intent;
                     try {
-                        intent = Intent.parseUri(url,
-                                Intent.URI_INTENT_SCHEME);
+                        intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
                         intent.addCategory(Intent.CATEGORY_BROWSABLE);
                         intent.setComponent(null);
                         startActivity(intent);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(dialog!=null){
+                                    dialog.close();
 
+                                }
+                                button.setVisibility(View.VISIBLE);
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 } else {
-                    button.setVisibility(View.VISIBLE);
-                    view.loadUrl(url);
+                    button.setVisibility(View.VISIBLE); view.loadUrl(url);
                 }
-
                 return true;
-
             }
-
         });
-
     }
-
 
     public class JsInteration {
 
         @JavascriptInterface
         public void payInfoMessage(String message) throws JSONException {
-
+            Log.e("message",message);
             if (message.equals("SUCCESS")) {
                 VipDataSave dataSave = new VipDataSave(BuyVipActivity.this);
-                dataSave.setVipData(new LoginDataSave(BuyVipActivity.this).getLoginPhone()+"isVip");
+                String vipContent =dataSave.getVipData();
+                dataSave.setVipData("##"+new LoginDataSave(BuyVipActivity.this).getLoginPhone()+"isVip"+"##"+vipContent);
                 FileUtils fileUtils=new FileUtils();
+                String content = new FileUtils().readInfo(Constants.VIP);
                 if(fileUtils.isExternalStorageReadable() && fileUtils.isExternalStorageWritable()){
-                    if(!fileUtils.isFileExist(Constants.VIP)){
-                        fileUtils.write2SDFromInput(Constants.VIP,new LoginDataSave(BuyVipActivity.this).getLoginPhone()+"isVip");
-                    }
-
+                    fileUtils.write2SDFromInput(Constants.VIP,"##"+new LoginDataSave(BuyVipActivity.this).getLoginPhone()+"isVip"+"##"+content);
                 }
-                button.setVisibility(View.GONE);
-                BuyVipActivity.this.finish();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        button.setVisibility(View.GONE);
+                        BuyVipActivity.this.finish();
+                    }
+                });
             }
         }
-
+        @JavascriptInterface
+        public void payMoney(final String message) throws JSONException {
+            if (!message.equals("")&&message!=null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        button.setVisibility(View.VISIBLE);
+                        button.setText("点击支付"+message+"元立刻享受1年VIP会员");
+                    }
+                });
+            }
+        }
     }
-
 
     public void back(View view) {
         this.finish();
     }
 
-    /**
-     * 当退出加载webView的Activity时 , 记得将webView销毁
-     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mWebView.destroy();
     }
-
 
 }
 

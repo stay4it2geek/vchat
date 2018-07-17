@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
+import com.act.videochat.MyApp;
 import com.act.videochat.R;
 import com.act.videochat.adapter.ComFragmentAdapter;
 import com.act.videochat.bean.ChatGirlInfoBase;
@@ -110,33 +111,25 @@ public class GirlInfoDetailActivity extends BaseActivity {
     MagicIndicator magicIndicatorTitle;
     @BindView(R.id.fl_activity)
     FrameLayout flActivity;
-
     @BindView(R.id.nickName)
     TextView nickName;
-
-
     @BindView(R.id.identity)
     TextView identity;
-
-
     @BindView(R.id.fansCount)
     TextView fansCount;
-
     @BindView(R.id.star_Layout)
     LinearLayout star_Layout;
 
-
-    private int mOffset = 0;
-    private int mScrollY = 0;
-    int toolBarPositionY = 0;
-    private String[] mTitles = new String[]{"资料"};
-    private List<String> mDataList = Arrays.asList(mTitles);
-    private List<CommonChatListModel.HomeChatInfoData> list;
-    private List<String> IDs =new ArrayList<>();
-    private CommonChatListModel.HomeChatInfoData infoData;
-    private TextView followHer;
-    private FollowDataSave dataSave;
-
+     int mOffset = 0;
+     int mScrollY = 0;
+     int toolBarPositionY = 0;
+     String[] mTitles = new String[]{"资料"};
+     List<String> mDataList = Arrays.asList(mTitles);
+     List<CommonChatListModel.HomeChatInfoData> list;
+     List<String> IDs =new ArrayList<>();
+     CommonChatListModel.HomeChatInfoData infoData;
+     TextView followHer;
+     FollowDataSave dataSave;
 
     @Override
     public int setLayoutId() {
@@ -169,13 +162,10 @@ public class GirlInfoDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
-
         requestInfoBaseData(getIntent().getStringExtra(Constants.USERID));
     }
 
-    private void initView() {
-
+     void initView() {
         StatusBarUtil.immersive(this);
         StatusBarUtil.setPaddingSmart(this, toolbar);
         infoData = (CommonChatListModel.HomeChatInfoData) getIntent().getSerializableExtra(Constants.CHAT_GIRL);
@@ -251,7 +241,6 @@ public class GirlInfoDetailActivity extends BaseActivity {
         });
         buttonBarLayout.setAlpha(0);
         toolbar.setBackgroundColor(0);
-
         List<Fragment> fragments = new ArrayList<>();
         GirlInfoFragment fragment1 = new GirlInfoFragment();
         Bundle bundle = new Bundle();
@@ -275,7 +264,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
     }
 
 
-    private void initMagicIndicator() {
+     void initMagicIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setScrollPivotX(0.65f);
         commonNavigator.setAdjustMode(true);
@@ -318,7 +307,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
         ViewPagerHelper.bind(magicIndicator, viewPager);
     }
 
-    private void initMagicIndicatorTitle() {
+     void initMagicIndicatorTitle() {
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -358,17 +347,16 @@ public class GirlInfoDetailActivity extends BaseActivity {
         });
         magicIndicatorTitle.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicatorTitle, viewPager);
-
     }
 
-    private ContentObserver mNavigationStatusObserver = new ContentObserver(new Handler()) {
+     ContentObserver mNavigationStatusObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
             dealWithHuaWei();
         }
     };
 
-    private void dealWithViewPager() {
+     void dealWithViewPager() {
         toolBarPositionY = toolbar.getHeight();
         ViewGroup.LayoutParams params = viewPager.getLayoutParams();
         params.height = ScreenUtil.getScreenHeightPx(getApplicationContext()) - toolBarPositionY - magicIndicator.getHeight() + 1;
@@ -378,7 +366,7 @@ public class GirlInfoDetailActivity extends BaseActivity {
     /**
      * 处理华为虚拟键显示隐藏问题导致屏幕高度变化，ViewPager的高度也需要重新测量
      */
-    private void dealWithHuaWei() {
+     void dealWithHuaWei() {
         flActivity.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -389,14 +377,12 @@ public class GirlInfoDetailActivity extends BaseActivity {
     }
 
 
-    private void requestInfoBaseData(String id) {
-
+     void requestInfoBaseData(String id) {
         RequestBody formBody = new FormBody.Builder()
-                .add("userId", Constants.USERID)
-                .add("userKey", Constants.USERKEY)
+                .add("userId", MyApp.userInfo[0])
+                .add("userKey",  MyApp.userInfo[1])
                 .add("vid", id)
                 .build();
-
         Call call = OkHttpClientManager.newInstance(this).newCall(new Request.Builder().url(ApiUrls.GIRL_INFO_DETAIL_BASE_HREF).post(formBody).build());
         call.enqueue(new Callback() {
             @Override
@@ -440,43 +426,33 @@ public class GirlInfoDetailActivity extends BaseActivity {
                             Glide.with(GirlInfoDetailActivity.this).load(base.data.avatar.url).error(R.drawable.error_img).into(toolbarAvatar);
                         }
 
-
                         int online = getIntent().getIntExtra("online", 0);
                         switch (online) {
                             case 0:
                                 onlinestatus.setText("离线");
                                 online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_offline_shape));
                                 break;
-
                             case 1:
                                 onlinestatus.setText("在线");
                                 online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_online_shape));
                                 break;
-
                             case 2:
                                 onlinestatus.setText("在聊");
                                 online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_talking_shape));
                                 break;
-
                             case 3:
                                 onlinestatus.setText("活跃");
                                 online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_active_shape));
                                 break;
-
                             case 4:
                                 onlinestatus.setText("勿扰");
                                 online_dot.setBackground(ContextCompat.getDrawable(GirlInfoDetailActivity.this, R.drawable.circle_dot_nodisturb_shape));
                                 break;
                         }
-
-
                     }
                 });
-
-
             }
         });
-
     }
 
 
@@ -489,7 +465,6 @@ public class GirlInfoDetailActivity extends BaseActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
-
 
     public void followHer(View view) {
         LoginDataSave dataSave = new LoginDataSave(this);
@@ -511,14 +486,13 @@ public class GirlInfoDetailActivity extends BaseActivity {
                 IDs.remove(IDs.indexOf(infoData.id));
                 followHer.setText("关注她");
                 new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).setDataList(Constants.CHAT_GIRL_FOLLOW_LIST, list);
-
             }
         }
-
     }
 
     public void loginphone(View view) {
         startActivity(new Intent(this, LoginActivity.class));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
+
 }

@@ -21,26 +21,17 @@ import java.util.List;
 
 public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAdapter.MyViewHolder> {
 
-    private int screenWidth;
-    private Context mContext;
-
-    private List<CommonChatListModel.HomeChatInfoData> datas;
-
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, int position, ImageView imageView);
-    }
-
-    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mOnItemClickListener = listener;
-    }
-
+    int screenWidth;
+    Context mContext;
+    List<CommonChatListModel.HomeChatInfoData> datas;
+    OnRecyclerViewItemClickListener mOnItemClickListener = null;
     public CommonChatListAdapter(Context context, int screenWidth) {
         mContext = context;
         this.screenWidth = screenWidth;
+    }
 
-
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
     public void setDatas(List<CommonChatListModel.HomeChatInfoData> datas) {
@@ -72,7 +63,7 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
             TextView textView = new TextView(mContext);
             textView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.star));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(37, 37);
-            params.setMargins(3, 2, 6,3);//设置边距
+            params.setMargins(3, 2, 6, 3);//设置边距
             params.gravity = Gravity.CENTER_VERTICAL;
             textView.setLayoutParams(params);
             holder.star_Layout.addView(textView);
@@ -84,22 +75,18 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
                 holder.onlinestatus.setText("离线");
                 holder.online_dot.setBackground(ContextCompat.getDrawable(mContext, R.drawable.circle_dot_offline_shape));
                 break;
-
             case 1:
                 holder.onlinestatus.setText("在线");
                 holder.online_dot.setBackground(ContextCompat.getDrawable(mContext, R.drawable.circle_dot_online_shape));
                 break;
-
             case 2:
                 holder.onlinestatus.setText("在聊");
                 holder.online_dot.setBackground(ContextCompat.getDrawable(mContext, R.drawable.circle_dot_talking_shape));
                 break;
-
             case 3:
                 holder.onlinestatus.setText("活跃");
                 holder.online_dot.setBackground(ContextCompat.getDrawable(mContext, R.drawable.circle_dot_active_shape));
                 break;
-
             case 4:
                 holder.onlinestatus.setText("勿扰");
                 holder.online_dot.setBackground(ContextCompat.getDrawable(mContext, R.drawable.circle_dot_nodisturb_shape));
@@ -115,16 +102,20 @@ public class CommonChatListAdapter extends RecyclerView.Adapter<CommonChatListAd
         return datas != null && datas.size() > 0 ? datas.size() : 0;
     }
 
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position, ImageView imageView);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private RelativeLayout starnickLayout;
-        private TextView online_dot;
-        private TextView onlinestatus;
-        private TextView vcoinPerMinute;
-        private RelativeLayout onlinelayout;
-        private TextView topicContent;
-        private TextView nickName;
-        private LinearLayout star_Layout;
-        private ImageView photoImg;
+        RelativeLayout starnickLayout;
+        TextView online_dot;
+        TextView onlinestatus;
+        TextView vcoinPerMinute;
+        RelativeLayout onlinelayout;
+        TextView topicContent;
+        TextView nickName;
+        LinearLayout star_Layout;
+        ImageView photoImg;
 
         public MyViewHolder(View view) {
             super(view);

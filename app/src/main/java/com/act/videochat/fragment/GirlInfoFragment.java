@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.act.videochat.ApiUrls;
 import com.act.videochat.Constants;
+import com.act.videochat.MyApp;
 import com.act.videochat.R;
 import com.act.videochat.adapter.GirlInfoAdapter;
 import com.act.videochat.bean.ChatGirlInfoComment;
@@ -34,13 +35,9 @@ public class GirlInfoFragment extends LazyFragment {
 
     @BindView(R.id.recycler_view)
     YRecycleview recyclerView;
-
-    private GirlInfoAdapter adapter;
-
-
+    GirlInfoAdapter adapter;
     String id;
-
-    private int currentPage;
+    int currentPage;
 
     @Override
     protected int getLayoutId() {
@@ -58,15 +55,10 @@ public class GirlInfoFragment extends LazyFragment {
 
     @Override
     public void lazyInitView(View view, Bundle savedInstanceState) {
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        recyclerView.addItemDecoration(new NormalDecoration(ContextCompat.getColor(mActivity, R.color.mainGrayF8), (int) mActivity.getResources().getDimension(R.dimen.one)));
-
-
+        recyclerView.addItemDecoration(new NormalDecoration(ContextCompat.getColor(mActivity, R.color.mainGrayF8), 1));
         recyclerView.setReFreshEnabled(false);
         recyclerView.setLoadMoreEnabled(true);
-
         recyclerView.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
             @Override
             public void onRefresh() {
@@ -85,17 +77,14 @@ public class GirlInfoFragment extends LazyFragment {
                 }, 500);
             }
         });
-
-
     }
 
     ArrayList<ChatGirlInfoComment.CommentTagList> commentTagLists = new ArrayList<>();
 
-    private void requestCommentInfo(String id) {
-
+    void requestCommentInfo(String id) {
         RequestBody formBody = new FormBody.Builder()
-                .add("userId", Constants.USERID)
-                .add("userKey", Constants.USERKEY)
+                .add("userId", MyApp.userInfo[0])
+                .add("userKey", MyApp.userInfo[1])
                 .add("vid", id)
                 .add("page", currentPage + "")
                 .add("pageCount", "30")
@@ -112,7 +101,6 @@ public class GirlInfoFragment extends LazyFragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String str = response.body().string();
                 final ChatGirlInfoComment comment = CommonUtil.parseJsonWithGson(str, ChatGirlInfoComment.class);
-
                 if (comment != null && comment.data != null && comment.data.size() > 0) {
                     commentTagLists.addAll(comment.data);
                     adapter.setCommentsData(commentTagLists);
@@ -123,29 +111,25 @@ public class GirlInfoFragment extends LazyFragment {
                             if (comment.maxPage < currentPage) {
                                 recyclerView.setNoMoreData(true);
                             }
-
                         }
                     });
                 }
             }
         });
-
     }
 
-    private void requestDetailData(final String id) {
+    void requestDetailData(final String id) {
 
         RequestBody formBody = new FormBody.Builder()
-                .add("userId", Constants.USERID)
-                .add("userKey", Constants.USERKEY)
+                .add("userId", MyApp.userInfo[0])
+                .add("userKey", MyApp.userInfo[1])
                 .add("vid", id)
                 .build();
 
         Call call = OkHttpClientManager.newInstance(getActivity()).newCall(new Request.Builder().url(ApiUrls.GIRL_INFO_DETAIL_DATA_HREF).post(formBody).build());
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
+            public void onFailure(Call call, IOException e) { }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -158,11 +142,8 @@ public class GirlInfoFragment extends LazyFragment {
                         adapter.notifyDataSetChanged();
                     }
                 });
-
             }
         });
-
     }
-
 
 }

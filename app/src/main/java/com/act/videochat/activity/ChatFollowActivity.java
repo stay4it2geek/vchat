@@ -18,7 +18,6 @@ import com.act.videochat.R;
 import com.act.videochat.adapter.CommonChatListAdapter;
 import com.act.videochat.bean.CommonChatListModel;
 import com.act.videochat.manager.PageHelper;
-import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.FollowDataSave;
 import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.ToastUtil;
@@ -34,14 +33,14 @@ public class ChatFollowActivity extends AppCompatActivity {
 
     LoadNetView loadNetView;
     Handler converDataHandler;
-    private List<CommonChatListModel.HomeChatInfoData> mLocalDatas;
-    private PageHelper<CommonChatListModel.HomeChatInfoData> mPageDaoImpl;
+    List<CommonChatListModel.HomeChatInfoData> mLocalDatas;
+    PageHelper<CommonChatListModel.HomeChatInfoData> mPageDaoImpl;
     ArrayList<CommonChatListModel.HomeChatInfoData> list = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycleview);
-
         loadNetView = (LoadNetView) findViewById(R.id.loadview);
         loadNetView.setlayoutVisily(Constants.LOAD);
         recycleview = (YRecycleview) findViewById(R.id.yrecycle_view);
@@ -51,13 +50,10 @@ public class ChatFollowActivity extends AppCompatActivity {
         recycleview.setReFreshEnabled(true);
         recycleview.setLoadMoreEnabled(true);
         converDataHandler = new Handler();
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-
         mLocalDatas = new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).getChatGirlDataList(Constants.CHAT_GIRL_FOLLOW_LIST);
-
         adapter = new CommonChatListAdapter(this, size.x);
         recycleview.setAdapter(adapter);
         recycleview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
@@ -66,11 +62,9 @@ public class ChatFollowActivity extends AppCompatActivity {
                 list.clear();
                 mPageDaoImpl.setCurrentPage(1);
                 getData(Constants.REFRESH);
-
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
-                    public void run() {
-                        recycleview.setReFreshComplete();
+                    public void run() {recycleview.setReFreshComplete();
                     }
                 }, 500);
                 recycleview.setNoMoreData(false);
@@ -78,15 +72,10 @@ public class ChatFollowActivity extends AppCompatActivity {
 
             @Override
             public void onLoadMore() {
-
                 if (mPageDaoImpl.getCurrentPage() < mPageDaoImpl.getPageNum()) {
                     mPageDaoImpl.nextPage();
                     getData(Constants.LOADMORE);
                 }
-
-
-
-
 
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
@@ -96,16 +85,14 @@ public class ChatFollowActivity extends AppCompatActivity {
                             recycleview.setNoMoreData(true);
                         }
                     }
-                }, 1000);
+                }, 500);
             }
         });
-
 
         loadNetView.setReloadButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadNetView.setlayoutVisily(Constants.LOAD);
-                list.clear();
+                loadNetView.setlayoutVisily(Constants.LOAD); list.clear();
                 mPageDaoImpl.setCurrentPage(1);
                 getData(Constants.REFRESH);
             }
@@ -114,8 +101,7 @@ public class ChatFollowActivity extends AppCompatActivity {
         loadNetView.setLoadButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadNetView.setlayoutVisily(Constants.LOAD);
-                list.clear();
+                loadNetView.setlayoutVisily(Constants.LOAD); list.clear();
                 mPageDaoImpl.setCurrentPage(1);
                 getData(Constants.REFRESH);
             }
@@ -133,13 +119,10 @@ public class ChatFollowActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         LoginDataSave dataSave = new LoginDataSave(this);
         if (dataSave.getLoginData()!=null &&"isLogin".equals(dataSave.getLoginData())) {
-            findViewById(R.id.logout).setVisibility(View.VISIBLE);
-            list.clear();
+            findViewById(R.id.logout).setVisibility(View.VISIBLE);  list.clear();
             mLocalDatas = new FollowDataSave(this, Constants.CHAT_GIRL_FOLLOW).getChatGirlDataList(Constants.CHAT_GIRL_FOLLOW_LIST);
-            //每次读10条数据
             mPageDaoImpl = new PageHelper<>(mLocalDatas, 10);
             mPageDaoImpl.setCurrentPage(1);
             recycleview.setNoMoreData(false);
@@ -149,16 +132,12 @@ public class ChatFollowActivity extends AppCompatActivity {
             loadNetView.setVisibility(View.VISIBLE);
             loadNetView.setlayoutVisily(Constants.LOGIN);
         }
-
     }
 
-
     public void getData(int what) {
-
         if (mPageDaoImpl.currentList().size() > 0) {
             list.addAll(mPageDaoImpl.currentList());
             adapter.setDatas(list);
-
             adapter.setOnItemClickListener(new CommonChatListAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, final int position, ImageView photoImg) {
@@ -169,12 +148,9 @@ public class ChatFollowActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
-
             loadNetView.setVisibility(View.GONE);
         }else{
             if (Constants.REFRESH==what){
-
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -185,12 +161,11 @@ public class ChatFollowActivity extends AppCompatActivity {
             }
         }
         adapter.notifyDataSetChanged();
-
     }
+
     public void back(View view) {
         this.finish();
     }
-
     public void logout(View view){
         LoginDataSave dataSave =new LoginDataSave(this);
         dataSave.clearLoginData();

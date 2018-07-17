@@ -28,19 +28,17 @@ import java.util.List;
 
 public class VideoFollowActivity extends AppCompatActivity {
     YRecycleview recycleview;
-
     FollowVideoListAdapter adapter;
     ArrayList<BigVideoOneUserInfoModel> list = new ArrayList<>();
     LoadNetView loadNetView;
     Handler converDataHandler;
-    private List<BigVideoOneUserInfoModel> mLocalDatas;
-    private PageHelper<BigVideoOneUserInfoModel> mPageDaoImpl;
+    List<BigVideoOneUserInfoModel> mLocalDatas;
+    PageHelper<BigVideoOneUserInfoModel> mPageDaoImpl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycleview);
-
         loadNetView = (LoadNetView) findViewById(R.id.loadview);
         loadNetView.setlayoutVisily(Constants.LOAD);
         recycleview = (YRecycleview) findViewById(R.id.yrecycle_view);
@@ -53,18 +51,15 @@ public class VideoFollowActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-
         mLocalDatas = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
         adapter = new FollowVideoListAdapter(this, size.x);
         recycleview.setAdapter(adapter);
-
         recycleview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
             @Override
             public void onRefresh() {
                 list.clear();
                 mPageDaoImpl.setCurrentPage(1);
                 getData(Constants.REFRESH);
-
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -76,15 +71,10 @@ public class VideoFollowActivity extends AppCompatActivity {
 
             @Override
             public void onLoadMore() {
-
                 if (mPageDaoImpl.getCurrentPage() <= mPageDaoImpl.getPageNum()) {
                     mPageDaoImpl.nextPage();
-
                 }
-
                 getData(Constants.LOADMORE);
-
-
                 converDataHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -96,8 +86,6 @@ public class VideoFollowActivity extends AppCompatActivity {
                 }, 1000);
             }
         });
-
-
         loadNetView.setReloadButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +95,6 @@ public class VideoFollowActivity extends AppCompatActivity {
                 getData(Constants.REFRESH);
             }
         });
-
         loadNetView.setLoadButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,21 +104,19 @@ public class VideoFollowActivity extends AppCompatActivity {
                 getData(Constants.REFRESH);
             }
         });
-
         loadNetView.setloginButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(VideoFollowActivity.this,LoginActivity.class));
+                startActivity(new Intent(VideoFollowActivity.this, LoginActivity.class));
             }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         LoginDataSave dataSave = new LoginDataSave(this);
-        if (dataSave.getLoginData()!=null &&"isLogin".equals(dataSave.getLoginData())) {
+        if (dataSave.getLoginData() != null && "isLogin".equals(dataSave.getLoginData())) {
             findViewById(R.id.logout).setVisibility(View.VISIBLE);
             list.clear();
             mLocalDatas = new FollowDataSave(this, Constants.VIDEO_GIRL_FOLLOW).getVideoGirlDataList(Constants.VIDEO_GIRL_FOLLOW_LIST);
@@ -139,20 +124,17 @@ public class VideoFollowActivity extends AppCompatActivity {
             mPageDaoImpl.setCurrentPage(1);
             recycleview.setNoMoreData(false);
             getData(Constants.REFRESH);
-        }else{
+        } else {
             findViewById(R.id.logout).setVisibility(View.GONE);
             loadNetView.setVisibility(View.VISIBLE);
             loadNetView.setlayoutVisily(Constants.LOGIN);
         }
     }
 
-
     public void getData(int what) {
-
         if (mPageDaoImpl.currentList().size() > 0) {
             list.addAll(mPageDaoImpl.currentList());
             adapter.setDatas(list);
-
             adapter.setOnItemClickListener(new FollowVideoListAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, final int position, ImageView photoImg) {
@@ -170,12 +152,10 @@ public class VideoFollowActivity extends AppCompatActivity {
                         loadNetView.setVisibility(View.VISIBLE);
                         loadNetView.setlayoutVisily(Constants.NO_DATA);
                     }
-                }, 1000);
+                }, 500);
             }
         }
         adapter.notifyDataSetChanged();
-
-
     }
 
     public void logout(View view) {
@@ -190,4 +170,5 @@ public class VideoFollowActivity extends AppCompatActivity {
     public void back(View view) {
         this.finish();
     }
+
 }

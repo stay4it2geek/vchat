@@ -29,26 +29,20 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     Activity activity;
     BigVideoOneUserInfoModel headerInfo;
     ArrayList<CommonVideoListModel.HomeVideoInfoData> girlVideos;
-    private int screenWidth;
+    int screenWidth;
+    OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, int position,ImageView imageView);
-    }
-
-    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mOnItemClickListener = listener;
-    }
-
-    public VideoWorksListAdapter(int screenWidth,Activity activity, BigVideoOneUserInfoModel headerInfo, ArrayList<CommonVideoListModel.HomeVideoInfoData> girlVideos, int maxCount) {
+    public VideoWorksListAdapter(int screenWidth, Activity activity, BigVideoOneUserInfoModel headerInfo, ArrayList<CommonVideoListModel.HomeVideoInfoData> girlVideos, int maxCount) {
         this.headerInfo = headerInfo;
         this.activity = activity;
         this.girlVideos = girlVideos;
         mLayoutInflater = LayoutInflater.from(activity);
         this.maxCount = maxCount;
         this.screenWidth = screenWidth;
+    }
 
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
     @Override
@@ -58,12 +52,10 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             return 1;
         }
-
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         if (viewType == 0) {
             return new Item1ViewHolder(mLayoutInflater.inflate(R.layout.girl_video_header_layout, parent, false));
         } else {
@@ -73,7 +65,6 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-
         if (holder instanceof Item1ViewHolder) {
             StaggeredGridLayoutManager.LayoutParams clp = (StaggeredGridLayoutManager.LayoutParams) ((Item1ViewHolder) holder).headerlayout.getLayoutParams();
             clp.setFullSpan(true);
@@ -81,7 +72,6 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ((Item1ViewHolder) holder).nickName.setText(headerInfo.data.nickname);
             ((Item1ViewHolder) holder).topics.setText(headerInfo.data.topic);
             ((Item1ViewHolder) holder).videoCount.setText("共有" + maxCount + "个视频");
-
             Glide.with(activity).load(headerInfo.data.avatar.url).into(((Item1ViewHolder) holder).userImage);
             ((Item1ViewHolder) holder).tagLayout.removeAllViews();
             for (BigVideoOneUserInfoModel.Tag tag : headerInfo.data.tags) {
@@ -95,16 +85,14 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 textView.setTextSize(15f);
                 textView.setTextColor(Color.WHITE);
                 textView.setGravity(Gravity.CENTER);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(175,93);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(175, 93);
                 params.setMargins(10, 16, 10, 5);//设置边距
                 textView.setLayoutParams(params);
                 ((Item1ViewHolder) holder).tagLayout.addView(textView);
-
             }
-
         } else if (holder instanceof Item2ViewHolder) {
-            if(activity!=null && !activity.isDestroyed()) {
-                ((Item2ViewHolder) holder).videoCover.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 3)-5, (screenWidth /3) + 190));
+            if (activity != null && !activity.isDestroyed()) {
+                ((Item2ViewHolder) holder).videoCover.setLayoutParams(new LinearLayout.LayoutParams((screenWidth / 3) - 5, (screenWidth / 3) + 190));
                 Glide.with(activity).load(girlVideos.get(position - 1).cover).error(R.drawable.error_img).placeholder(R.drawable.placehoder_img).into(((Item2ViewHolder) holder).videoCover);
             }
             ((Item2ViewHolder) holder).videoCover.setOnClickListener(new View.OnClickListener() {
@@ -121,19 +109,21 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return girlVideos.size() + 1;
     }
 
-    class Item1ViewHolder extends RecyclerView.ViewHolder {
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position, ImageView imageView);
+    }
 
-        private LinearLayout headerlayout;
-        private TextView nickName;
-        private TextView topics;
-        private CircleImageView userImage;
-        private ImageView backGroundImg;
-        private LinearLayout tagLayout;
-        private TextView videoCount;
+    class Item1ViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout headerlayout;
+        TextView nickName;
+        TextView topics;
+        CircleImageView userImage;
+        ImageView backGroundImg;
+        LinearLayout tagLayout;
+        TextView videoCount;
 
         public Item1ViewHolder(View view) {
             super(view);
-
             headerlayout = (LinearLayout) view.findViewById(R.id.headerlayout);
             nickName = (TextView) view.findViewById(R.id.nickName);
             topics = (TextView) view.findViewById(R.id.topics);
@@ -146,9 +136,7 @@ public class VideoWorksListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     class Item2ViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView videoCover;
-
+        ImageView videoCover;
         public Item2ViewHolder(View view) {
             super(view);
             videoCover = (ImageView) view.findViewById(R.id.videoCover);

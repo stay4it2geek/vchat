@@ -21,8 +21,6 @@ public class VerifyUitl {
 
     public boolean verifyInputTrue(EditText et_userPhonenumber,
                                    EditText et_password) {
-
-
         if (et_userPhonenumber != null) {
             if (et_userPhonenumber.getText().toString().equals("手机号") ||
                     et_userPhonenumber.getText().toString().equals("") ||
@@ -42,7 +40,6 @@ public class VerifyUitl {
             }
         }
 
-
         if (et_password != null) {
             if (et_password.getText().toString().equals("密码") || et_password.getText().toString().equals("")) {
                 ToastUtil.showToast(context, "请输入密码");
@@ -50,8 +47,6 @@ public class VerifyUitl {
                 return false;
             }
         }
-
-
         return true;
     }
 

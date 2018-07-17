@@ -16,25 +16,17 @@ import java.util.ArrayList;
 
 public class FollowVideoListAdapter extends RecyclerView.Adapter<FollowVideoListAdapter.MyViewHolder> {
 
-    private int screenWidth;
-    private Context mContext;
-    private ArrayList<BigVideoOneUserInfoModel> datas;
-
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, int position, ImageView imageView);
-    }
-
-    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mOnItemClickListener = listener;
-    }
-
+    int screenWidth;
+    Context mContext;
+    ArrayList<BigVideoOneUserInfoModel> datas;
+    OnRecyclerViewItemClickListener mOnItemClickListener = null;
     public FollowVideoListAdapter(Context context, int screenWidth) {
         mContext = context;
         this.screenWidth = screenWidth;
     }
-
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
     public void setDatas(ArrayList<BigVideoOneUserInfoModel> datas) {
         this.datas = datas;
     }
@@ -55,10 +47,9 @@ public class FollowVideoListAdapter extends RecyclerView.Adapter<FollowVideoList
         holder.photoImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.onItemClick(v, position,holder.photoImg);
+                mOnItemClickListener.onItemClick(v, position, holder.photoImg);
             }
         });
-
     }
 
     @Override
@@ -66,8 +57,12 @@ public class FollowVideoListAdapter extends RecyclerView.Adapter<FollowVideoList
         return datas != null && datas.size() > 0 ? datas.size() : 0;
     }
 
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position, ImageView imageView);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView photoImg;
+        ImageView photoImg;
 
         public MyViewHolder(View view) {
             super(view);

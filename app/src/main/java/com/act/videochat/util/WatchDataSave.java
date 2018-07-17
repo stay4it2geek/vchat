@@ -17,7 +17,6 @@ public class WatchDataSave {
         watchCountEditor = watchCountPreferences.edit();
     }
 
-
     public void setWatchDataList(List<String> datalist) {
         if (null == datalist || datalist.size() <= 0)
             return;
@@ -29,7 +28,6 @@ public class WatchDataSave {
         watchCountEditor.putString("videoList", sb.toString());
         watchCountEditor.putLong("time",  System.currentTimeMillis());
         watchCountEditor.commit();
-
     }
 
 
@@ -50,14 +48,11 @@ public class WatchDataSave {
             datalist.add(str_);
         }
         return datalist;
-
     }
 
     public Long getTimeData() {
-
         return watchCountPreferences.getLong("time", 0);
 
     }
-
 
 }

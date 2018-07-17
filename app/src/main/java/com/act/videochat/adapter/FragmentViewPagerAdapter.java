@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-/**
- * 为ViewPager添加布局（Fragment），绑定和处理fragments和viewpager之间的逻辑关系
- */
 public class FragmentViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener{
     private List<Fragment> fragments; // 每个Fragment对应一个Page
     private FragmentManager fragmentManager;
@@ -63,29 +60,9 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements ViewPager.
         if(fragment.getView().getParent() == null){
             container.addView(fragment.getView()); // 为viewpager增加布局
         }
-
         return fragment.getView();
     }
 
-    /**
-     * 当前page索引（切换之前）
-     * @return
-     */
-    public int getCurrentPageIndex() {
-        return currentPageIndex;
-    }
-
-    public OnExtraPageChangeListener getOnExtraPageChangeListener() {
-        return onExtraPageChangeListener;
-    }
-
-    /**
-     * 设置页面切换额外功能监听器
-     * @param onExtraPageChangeListener
-     */
-    public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
-        this.onExtraPageChangeListener = onExtraPageChangeListener;
-    }
 
     @Override
     public void onPageScrolled(int i, float v, int i2) {

@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.act.videochat.Constants;
 import com.act.videochat.R;
@@ -19,7 +18,7 @@ public class LoadNetView extends LinearLayout {
      Button reloadbutton;
      Button loginbutton;
      LinearLayout loadlayout;
-     LinearLayout noDataText;
+     LinearLayout noDatalayout;
      LinearLayout reloadlayout;
      Button loadDataButton;
 
@@ -30,7 +29,7 @@ public class LoadNetView extends LinearLayout {
         reloadbutton = (Button) findViewById(R.id.relaodbutton);
         loginbutton = (Button) findViewById(R.id.loginbutton);
         loadDataButton = (Button) findViewById(R.id.loadDataButton);
-        noDataText = (LinearLayout) findViewById(R.id.noDataText);
+        noDatalayout = (LinearLayout) findViewById(R.id.noDatalayout);
         loadlayout = (LinearLayout) findViewById(R.id.loadlayout);
         nologinlayout = (LinearLayout) findViewById(R.id.nologinlayout);
         this.setOnTouchListener(new View.OnTouchListener() {
@@ -56,25 +55,25 @@ public class LoadNetView extends LinearLayout {
 
     public void setlayoutVisily(int loadType) {
         if (loadType == Constants.LOAD) {
-            noDataText.setVisibility(GONE);
+            noDatalayout.setVisibility(GONE);
             reloadlayout.setVisibility(View.GONE);
             loadlayout.setVisibility(View.VISIBLE);
             nologinlayout.setVisibility(View.GONE);
         } else if (loadType == Constants.RELOAD) {
             reloadlayout.setVisibility(View.VISIBLE);
             loadlayout.setVisibility(View.GONE);
-            noDataText.setVisibility(GONE);
+            noDatalayout.setVisibility(GONE);
             nologinlayout.setVisibility(View.GONE);
         } else if (loadType == Constants.LOGIN) {
             loadlayout.setVisibility(View.GONE);
-            noDataText.setVisibility(GONE);
+            noDatalayout.setVisibility(GONE);
             reloadlayout.setVisibility(View.GONE);
             nologinlayout.setVisibility(View.VISIBLE);
         }  else if (loadType == Constants.NO_DATA) {
             loadlayout.setVisibility(View.GONE);
             nologinlayout.setVisibility(View.GONE);
             reloadlayout.setVisibility(View.GONE);
-            noDataText.setVisibility(View.VISIBLE);
+            noDatalayout.setVisibility(View.VISIBLE);
         }
     }
 

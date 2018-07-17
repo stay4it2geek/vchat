@@ -31,6 +31,7 @@ import com.act.videochat.util.CommonUtil;
 import com.act.videochat.util.FileUtils;
 import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.TCUtils;
+import com.act.videochat.util.ToastUtil;
 import com.act.videochat.util.VipDataSave;
 import com.act.videochat.util.WatchDataSave;
 import com.act.videochat.view.FragmentDialog;
@@ -97,6 +98,7 @@ public class TCVodPlayerActivity extends AppCompatActivity implements ITXVodPlay
         vipsave = new VipDataSave(this);
         fileUtils = new FileUtils();
         EventBus.getDefault().register(this);
+        ToastUtil.showToast(this, "上下滑动切换视频");
     }
 
     void initData() {

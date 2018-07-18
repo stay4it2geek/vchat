@@ -32,13 +32,6 @@ public class Constants {
     public static final String USER_INFO = "android_system_user_info.txt";
     public static final String  USERID ="USER_ID_OR_VID";
 
-
-
-
-
-
-
-
-
-
+    public static final int TABMAIN = 1;
+    public static final int CLOSE = 2;
 }

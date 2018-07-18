@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import com.act.videochat.Constants;
 import com.act.videochat.R;
 import com.act.videochat.util.LoginDataSave;
 import com.act.videochat.util.TCUtils;
@@ -62,11 +63,11 @@ public class WelcomeActivity extends ActivityManagePermission {
     }
 
     public void toMain(View view) {
-        checkSomething();
+        checkSomething(TabMainActivity.class);
 
     }
 
-    private void checkSomething() {
+    private void checkSomething(Class cls) {
         if (!TCUtils.isNetworkAvailable(this)) {
 
             FragmentDialog.newInstance(false, "网络有问题", "请先打开网络", "确定", "", "", "", true, new FragmentDialog.OnClickBottomListener() {
@@ -90,14 +91,14 @@ public class WelcomeActivity extends ActivityManagePermission {
                 public void onNegtiveClick(Dialog dialog) {
                     dialog.dismiss();
                 }
-            }).show(getSupportFragmentManager(),"");
+            }).show(getSupportFragmentManager(), "");
         } else {
-            grantPermission(LoginActivity.class);
+            grantPermission(cls);
         }
     }
 
     public void loginphone(View view) {
-        checkSomething();
+        checkSomething(LoginActivity.class);
     }
 
     @Override
@@ -121,9 +122,10 @@ public class WelcomeActivity extends ActivityManagePermission {
         askCompactPermissions(new String[]{PermissionUtils.Manifest_READ_EXTERNAL_STORAGE, PermissionUtils.Manifest_WRITE_EXTERNAL_STORAGE}, new PermissionResult() {
             @Override
             public void permissionGranted() {
-                startActivity(new Intent(WelcomeActivity.this, cls));
+
+                startActivityForResult(new Intent(WelcomeActivity.this, cls), Constants.TABMAIN);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
+
             }
 
             @Override
@@ -167,5 +169,13 @@ public class WelcomeActivity extends ActivityManagePermission {
                 selfDialog.show();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==Constants.TABMAIN&&resultCode==Constants.CLOSE){
+            finish();
+        }
     }
 }

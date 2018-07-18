@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.act.videochat.Constants;
 import com.act.videochat.OnScrollShowHideListner;
 import com.act.videochat.R;
 import com.act.videochat.adapter.FragmentViewPagerAdapter;
@@ -149,7 +150,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
     public void onBackPressed() {
 
 
-        FragmentDialog.newInstance(false, "客官再看一会儿呗", "还是留下来再看看吧", "再欣赏下", "有事要忙", "", "", false, new FragmentDialog.OnClickBottomListener() {
+        FragmentDialog.newInstance(false, "再看一会儿呗", "还是留下来再看看吧", "再欣赏下", "有事要忙", "", "", false, new FragmentDialog.OnClickBottomListener() {
             @Override
             public void onPositiveClick(Dialog dialog) {
                 dialog.dismiss();
@@ -159,6 +160,7 @@ public class TabMainActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onNegtiveClick(final Dialog dialog) {
                 dialog.dismiss();
+                setResult(Constants.CLOSE);
                 TabMainActivity.super.onBackPressed();
             }
         }).show(getSupportFragmentManager(), "");
